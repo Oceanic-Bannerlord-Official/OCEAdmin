@@ -38,54 +38,11 @@ namespace ChatCommands
             }
         }
 
-        private void TestClanUniformSetup()
-        {
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string clanUniformsPath = Path.Combine(basePath, "clanUniforms.json");
-            if (!File.Exists(clanUniformsPath))
-            {
-                UniformManager uniformManager = new UniformManager();
-                ClanUniform clanUniform = new ClanUniform();
-
-                clanUniform.clanTag = "ASTG";
-                clanUniform.officerIDs = new List<String> { "2.0.0.76561198259745840" };
-                clanUniform.uniformParts = new List<UniformPart>();
-                clanUniform.uniformParts.Add(new UniformPart(EquipmentIndex.Head, 
-                    new List<string> { "mp_nasal_helmet_over_cloth_headwrap" }, 
-                    new List<string> { "mp_nasal_helmet_over_cloth_headwrap" }));
-                clanUniform.uniformParts.Add(new UniformPart(EquipmentIndex.Body,
-                    new List<string> { "mp_veteran_mercenary_armor" },
-                    new List<string> { "mp_veteran_mercenary_armor" }));
-                clanUniform.uniformParts.Add(new UniformPart(EquipmentIndex.Cape,
-                    new List<string> { "mp_a_battania_cloak_a" },
-                    new List<string> { "mp_battanian_leather_shoulder_a" }));
-                clanUniform.uniformParts.Add(new UniformPart(EquipmentIndex.Gloves,
-                    new List<string> { "mp_leather_gloves" },
-                    new List<string> { "mp_leather_gloves" }));
-                clanUniform.uniformParts.Add(new UniformPart(EquipmentIndex.Leg,
-                    new List<string> { "mp_fine_town_boots" },
-                    new List<string> { "mp_fine_town_boots" }));
-
-                uniformManager.Add(clanUniform);
-
-                AdminPanel.Instance.uniformManager = uniformManager;
-
-                string json = JsonConvert.SerializeObject(uniformManager);
-                File.WriteAllText(clanUniformsPath, json);
-            }
-            else
-            {
-                string clanUniformListString = File.ReadAllText(clanUniformsPath);
-                UniformManager uniformManager = JsonConvert.DeserializeObject<UniformManager>(clanUniformListString);
-                AdminPanel.Instance.uniformManager = uniformManager;
-            }
-        }
-
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
             this.setup();
-            this.TestClanUniformSetup();
+            UniformManager.Instance.Populate();
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -99,7 +56,7 @@ namespace ChatCommands
                      | NotifyFilters.Security
                      | NotifyFilters.Size;
             watcher.Changed += OnChanged;
-            watcher.Filter = "*.json";
+            watcher.Filter = "*.xml";
             watcher.EnableRaisingEvents = true;
 
             Debug.Print("** CHAT COMMANDS BY MENTALROB LOADED **", 0, Debug.DebugColor.Green);

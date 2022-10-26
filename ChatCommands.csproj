@@ -113,14 +113,14 @@
     <Compile Include="Patches\PatchMaxNumberOfPlayers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MPUtil.cs" />
-    <Compile Include="ClanUniformList.cs" />
+    <Compile Include="Uniform\ClanUniform.cs" />
+    <Compile Include="Uniform\UniformManager.cs" />
+    <Compile Include="Uniform\UniformPart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Uniform\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
