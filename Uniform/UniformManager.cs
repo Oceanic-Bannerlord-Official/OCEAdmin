@@ -33,7 +33,7 @@ namespace OCEAdmin
             // Refresh the list if it's already populated.
             this.uniforms = new List<ClanUniform>();
 
-            string uniformDir = Path.Combine(GetDir(), "Uniforms");
+            string uniformDir = Path.Combine(GetDir(), "uniforms");
 
             if(!Directory.Exists(uniformDir))
             {

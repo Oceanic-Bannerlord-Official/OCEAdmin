@@ -28,6 +28,9 @@ namespace OCEAdmin
 
             this.Populate();
             UniformManager.Instance.Populate();
+            HashStorage hashStorage = new HashStorage();
+            hashStorage.GenerateFromDir();
+            hashStorage.ToFile();
 
             MPUtil.WriteToConsole("Loading chat commands...");
            

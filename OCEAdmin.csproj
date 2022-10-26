@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminPanel\AdminPanel.cs" />
+    <Compile Include="Checksum\HashStorage.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
     <Compile Include="Commands\AdminChat.cs" />
     <Compile Include="Commands\Ban.cs" />
