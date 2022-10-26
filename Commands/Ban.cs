@@ -56,9 +56,9 @@ namespace OCEAdmin.Commands
             {
                 sw.WriteLine(targetPeer.UserName + "|" + targetPeer.VirtualPlayer.Id.ToString());
             }
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Player " + targetPeer.UserName + " is banned from the server"));
-            GameNetwork.EndModuleEventAsServer();
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has banned {1} from the server.", networkPeer.UserName, targetPeer.UserName));
+
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
             return true;
             // throw new NotImplementedException();

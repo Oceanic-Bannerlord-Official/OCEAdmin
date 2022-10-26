@@ -116,6 +116,7 @@
     <Compile Include="Uniform\ClanUniform.cs" />
     <Compile Include="Uniform\UniformManager.cs" />
     <Compile Include="Uniform\UniformPart.cs" />
+    <Compile Include="Util\NetworkPeerExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

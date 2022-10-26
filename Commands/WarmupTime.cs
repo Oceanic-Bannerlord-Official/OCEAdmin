@@ -47,6 +47,8 @@ namespace OCEAdmin.Commands
 
             AdminPanel.Instance.SetWarmupTime(newRoundTime);
 
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has adjusted warmup timer to {1} minute(s).", networkPeer.GetUsername(), args[0]));
+
             return true;
         }
     }

@@ -40,9 +40,8 @@ namespace OCEAdmin.Commands
 
             if(searchResult.Item1)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Changing map to " + searchResult.Item2));
-                GameNetwork.EndModuleEventAsServer();
+                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.GetUsername(), searchResult.Item2));
+
                 AdminPanel.Instance.ChangeMap(searchResult.Item2);
             }
             else

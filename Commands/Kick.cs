@@ -54,10 +54,9 @@ namespace OCEAdmin.Commands
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
-            
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Player " + targetPeer.UserName + " is kicked from the server"));
-            GameNetwork.EndModuleEventAsServer();
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.GetUsername(), targetPeer.UserName));
+
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
             return true;
         }

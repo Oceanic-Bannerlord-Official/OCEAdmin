@@ -46,7 +46,7 @@ namespace OCEAdmin
             return admins;
         }
 
-        public static void BroadcastToAdmins(NetworkCommunicator networkPeer, string text)
+        public static void BroadcastToAdmins(string text)
         {
             foreach(NetworkCommunicator admin in GetAdmins())
             {
