@@ -30,6 +30,30 @@ namespace OCEAdmin
             GameNetwork.EndModuleEventAsServer();
         }
 
+        public static List<NetworkCommunicator> GetAdmins() {
+            var admins = new List<NetworkCommunicator>();
+            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+            {
+                bool isAdmin = false;
+                bool isExists = AdminManager.Admins.TryGetValue(peer.VirtualPlayer.Id.ToString(), out isAdmin);
+
+                if (isAdmin && isExists)
+                {
+                    admins.Add(peer);
+                }
+            }
+
+            return admins;
+        }
+
+        public static void BroadcastToAdmins(NetworkCommunicator networkPeer, string text)
+        {
+            foreach(NetworkCommunicator admin in GetAdmins())
+            {
+                SendChatMessage(admin, text);
+            }
+        }
+
         public static string GetClanTag(NetworkCommunicator networkPeer)
         {
             string username = networkPeer.VirtualPlayer.UserName;
