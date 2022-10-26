@@ -111,7 +111,7 @@ namespace OCEAdmin
 
         public string GetDir()
         {
-            return "../../";
+            return "../../OCEAdmin/";
         }
 
         public void Add(ClanUniform uniform)

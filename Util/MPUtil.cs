@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin
@@ -11,6 +12,10 @@ namespace OCEAdmin
     public class MPUtil
     {
         private static Random random = new Random();
+
+        public static void WriteToConsole(string text) {
+            Debug.Print(string.Format("[OCEAdmin] - " + text), 0, Debug.DebugColor.Green);
+        }
 
         public static string RandomString(int length)
         {
