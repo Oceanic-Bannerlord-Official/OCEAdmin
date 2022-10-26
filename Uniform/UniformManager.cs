@@ -14,6 +14,8 @@ namespace OCEAdmin
     {
         public List<ClanUniform> uniforms;
 
+        public bool IsLoaded = false;
+
         // Singleton
         private static UniformManager instance;
         public static UniformManager Instance
@@ -64,6 +66,8 @@ namespace OCEAdmin
                     }
                 }
             }
+
+            IsLoaded = true;
         }
 
         public ClanUniform GetTestData()
