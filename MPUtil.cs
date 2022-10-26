@@ -36,5 +36,10 @@ namespace ChatCommands
         {
             return networkPeer.VirtualPlayer.Id.ToString();
         }
+
+        public static string GetUnitID(NetworkCommunicator networkPeer)
+        {
+            return networkPeer.ControlledAgent.Character.StringId;
+        }
     }
 }

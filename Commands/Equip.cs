@@ -52,7 +52,7 @@ namespace ChatCommands.Commands
             string clan = MPUtil.GetClanTag(networkPeer);
 
             // Retrieving the character id from the player's current agent.
-            string curUnit = networkPeer.ControlledAgent.Character.StringId;
+            string curUnit = MPUtil.GetUnitID(networkPeer);
 
             if (!uniformManager.HasClanUniformForUnit(clan, curUnit))
             {
