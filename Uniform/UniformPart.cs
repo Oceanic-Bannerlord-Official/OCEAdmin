@@ -19,14 +19,15 @@ namespace ChatCommands
         // the clan with the officer ID.
         public List<string> officerVariations;
 
+        // Returns a random variation from the officer or enlisted category.
         public string GetPart(bool isOfficer)
         {
-            if(isOfficer)
+            if(isOfficer && officerVariations.Count > 0)
             {
-                return this.officerVariations;
+                return officerVariations[new Random().Next(0, this.officerVariations.Count - 1)];
             }
 
-            return this.variations;
+            return variations[new Random().Next(0, this.variations.Count - 1)];
         }
     }
 }
