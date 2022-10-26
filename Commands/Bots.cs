@@ -3,7 +3,7 @@ using System;
 using TaleWorlds.MountAndBlade;
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     // To Test:
     // First/Second arg is not a number

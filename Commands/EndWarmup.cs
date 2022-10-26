@@ -11,7 +11,7 @@ using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
 
     class EndWarmup : Command

@@ -5,12 +5,12 @@ using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using HarmonyLib;
 using System.Reflection;
-using ChatCommands.Patches;
+using OCEAdmin.Patches;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public class ChatCommandsSubModule : MBSubModuleBase
     {
@@ -22,7 +22,7 @@ namespace ChatCommands
             if (!File.Exists(configPath))
             {
                 Config config = new Config();
-                config.AdminPassword = Helpers.RandomString(6);
+                config.AdminPassword = MPUtil.RandomString(6);
                 config.Admins = new List<string>();
                 config.Admins.Add("test");
                 config.Admins.Add("test2");

@@ -12,7 +12,7 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.Diamond;
 using TaleWorlds.ObjectSystem;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Equip : Command
     {

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
-    class Kick : Command
+    class OCEAdmin : Command
     {
         public bool CanUse(NetworkCommunicator networkPeer)
         {

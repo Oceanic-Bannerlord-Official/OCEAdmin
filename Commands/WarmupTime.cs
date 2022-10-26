@@ -3,7 +3,7 @@ using System;
 using TaleWorlds.MountAndBlade;
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class WarmupTime : Command
     {

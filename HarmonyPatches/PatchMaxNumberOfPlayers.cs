@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Patches
+namespace OCEAdmin.Patches
 {
     class PatchMaxNumberOfPlayers
     {

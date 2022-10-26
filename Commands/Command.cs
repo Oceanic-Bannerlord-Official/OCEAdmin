@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     interface Command
     {

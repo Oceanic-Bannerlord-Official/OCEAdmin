@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public class UniformManager
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Kill : Command
     {

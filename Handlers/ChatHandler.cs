@@ -10,7 +10,7 @@ using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 using TaleWorlds.MountAndBlade.Network.Messages;
 using TaleWorlds.PlayerServices;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     class ChatHandler : GameHandler
     {

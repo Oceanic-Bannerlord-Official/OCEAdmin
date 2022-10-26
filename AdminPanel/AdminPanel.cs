@@ -15,7 +15,7 @@ using TaleWorlds.ObjectSystem;
 using TaleWorlds.MountAndBlade.Diamond;
 using System.Reflection;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public struct MissionData
     {

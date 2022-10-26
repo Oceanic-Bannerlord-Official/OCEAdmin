@@ -1,4 +1,4 @@
-﻿using ChatCommands.Commands;
+﻿using OCEAdmin.Commands;
 using NetworkMessages.FromServer;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     class CommandManager
     {

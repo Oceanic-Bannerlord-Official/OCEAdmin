@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Gold : Command
     {
