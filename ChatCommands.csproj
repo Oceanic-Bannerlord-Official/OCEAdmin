@@ -87,7 +87,6 @@
     <Compile Include="Commands\ChangeMap.cs" />
     <Compile Include="Commands\ChangeMapFacs.cs" />
     <Compile Include="Commands\EndWarmup.cs" />
-    <Compile Include="Commands\Equip.cs" />
     <Compile Include="Commands\Factions.cs" />
     <Compile Include="Commands\id.cs" />
     <Compile Include="Commands\Maps.cs" />
