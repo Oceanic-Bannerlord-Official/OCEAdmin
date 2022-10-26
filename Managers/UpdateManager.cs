@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OCEAdmin.Managers
+namespace OCEAdmin
 {
     public class UpdateManager
     {
@@ -47,6 +47,7 @@ namespace OCEAdmin.Managers
         {
             HashStorage hashStorage = new HashStorage();
             hashStorage.GenerateFromDir();
+            hashStorage.ToFile();
 
             this.SetState(UpdateState.ComparingChecksum);
         }

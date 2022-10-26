@@ -27,7 +27,10 @@ namespace OCEAdmin
             base.OnSubModuleLoad();
 
             this.Populate();
-            UniformManager.Instance.Populate();
+            
+            // Begin the update process for the uniforms.
+            UpdateManager updateManager = new UpdateManager();
+
 
             MPUtil.WriteToConsole("Loading chat commands...");
            

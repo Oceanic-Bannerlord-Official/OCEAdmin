@@ -50,7 +50,7 @@ namespace OCEAdmin
             {
                 Command command = (Command) Activator.CreateInstance(mytype);
                 if (!commands.ContainsKey(command.Command())) {
-                    Debug.Print("** Chat Command " + command.Command() + " have been initiated !", 0, Debug.DebugColor.Green);
+                    MPUtil.WriteToConsole("** Chat Command " + command.Command() + " has been loaded!");
                     commands.Add(command.Command(), command);
                 }
             }
