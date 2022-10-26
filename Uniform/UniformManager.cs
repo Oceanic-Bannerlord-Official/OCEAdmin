@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
+using TaleWorlds.Library;
 
 namespace ChatCommands
 {
@@ -38,6 +39,30 @@ namespace ChatCommands
             {
                 Directory.CreateDirectory(uniformDir);
                 GetTestData().Serialize(uniformDir);
+            }
+            else
+            {
+                IEnumerable<string> subdirs = Directory.GetDirectories(uniformDir);
+
+                foreach(string dir in subdirs)
+                {
+                    string[] files = Directory.GetFiles(dir);
+
+                    foreach(string file in files)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ClanUniform));
+                        ClanUniform clanUniform = new ClanUniform();
+
+                        using(Stream reader = new FileStream(file, FileMode.Open))
+                        {
+                            clanUniform = (ClanUniform)serializer.Deserialize(reader);
+                        }
+
+                        uniforms.Add(clanUniform);
+
+                        Debug.Print(string.Format("Loading uniform for {0} with unit type: {1}", clanUniform.clanTag, clanUniform.unitOverride), 0, Debug.DebugColor.Green);
+                    }
+                }
             }
         }
 

@@ -68,9 +68,7 @@ namespace ChatCommands.Commands
 
             foreach (UniformPart part in clanUniform.uniformParts)
             {
-
-
-                equipment.Add(new Tuple<EquipmentIndex, string>(part.itemSlot, itemName));
+                equipment.Add(new Tuple<EquipmentIndex, string>(part.itemSlot, part.GetPart(isOfficer)));
             }
 
             if(equipment != null)
