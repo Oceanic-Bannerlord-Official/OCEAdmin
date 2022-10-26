@@ -23,8 +23,18 @@ namespace ChatCommands
         // List of uniform parts.
         public List<UniformPart> uniformParts;
 
-        public void Serialize(string fileName)
+        public void Serialize(string path)
         {
+            string clanDir = Path.Combine(path, clanTag);
+
+            if (!Directory.Exists(clanDir))
+            {
+                Directory.CreateDirectory(clanDir);
+            }
+
+            string fileName = Path.Combine(path, clanTag);
+            fileName = string.Format("{0}/{1}_{2}.xml", fileName, clanTag, unitOverride);
+
             XmlSerializer serializer = new XmlSerializer(typeof(ClanUniform));
             Stream fs = new FileStream(fileName, FileMode.Create);
 
@@ -34,6 +44,16 @@ namespace ChatCommands
 
             serializer.Serialize(writer, this);
             writer.Close();
+        }
+
+        public bool IsForUnit(string unit)
+        {
+            if(this.unitOverride == unit)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool GetClan(string tag)

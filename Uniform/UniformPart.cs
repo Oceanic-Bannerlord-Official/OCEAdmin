@@ -13,20 +13,20 @@ namespace ChatCommands
 
         // These are the possible variations for standard enlisted
         // of the clan.
-        public List<string> parts;
+        public List<string> variations;
 
         // These are the possible variations for those a part of
         // the clan with the officer ID.
-        public List<string> officerParts;
+        public List<string> officerVariations;
 
-        public List<string> GetParts(bool isOfficer)
+        public string GetPart(bool isOfficer)
         {
             if(isOfficer)
             {
-                return this.officerParts;
+                return this.officerVariations;
             }
 
-            return this.parts;
+            return this.variations;
         }
     }
 }

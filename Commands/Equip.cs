@@ -30,7 +30,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Command to equip a beefy set of armor";
+            return "Equip a clan armor set for your current unit. 30s internal CD.";
         }
 
         // Include Internal CD: 30s.
@@ -38,63 +38,46 @@ namespace ChatCommands.Commands
         // Color shield.
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            string username = networkPeer.VirtualPlayer.UserName;
+            UniformManager uniformManager = AdminPanel.Instance.uniformManager;
 
-            if(username.Substring(0,1) != "[")
+            // Checking if the player is in a clan.
+            if (!MPUtil.IsInClan(networkPeer))
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("You aren't in a clan."));
-                GameNetwork.EndModuleEventAsServer();
+                MPUtil.SendChatMessage(networkPeer, "You aren't in a clan.");
 
                 return true;
             }
 
-            string clan = username.Substring(username.IndexOf("[")+1, username.IndexOf("]")-1);
+            // Grabbing the clan string from the player's name.
+            string clan = MPUtil.GetClanTag(networkPeer);
 
-            Debug.Print(string.Format("Attempting to equip for clan: {0}", clan), 0, Debug.DebugColor.Green);
+            // Retrieving the character id from the player's current agent.
+            string curUnit = networkPeer.ControlledAgent.Character.StringId;
 
+            if (!uniformManager.HasClanUniformForUnit(clan, curUnit))
+            {
+                MPUtil.SendChatMessage(networkPeer, 
+                    string.Format("{0} has no uniform for your current unit type of {1}.", clan, curUnit));
+
+                return true;
+            }
+
+            ClanUniform clanUniform = uniformManager.GetUniform(clan);
+            bool isOfficer = clanUniform.officerIDs.Contains(MPUtil.GetPlayerID(networkPeer));
             List<Tuple<EquipmentIndex, string>> equipment = new List<Tuple<EquipmentIndex, string>>();
 
-            if (AdminPanel.Instance.uniformManager.HasClanUniform(clan))
+            foreach (UniformPart part in clanUniform.uniformParts)
             {
-                ClanUniform clanUniform = AdminPanel.Instance.uniformManager.GetUniformList(clan);
 
-                Debug.Print(string.Format("Equipping for clan: {0}", clan), 0, Debug.DebugColor.Green);
-                bool isOfficer = false;
 
-                foreach(string officerID in clanUniform.officerIDs)
-                {
-                    if (networkPeer.VirtualPlayer.Id.ToString() == officerID)
-                    {
-                        isOfficer = true;
-                        break;
-                    }
-                }
+                equipment.Add(new Tuple<EquipmentIndex, string>(part.itemSlot, itemName));
+            }
 
-                Debug.Print(string.Format("IsOfficer: {0}", isOfficer), 0, Debug.DebugColor.Green);
-
-                foreach (UniformPart part in clanUniform.uniformParts)
-                {
-                    string itemName = "";
-
-                    if(isOfficer)
-                    {
-                        itemName = part.officerParts[new Random().Next(0, part.officerParts.Count-1)];
-                    } else
-                    {
-                        itemName = part.parts[new Random().Next(0, part.parts.Count-1)];
-                    }
-
-                    Debug.Print(string.Format("Item name: {0}", itemName), 0, Debug.DebugColor.Green);
-
-                    equipment.Add(new Tuple<EquipmentIndex, string>(part.itemSlot, itemName));
-                }
-
-                if(equipment != null)
-                {
-                    AdminPanel.Instance.GivePlayerAgentCosmeticEquipment(networkPeer, equipment);
-                }
-            }        
+            if(equipment != null)
+            {
+                AdminPanel.Instance.GivePlayerAgentCosmeticEquipment(networkPeer, equipment);
+            }
+                   
 
             return true;
         }

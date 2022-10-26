@@ -32,13 +32,12 @@ namespace ChatCommands
             // Refresh the list if it's already populated.
             this.uniforms = new List<ClanUniform>();
 
-            if (!File.Exists(GetDir()))
+            string uniformDir = Path.Combine(GetDir(), "Uniforms");
+
+            if(!Directory.Exists(uniformDir))
             {
-                GetTestData().Serialize(GetDir());
-            }
-            else
-            {
-                // Read
+                Directory.CreateDirectory(uniformDir);
+                GetTestData().Serialize(uniformDir);
             }
         }
 
@@ -47,33 +46,34 @@ namespace ChatCommands
             ClanUniform clanUniform = new ClanUniform();
 
             clanUniform.clanTag = "ASTG";
+            clanUniform.unitOverride = "mp_heavy_infantry_vlandia_troop";
             clanUniform.officerIDs = new List<String> { "2.0.0.76561198259745840" };
             clanUniform.uniformParts = new List<UniformPart>();
 
             UniformPart headPart = new UniformPart();
             headPart.itemSlot = EquipmentIndex.Head;
-            headPart.parts = new List<string> { "mp_nasal_helmet_over_cloth_headwrap" };
-            headPart.officerParts = new List<string> { "mp_nasal_helmet_over_cloth_headwrap" };
+            headPart.variations = new List<string> { "mp_nasal_helmet_over_cloth_headwrap" };
+            headPart.officerVariations = new List<string> { "mp_nasal_helmet_over_cloth_headwrap" };
 
             UniformPart chestPart = new UniformPart();
             chestPart.itemSlot = EquipmentIndex.Body;
-            chestPart.parts = new List<string> { "mp_veteran_mercenary_armor" };
-            chestPart.officerParts = new List<string> { "mp_veteran_mercenary_armor" };
+            chestPart.variations = new List<string> { "mp_veteran_mercenary_armor" };
+            chestPart.officerVariations = new List<string> { "mp_veteran_mercenary_armor" };
 
             UniformPart cloakPart = new UniformPart();
             cloakPart.itemSlot = EquipmentIndex.Cape;
-            cloakPart.parts = new List<string> { "mp_battanian_leather_shoulder_a" };
-            cloakPart.officerParts = new List<string> { "mp_battanian_leather_shoulder_a" };
+            cloakPart.variations = new List<string> { "mp_battanian_leather_shoulder_a" };
+            cloakPart.officerVariations = new List<string> { "mp_battanian_leather_shoulder_a" };
 
             UniformPart handsPart = new UniformPart();
             handsPart.itemSlot = EquipmentIndex.Gloves;
-            handsPart.parts = new List<string> { "mp_leather_gloves" };
-            handsPart.officerParts = new List<string> { "mp_leather_gloves" };
+            handsPart.variations = new List<string> { "mp_leather_gloves" };
+            handsPart.officerVariations = new List<string> { "mp_leather_gloves" };
 
             UniformPart legPart = new UniformPart();
             legPart.itemSlot = EquipmentIndex.Leg;
-            legPart.parts = new List<string> { "mp_fine_town_boots" };
-            legPart.officerParts = new List<string> { "mp_fine_town_boots" };
+            legPart.variations = new List<string> { "mp_fine_town_boots" };
+            legPart.officerVariations = new List<string> { "mp_fine_town_boots" };
 
             clanUniform.uniformParts.Add(headPart);
             clanUniform.uniformParts.Add(chestPart);
@@ -86,7 +86,7 @@ namespace ChatCommands
 
         public string GetDir()
         {
-            return Path.Combine("../../" + AppDomain.CurrentDomain.BaseDirectory, "clanUniforms.xml");
+            return "../../";
         }
 
         public void Add(ClanUniform uniform)
@@ -94,11 +94,11 @@ namespace ChatCommands
             uniforms.Add(uniform);
         }
 
-        public bool HasClanUniform(string tag)
+        public bool HasClanUniform(string clan)
         {
             foreach (ClanUniform clanUniform in uniforms)
             {
-                if (clanUniform.GetClan(tag))
+                if (clanUniform.GetClan(clan))
                 {
                     return true;
                 }
@@ -107,11 +107,24 @@ namespace ChatCommands
             return false;
         }
 
-        public ClanUniform GetUniformList(string tag)
+        public bool HasClanUniformForUnit(string clan, string unit)
         {
             foreach (ClanUniform clanUniform in uniforms)
             {
-                if (clanUniform.GetClan(tag))
+                if (clanUniform.GetClan(clan) && clanUniform.IsForUnit(unit))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public ClanUniform GetUniform(string clan)
+        {
+            foreach (ClanUniform clanUniform in uniforms)
+            {
+                if (clanUniform.GetClan(clan))
                 {
                     return clanUniform;
                 }

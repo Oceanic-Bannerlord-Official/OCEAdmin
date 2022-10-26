@@ -15,5 +15,26 @@ namespace ChatCommands
             GameNetwork.WriteMessage(new ServerMessage(text));
             GameNetwork.EndModuleEventAsServer();
         }
+
+        public static string GetClanTag(NetworkCommunicator networkPeer)
+        {
+            string username = networkPeer.VirtualPlayer.UserName;
+            return username.Substring(username.IndexOf("[") + 1, username.IndexOf("]") - 1);
+        }
+
+        public static bool IsInClan(NetworkCommunicator networkPeer)
+        {
+            if (networkPeer.VirtualPlayer.UserName.Substring(0, 1) == "[")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static string GetPlayerID(NetworkCommunicator networkPeer)
+        {
+            return networkPeer.VirtualPlayer.Id.ToString();
+        }
     }
 }
