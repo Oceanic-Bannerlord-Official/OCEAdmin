@@ -34,7 +34,7 @@ namespace OCEAdmin
             MPUtil.WriteToConsole("Loading chat commands...");
            
             CommandManager cm = new CommandManager();
-            HarmonyFileLog.Enabled = true;
+            Harmony.DEBUG = true;
 
             var harmony = new Harmony("OCEAdmin.Bannerlord");
             var original = typeof(ChatBox).GetMethod("ServerPrepareAndSendMessage", BindingFlags.NonPublic | BindingFlags.Instance);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -28,7 +29,7 @@ namespace OCEAdmin
                 switch (State)
                 {
                     case UpdateState.GeneratingChecksum:
-                        this.GenerateChecksum();
+                        this.SetState(UpdateState.ComparingChecksum);
                         break;
                     case UpdateState.ComparingChecksum:
                         this.SetState(UpdateState.Updating); // NYI: Pass thru to load until master server done
@@ -42,7 +43,6 @@ namespace OCEAdmin
             }
 
             this.Finish();
-            thr.Abort();
         }
 
         public void GenerateChecksum()

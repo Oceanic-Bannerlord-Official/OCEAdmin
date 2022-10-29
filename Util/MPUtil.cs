@@ -25,7 +25,7 @@ namespace OCEAdmin
         }
 
         public static void SendChatMessage(NetworkCommunicator networkPeer, string text) {
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
+            GameNetwork.BeginModuleEventAsServerUnreliable(networkPeer);
             GameNetwork.WriteMessage(new ServerMessage(text));
             GameNetwork.EndModuleEventAsServer();
         }
