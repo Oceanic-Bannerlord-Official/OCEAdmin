@@ -722,6 +722,8 @@ namespace OCEAdmin
 
                 // Spawning the agent, player immediately takes control
                 Agent newAgent = Mission.Current.SpawnAgent(bda);
+                newAgent.SetClothingColor1(oldAgent.ClothingColor1);
+                newAgent.SetClothingColor2(oldAgent.ClothingColor2);
 
                 // Make sure we wield the default items
                 newAgent.WieldInitialWeapons();
