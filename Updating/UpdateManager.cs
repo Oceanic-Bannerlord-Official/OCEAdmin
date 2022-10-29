@@ -100,8 +100,9 @@ namespace OCEAdmin
 
         public void ReceiveFile(SendFilePacket packet)
         {
-            string file = Path.Combine(OCEAdminSubModule.baseDir, packet.fileName);
+            string file = Path.Combine(OCEAdminSubModule.baseDir, Path.Combine(packet.path, packet.fileName));
 
+            Directory.CreateDirectory(packet.path);
             File.WriteAllBytes(file, packet.data);
         }
 
