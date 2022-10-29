@@ -39,7 +39,10 @@ namespace OCEAdmin
 
                 if (isAdmin && isExists)
                 {
-                    admins.Add(peer);
+                    if (peer.IsSynchronized)
+                    {
+                        admins.Add(peer);
+                    }
                 }
             }
 
