@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AdminPanel\AdminPanel.cs" />
     <Compile Include="Checksum\HashStorage.cs" />
+    <Compile Include="Commands\Heal.cs" />
     <Compile Include="Managers\UpdateManager.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
     <Compile Include="Commands\AdminChat.cs" />
