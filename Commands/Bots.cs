@@ -34,7 +34,7 @@ namespace OCEAdmin.Commands
             if (args.Length != 2)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments"));
+                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments. There should only be two."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -42,7 +42,7 @@ namespace OCEAdmin.Commands
             if (!Int32.TryParse(args[0], out numBotsTeam1) || numBotsTeam1 < 0)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("First argument is not a positive number"));
+                GameNetwork.WriteMessage(new ServerMessage("Team 1 cannot be a negative number."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -51,7 +51,7 @@ namespace OCEAdmin.Commands
             if (!Int32.TryParse(args[1], out numBotsTeam2) || numBotsTeam2 < 0)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Second argument is not a positive number"));
+                GameNetwork.WriteMessage(new ServerMessage("Team 2 cannot be a negative number."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

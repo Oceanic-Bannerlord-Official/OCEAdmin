@@ -31,7 +31,6 @@ namespace OCEAdmin
             // Begin the update process for the uniforms.
             UpdateManager updateManager = new UpdateManager();
 
-
             MPUtil.WriteToConsole("Loading chat commands...");
            
             CommandManager cm = new CommandManager();

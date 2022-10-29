@@ -40,6 +40,11 @@ namespace OCEAdmin.Commands
         {
             UniformManager uniformManager = AdminPanel.Instance.uniformManager;
 
+            if(!uniformManager.IsEnabled())
+            {
+                MPUtil.SendChatMessage(networkPeer, "The uniform manager has not been enabled. You cannot use this command.");
+            }
+
             // Checking if the player is in a clan.
             if (!MPUtil.IsInClan(networkPeer))
             {

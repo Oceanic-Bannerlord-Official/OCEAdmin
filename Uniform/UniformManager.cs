@@ -30,6 +30,11 @@ namespace OCEAdmin
             }
         }
 
+        public bool IsEnabled()
+        {
+            return false;
+        }
+
         public void Populate()
         {
             // Refresh the list if it's already populated.

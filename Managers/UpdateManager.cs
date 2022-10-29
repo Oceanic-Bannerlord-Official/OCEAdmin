@@ -11,12 +11,13 @@ namespace OCEAdmin
     {
         public UpdateState State;
         private const int UPDATE_TICK_RATE = 10;
+        Thread thr;
 
         public UpdateManager()
         {
             this.SetState(UpdateState.GeneratingChecksum);
 
-            Thread thr = new Thread(() => this.Tick());
+            thr = new Thread(() => this.Tick());
             thr.Start();
         }
         
@@ -41,6 +42,7 @@ namespace OCEAdmin
             }
 
             this.Finish();
+            thr.Abort();
         }
 
         public void GenerateChecksum()

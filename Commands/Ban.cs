@@ -26,14 +26,14 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Bans a player. Caution! First user that contains the provided input will be banned. Usage !ban <Player Name>";
+            return "Bans a player. First user that contains the provided input will be banned. Usage !ban <player name>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains the provided input will be banned"));
+                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Any player that contains the provided input will be banned."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -47,7 +47,7 @@ namespace OCEAdmin.Commands
             }
             if (targetPeer == null) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found."));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

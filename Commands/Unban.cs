@@ -49,7 +49,7 @@ namespace OCEAdmin.Commands
 
             if (index == -1) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Username not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Username was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

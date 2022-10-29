@@ -25,7 +25,7 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Kills a provided username. Usage !kill <Player Name>";
+            return "Kills a provided username. Usage !kill <player name>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
@@ -50,7 +50,7 @@ namespace OCEAdmin.Commands
             if (targetPeer == null)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

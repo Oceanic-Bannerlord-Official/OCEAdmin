@@ -25,7 +25,7 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Kicks a player. Caution ! First user that contains the provided input will be kicked. Usage !kick <Player Name>";
+            return "Kicks a player. First username that contains the provided input will be kicked. Usage !kick <player name>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
@@ -33,7 +33,7 @@ namespace OCEAdmin.Commands
             if (args.Length == 0)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains provided input will be kicked."));
+                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Any player containing your provided input will be kicked. Be specific."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -50,7 +50,7 @@ namespace OCEAdmin.Commands
             if (targetPeer == null)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

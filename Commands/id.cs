@@ -20,7 +20,7 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Returns your unique ID";
+            return "Returns your unique ID into the chatbox.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)

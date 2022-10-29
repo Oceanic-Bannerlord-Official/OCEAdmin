@@ -25,7 +25,7 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Ascend yourself. Be something selestial";
+            return "Makes you immune to all damage.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)

@@ -22,7 +22,7 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Help message";
+            return "Help message. Returns all the avaliable commands.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)

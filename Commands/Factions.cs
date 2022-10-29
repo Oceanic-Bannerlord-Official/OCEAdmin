@@ -41,7 +41,7 @@ namespace OCEAdmin.Commands
                 else
                 {
                     GameNetwork.BeginModuleEventAsServer(networkPeer);
-                    GameNetwork.WriteMessage(new ServerMessage("No faction found"));
+                    GameNetwork.WriteMessage(new ServerMessage("No factions have been found."));
                     GameNetwork.EndModuleEventAsServer();
                 }
                 

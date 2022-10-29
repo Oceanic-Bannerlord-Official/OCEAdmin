@@ -30,7 +30,7 @@ namespace OCEAdmin.Commands
             if (args.Length != 1)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments"));
+                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
