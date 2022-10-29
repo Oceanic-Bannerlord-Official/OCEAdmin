@@ -5,7 +5,7 @@ using System.Text;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Patches
+namespace OCEAdmin.Patches
 {
     class PatchChatBox
     {

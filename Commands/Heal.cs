@@ -9,7 +9,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class Teleport : Command
+    class HealCommand
     {
         public bool CanUse(NetworkCommunicator networkPeer)
         {
@@ -20,20 +20,21 @@ namespace OCEAdmin.Commands
 
         public string Command()
         {
-            return "!tp";
+            return "!heal";
         }
 
         public string Description()
         {
-            return "Teleport yourself to another. Usage !tp <Target User>";
+            return "Heals a player.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
+
             if (args.Length == 0)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username."));
+                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains provided input will be healed."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -47,21 +48,20 @@ namespace OCEAdmin.Commands
                     break;
                 }
             }
+
             if (targetPeer == null)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
 
+            if (targetPeer.ControlledAgent != null) {
+                targetPeer.ControlledAgent.Health = targetPeer.ControlledAgent.HealthLimit;
 
-            if (networkPeer.ControlledAgent != null && targetPeer.ControlledAgent != null) {
-                Vec3 targetPos = targetPeer.ControlledAgent.Position;
-                targetPos.x = targetPos.x + 1;
-                networkPeer.ControlledAgent.TeleportToPosition( targetPos );
+                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName));
             }
-
 
             return true;
         }

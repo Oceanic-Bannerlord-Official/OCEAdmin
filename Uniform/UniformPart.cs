@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Core;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public class UniformPart
     {

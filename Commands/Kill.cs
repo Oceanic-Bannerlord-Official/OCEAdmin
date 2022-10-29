@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Kill : Command
     {
@@ -25,7 +25,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Kills a provided username. Usage !kill <Player Name>";
+            return "Kills a provided username. Usage !kill <player name>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
@@ -50,7 +50,7 @@ namespace ChatCommands.Commands
             if (targetPeer == null)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -74,6 +74,8 @@ namespace ChatCommands.Commands
                 sbyte mainHandItemBoneIndex = agent.Monster.MainHandItemBoneIndex;
                 AttackCollisionData attackCollisionDataForDebugPurpose = AttackCollisionData.GetAttackCollisionDataForDebugPurpose(false, false, false, true, false, false, false, false, false, false, false, false, CombatCollisionResult.StrikeAgent, -1, 0, 2, blow.BoneIndex, BoneBodyPartType.Head, mainHandItemBoneIndex, Agent.UsageDirection.AttackLeft, -1, CombatHitResultFlags.NormalHit, 0.5f, 1f, 0f, 0f, 0f, 0f, 0f, 0f, Vec3.Up, blow.Direction, blow.Position, Vec3.Zero, Vec3.Zero, agent.Velocity, Vec3.Up);
                 agent.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
+
+                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has slayed {1}.", networkPeer.UserName, targetPeer.UserName));
             }
 
             return true;

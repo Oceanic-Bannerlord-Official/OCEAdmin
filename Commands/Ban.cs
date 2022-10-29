@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Ban : Command
     {
@@ -26,14 +26,14 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Bans a player. Caution! First user that contains the provided input will be banned. Usage !ban <Player Name>";
+            return "Bans a player. First user that contains the provided input will be banned. Usage !ban <player name>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains the provided input will be banned"));
+                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Any player that contains the provided input will be banned."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -47,7 +47,7 @@ namespace ChatCommands.Commands
             }
             if (targetPeer == null) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found."));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -56,9 +56,9 @@ namespace ChatCommands.Commands
             {
                 sw.WriteLine(targetPeer.UserName + "|" + targetPeer.VirtualPlayer.Id.ToString());
             }
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Player " + targetPeer.UserName + " is banned from the server"));
-            GameNetwork.EndModuleEventAsServer();
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has banned {1} from the server.", networkPeer.UserName, targetPeer.UserName));
+
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
             return true;
             // throw new NotImplementedException();

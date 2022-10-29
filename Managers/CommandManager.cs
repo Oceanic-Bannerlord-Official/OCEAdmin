@@ -1,4 +1,4 @@
-﻿using ChatCommands.Commands;
+﻿using OCEAdmin.Commands;
 using NetworkMessages.FromServer;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     class CommandManager
     {
@@ -50,7 +50,7 @@ namespace ChatCommands
             {
                 Command command = (Command) Activator.CreateInstance(mytype);
                 if (!commands.ContainsKey(command.Command())) {
-                    Debug.Print("** Chat Command " + command.Command() + " have been initiated !", 0, Debug.DebugColor.Green);
+                    MPUtil.WriteToConsole("** Chat Command " + command.Command() + " has been loaded!");
                     commands.Add(command.Command(), command);
                 }
             }

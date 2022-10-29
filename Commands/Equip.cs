@@ -12,7 +12,7 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.Diamond;
 using TaleWorlds.ObjectSystem;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Equip : Command
     {
@@ -39,6 +39,11 @@ namespace ChatCommands.Commands
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
             UniformManager uniformManager = AdminPanel.Instance.uniformManager;
+
+            if(!uniformManager.IsEnabled())
+            {
+                MPUtil.SendChatMessage(networkPeer, "The uniform manager has not been enabled. You cannot use this command.");
+            }
 
             // Checking if the player is in a clan.
             if (!MPUtil.IsInClan(networkPeer))

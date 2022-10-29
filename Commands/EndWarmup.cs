@@ -11,7 +11,7 @@ using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
 
     class EndWarmup : Command
@@ -30,12 +30,14 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Ends warmup mode";
+            return "Ends warmup mode instantly.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
             AdminPanel.Instance.EndWarmup();
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has ended warmup.", networkPeer.UserName));
 
             return true;
         }

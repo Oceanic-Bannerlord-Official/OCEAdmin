@@ -8,11 +8,13 @@ using System.Xml.Serialization;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public class UniformManager
     {
         public List<ClanUniform> uniforms;
+
+        public bool IsLoaded = false;
 
         // Singleton
         private static UniformManager instance;
@@ -28,12 +30,17 @@ namespace ChatCommands
             }
         }
 
+        public bool IsEnabled()
+        {
+            return false;
+        }
+
         public void Populate()
         {
             // Refresh the list if it's already populated.
             this.uniforms = new List<ClanUniform>();
 
-            string uniformDir = Path.Combine(GetDir(), "Uniforms");
+            string uniformDir = Path.Combine(GetDir(), "uniforms");
 
             if(!Directory.Exists(uniformDir))
             {
@@ -64,6 +71,8 @@ namespace ChatCommands
                     }
                 }
             }
+
+            IsLoaded = true;
         }
 
         public ClanUniform GetTestData()
@@ -111,7 +120,7 @@ namespace ChatCommands
 
         public string GetDir()
         {
-            return "../../";
+            return "../../OCEAdmin";
         }
 
         public void Add(ClanUniform uniform)

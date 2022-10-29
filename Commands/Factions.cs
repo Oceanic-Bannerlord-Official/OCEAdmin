@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
 
     class Factions : Command
@@ -41,7 +41,7 @@ namespace ChatCommands.Commands
                 else
                 {
                     GameNetwork.BeginModuleEventAsServer(networkPeer);
-                    GameNetwork.WriteMessage(new ServerMessage("No faction found"));
+                    GameNetwork.WriteMessage(new ServerMessage("No factions have been found."));
                     GameNetwork.EndModuleEventAsServer();
                 }
                 

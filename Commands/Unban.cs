@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Unban : Command
     {
@@ -49,16 +49,14 @@ namespace ChatCommands.Commands
 
             if (index == -1) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Username not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Username was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
             string[] newBanlist = banlist.Where((val, idx) => idx != index).ToArray();
             BanManager.UpdateList(newBanlist);
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("User "+ username + " is unbanned."));
-            GameNetwork.EndModuleEventAsServer();
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, username));
 
             return true;
         }

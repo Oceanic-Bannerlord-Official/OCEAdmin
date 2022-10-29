@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class GodMode : Command
     {
@@ -25,7 +25,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Ascend yourself. Be something selestial";
+            return "Makes you immune to all damage.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)

@@ -3,7 +3,7 @@ using System;
 using TaleWorlds.MountAndBlade;
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class ChangeMission : Command
     {
@@ -42,7 +42,7 @@ namespace ChatCommands.Commands
             if (args.Length != 4)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments"));
+                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

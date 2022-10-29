@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class AdminChat : Command
     {
@@ -26,7 +26,7 @@ namespace ChatCommands.Commands
         {
             return "Type in admin chat. !a <string text>";
         }
-
+        
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
             String text = string.Join(" ", args);
@@ -40,9 +40,11 @@ namespace ChatCommands.Commands
                 {
                     string senderName = networkPeer.VirtualPlayer.UserName.ToString();
 
-                    GameNetwork.BeginModuleEventAsServer(peer);
-                    GameNetwork.WriteMessage(new ServerMessage(string.Format("(Admin) {0}: {1}", senderName, text)));
-                    GameNetwork.EndModuleEventAsServer();
+                    if (peer.IsSynchronized) {
+                        GameNetwork.BeginModuleEventAsServer(peer);
+                        GameNetwork.WriteMessage(new ServerMessage(string.Format("(Admin) {0}: {1}", senderName, text)));
+                        GameNetwork.EndModuleEventAsServer();
+                    }
                 }
             }
 

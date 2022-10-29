@@ -7,8 +7,8 @@
     <ProjectGuid>{5BC392E4-CA8E-4C20-A009-FBDB298AED75}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChatCommands</RootNamespace>
-    <AssemblyName>ChatCommands</AssemblyName>
+    <RootNamespace>OCEAdmin</RootNamespace>
+    <AssemblyName>OCEAdmin</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -77,42 +77,43 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminPanel\AdminPanel.cs" />
-    <Compile Include="ChatCommandsSubModule.cs" />
-    <Compile Include="ChatHandler.cs" />
-    <Compile Include="CommandManager.cs" />
-    <Compile Include="AdminManager.cs" />
+    <Compile Include="Checksum\HashStorage.cs" />
+    <Compile Include="Commands\Heal.cs" />
+    <Compile Include="Managers\UpdateManager.cs" />
+    <Compile Include="OCEAdminSubModule.cs" />
     <Compile Include="Commands\AdminChat.cs" />
+    <Compile Include="Commands\Ban.cs" />
     <Compile Include="Commands\Bots.cs" />
-    <Compile Include="Commands\ChangeMission.cs" />
     <Compile Include="Commands\ChangeMap.cs" />
     <Compile Include="Commands\ChangeMapFacs.cs" />
+    <Compile Include="Commands\ChangeMission.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\EndWarmup.cs" />
     <Compile Include="Commands\Equip.cs" />
     <Compile Include="Commands\Factions.cs" />
-    <Compile Include="Commands\id.cs" />
-    <Compile Include="Commands\Maps.cs" />
-    <Compile Include="Commands\Gold.cs" />
-    <Compile Include="Commands\Ban.cs" />
-    <Compile Include="BanManager.cs" />
     <Compile Include="Commands\GodMode.cs" />
-    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\Gold.cs" />
     <Compile Include="Commands\Help.cs" />
+    <Compile Include="Commands\id.cs" />
     <Compile Include="Commands\Kick.cs" />
     <Compile Include="Commands\Kill.cs" />
     <Compile Include="Commands\Login.cs" />
+    <Compile Include="Commands\Maps.cs" />
     <Compile Include="Commands\MapTime.cs" />
     <Compile Include="Commands\Reset.cs" />
-    <Compile Include="Commands\RoundTime.cs" />
     <Compile Include="Commands\Teleport.cs" />
     <Compile Include="Commands\Unban.cs" />
     <Compile Include="Commands\WarmupTime.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="ConfigManager.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Patches\PatchChatBox.cs" />
-    <Compile Include="Patches\PatchMaxNumberOfPlayers.cs" />
+    <Compile Include="Handlers\ChatHandler.cs" />
+    <Compile Include="Managers\CommandManager.cs" />
+    <Compile Include="Managers\AdminManager.cs" />
+    <Compile Include="Managers\BanManager.cs" />
+    <Compile Include="AdminPanel\Config.cs" />
+    <Compile Include="Managers\ConfigManager.cs" />
+    <Compile Include="HarmonyPatches\PatchChatBox.cs" />
+    <Compile Include="HarmonyPatches\PatchMaxNumberOfPlayers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MPUtil.cs" />
+    <Compile Include="Util\MPUtil.cs" />
     <Compile Include="Uniform\ClanUniform.cs" />
     <Compile Include="Uniform\UniformManager.cs" />
     <Compile Include="Uniform\UniformPart.cs" />

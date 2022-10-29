@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public class AdminManager
     {

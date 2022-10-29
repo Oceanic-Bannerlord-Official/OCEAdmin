@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Help : Command
     {
@@ -22,7 +22,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Help message";
+            return "Help message. Returns all the avaliable commands.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)

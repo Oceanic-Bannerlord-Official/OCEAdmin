@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public class ClanUniform
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Gold : Command
     {
@@ -26,14 +26,14 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Set gold to a player. Usage !gold <Player Name> <amount>";
+            return "Set's a players gold. Usage !gold <player name> <amount>";
         }
        
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length < 2) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username an a amount."));
+                GameNetwork.WriteMessage(new ServerMessage("Please provide a username and an amount."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -49,7 +49,7 @@ namespace ChatCommands.Commands
             }
             if (targetPeer == null) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class Login : Command
     {
@@ -22,7 +22,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Admin login. Usage !login <password>";
+            return "Used to login with the admin password. Usage !login <password>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
@@ -40,6 +40,9 @@ namespace ChatCommands.Commands
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
+
+            MPUtil.BroadcastToAdmins(string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.UserName));
+            
             AdminManager.Admins.Add(networkPeer.VirtualPlayer.Id.ToString(), true);
             GameNetwork.BeginModuleEventAsServer(networkPeer);
             GameNetwork.WriteMessage(new ServerMessage("Login successful. Welcome!"));

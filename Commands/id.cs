@@ -3,7 +3,7 @@ using System;
 using TaleWorlds.MountAndBlade;
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
 
     class Id : Command
@@ -20,7 +20,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Returns your unique ID";
+            return "Returns your unique ID into the chatbox.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)

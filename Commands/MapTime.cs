@@ -3,7 +3,7 @@ using System;
 using TaleWorlds.MountAndBlade;
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class MapTime : Command
     {
@@ -46,6 +46,8 @@ namespace ChatCommands.Commands
             }
 
             AdminPanel.Instance.SetMapTime(newRoundTime);
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has adjusted the map time to {1} minute(s).", networkPeer.UserName, args[0]));
 
             return true;
         }

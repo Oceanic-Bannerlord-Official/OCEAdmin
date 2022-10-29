@@ -3,7 +3,7 @@ using System;
 using TaleWorlds.MountAndBlade;
 
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
     class WarmupTime : Command
     {
@@ -44,6 +44,8 @@ namespace ChatCommands.Commands
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has adjusted the warmup timer.", networkPeer.UserName));
 
             AdminPanel.Instance.SetWarmupTime(newRoundTime);
 

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
-namespace ChatCommands.Commands
+namespace OCEAdmin.Commands
 {
-    class Kick : Command
+    class OCEAdmin : Command
     {
         public bool CanUse(NetworkCommunicator networkPeer)
         {
@@ -25,7 +25,7 @@ namespace ChatCommands.Commands
 
         public string Description()
         {
-            return "Kicks a player. Caution ! First user that contains the provided input will be kicked. Usage !kick <Player Name>";
+            return "Kicks a player. First username that contains the provided input will be kicked. Usage !kick <player name>";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
@@ -33,7 +33,7 @@ namespace ChatCommands.Commands
             if (args.Length == 0)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains provided input will be kicked."));
+                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Any player containing your provided input will be kicked. Be specific."));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
@@ -50,14 +50,13 @@ namespace ChatCommands.Commands
             if (targetPeer == null)
             {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
+                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
                 GameNetwork.EndModuleEventAsServer();
                 return true;
             }
-            
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Player " + targetPeer.UserName + " is kicked from the server"));
-            GameNetwork.EndModuleEventAsServer();
+
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.UserName, targetPeer.UserName));
+
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
             return true;
         }

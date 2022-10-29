@@ -15,7 +15,7 @@ using TaleWorlds.ObjectSystem;
 using TaleWorlds.MountAndBlade.Diamond;
 using System.Reflection;
 
-namespace ChatCommands
+namespace OCEAdmin
 {
     public struct MissionData
     {
@@ -369,7 +369,7 @@ namespace ChatCommands
             {
                 MultiplayerTimerComponent timer = GetMissionTimer();
 
-                timer.StartTimerAsServer((float)(roundTime * 60));
+                timer.StartTimerAsServer((float)(roundTime));
 
                 SyncMultiplayerOptions();
 
