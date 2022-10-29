@@ -38,6 +38,7 @@ namespace OCEAdmin
 
             _client.OnConnected = SendChecksum;
             _client.OnData = OnData;
+            _client.OnDisconnected = Finish;
 
             Telepathy.Log.Info = MPUtil.WriteToConsole;
             Telepathy.Log.Error = MPUtil.WriteToConsole;
