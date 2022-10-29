@@ -361,7 +361,7 @@ namespace OCEAdmin
 
         public void SetRoundTime(int roundTime)
         {
-            MultiplayerOptions.Instance.GetOptionFromOptionType(MultiplayerOptions.OptionType.RoundTimeLimit).UpdateValue(roundTime * 60);
+            MultiplayerOptions.Instance.GetOptionFromOptionType(MultiplayerOptions.OptionType.RoundTimeLimit).UpdateValue(roundTime);
 
             MissionLobbyComponent mlc = Mission.Current.GetMissionBehavior<MissionLobbyComponent>();
 
@@ -369,7 +369,7 @@ namespace OCEAdmin
             {
                 MultiplayerTimerComponent timer = GetMissionTimer();
 
-                timer.StartTimerAsServer((float)(roundTime * 60));
+                timer.StartTimerAsServer((float)(roundTime));
 
                 SyncMultiplayerOptions();
 

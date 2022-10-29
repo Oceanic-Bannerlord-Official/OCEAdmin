@@ -55,7 +55,7 @@ namespace OCEAdmin.Commands
                 return true;
             }
 
-            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.GetUsername(), targetPeer.UserName));
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.UserName, targetPeer.UserName));
 
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
             return true;

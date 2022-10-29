@@ -40,7 +40,7 @@ namespace OCEAdmin.Commands
 
             if(searchResult.Item1)
             {
-                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.GetUsername(), searchResult.Item2));
+                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.UserName, searchResult.Item2));
 
                 AdminPanel.Instance.ChangeMap(searchResult.Item2);
             }

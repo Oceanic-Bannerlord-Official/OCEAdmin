@@ -56,7 +56,7 @@ namespace OCEAdmin.Commands
             string[] newBanlist = banlist.Where((val, idx) => idx != index).ToArray();
             BanManager.UpdateList(newBanlist);
 
-            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has unbanned {1}.", networkPeer.GetUsername(), username));
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, username));
 
             return true;
         }

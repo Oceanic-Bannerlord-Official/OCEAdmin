@@ -37,7 +37,7 @@ namespace OCEAdmin.Commands
         {
             AdminPanel.Instance.EndWarmup();
 
-            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has ended warmup.", networkPeer.GetUsername()));
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has ended warmup.", networkPeer.UserName));
 
             return true;
         }

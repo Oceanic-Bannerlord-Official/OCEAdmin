@@ -100,7 +100,6 @@
     <Compile Include="Commands\Maps.cs" />
     <Compile Include="Commands\MapTime.cs" />
     <Compile Include="Commands\Reset.cs" />
-    <Compile Include="Commands\RoundTime.cs" />
     <Compile Include="Commands\Teleport.cs" />
     <Compile Include="Commands\Unban.cs" />
     <Compile Include="Commands\WarmupTime.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="Uniform\ClanUniform.cs" />
     <Compile Include="Uniform\UniformManager.cs" />
     <Compile Include="Uniform\UniformPart.cs" />
-    <Compile Include="Util\NetworkPeerExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
