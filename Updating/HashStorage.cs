@@ -11,7 +11,7 @@ namespace OCEAdmin
 {
     public class HashStorage
     {
-        List<Tuple<string, string>> HashMap = new List<Tuple<string, string>>();
+        public List<HashedFile> HashMap = new List<HashedFile>();
 
         public void GenerateFromDir()
         {
@@ -25,22 +25,10 @@ namespace OCEAdmin
                     {
                         var hash = md5.ComputeHash(stream);
                         MPUtil.WriteToConsole(BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower());
-                        HashMap.Add(Tuple.Create(files[i], BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower()));
+                        HashMap.Add(new HashedFile(files[i], BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower()));
                     }
                 }
             }
-        }
-
-        public void ToFile()
-        {
-            // Reset the previous checksum.
-            if (File.Exists(Path.Combine(OCEAdminSubModule.baseDir, "checksum.json")))
-            {
-                File.Delete(Path.Combine(OCEAdminSubModule.baseDir, "checksum.json"));
-            }
-
-            string jsonData = JsonConvert.SerializeObject(HashMap, Formatting.None);
-            File.WriteAllText(Path.Combine(OCEAdminSubModule.baseDir, "checksum.json"), jsonData);
         }
     }
 }
