@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminPanel\AdminPanel.cs" />
+    <Compile Include="HarmonyPatches\PatchMissionLobbyComponent.cs" />
     <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
     <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
     <Compile Include="Updating\HashedFile.cs" />
