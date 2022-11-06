@@ -28,6 +28,8 @@ namespace OCEAdmin.Commands
         {
             AdminPanel.Instance.BroadcastMessage("Resetting the map.");
 
+            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has reset the map.", networkPeer.UserName));
+
             AdminPanel.Instance.ResetMission();
 
             return true;

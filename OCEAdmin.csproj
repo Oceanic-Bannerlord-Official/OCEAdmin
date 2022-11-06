@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminPanel\AdminPanel.cs" />
+    <Compile Include="Commands\Bring.cs" />
     <Compile Include="HarmonyPatches\PatchMissionLobbyComponent.cs" />
     <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
     <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
@@ -151,7 +152,7 @@
     <Compile Include="Commands\Maps.cs" />
     <Compile Include="Commands\MapTime.cs" />
     <Compile Include="Commands\Reset.cs" />
-    <Compile Include="Commands\Teleport.cs" />
+    <Compile Include="Commands\Goto.cs" />
     <Compile Include="Commands\Unban.cs" />
     <Compile Include="Commands\WarmupTime.cs" />
     <Compile Include="Handlers\ChatHandler.cs" />

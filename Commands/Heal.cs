@@ -25,7 +25,7 @@ namespace OCEAdmin.Commands
 
         public string Description()
         {
-            return "Heals a player.";
+            return "Heals a player. Use * to heal all.";
         }
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
@@ -39,10 +39,24 @@ namespace OCEAdmin.Commands
                 return true;
             }
 
+            if(args[0] == "*")
+            {
+                foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+                {
+                    if (peer.ControlledAgent != null)
+                    {
+                        peer.ControlledAgent.Health = peer.ControlledAgent.HealthLimit;
+                        MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed all players.", networkPeer.UserName));
+                    }
+                }
+
+                return true;
+            }
+
             NetworkCommunicator targetPeer = null;
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                if (peer.UserName.Contains(string.Join(" ", args)))
+                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
                 {
                     targetPeer = peer;
                     break;

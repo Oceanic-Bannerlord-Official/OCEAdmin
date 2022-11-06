@@ -40,7 +40,7 @@ namespace OCEAdmin.Commands
 
             NetworkCommunicator targetPeer = null;
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers) {
-                if(peer.UserName.Contains(string.Join(" ", args))) {
+                if(peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower())) {
                     targetPeer = peer;
                     break;
                 }
