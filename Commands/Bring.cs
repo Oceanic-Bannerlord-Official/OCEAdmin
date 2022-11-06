@@ -60,6 +60,9 @@ namespace OCEAdmin.Commands
                 Vec3 targetPos = networkPeer.ControlledAgent.Position;
                 targetPos.x = targetPos.x + 1;
                 targetPeer.ControlledAgent.TeleportToPosition( targetPos );
+
+                MPUtil.SendChatMessage(targetPeer, string.Format("** Command ** {0} has brought you to them.", networkPeer.UserName));
+                MPUtil.SendChatMessage(networkPeer, string.Format("** Command ** You have brought {0} to you.", targetPeer.UserName));
             }
 
 

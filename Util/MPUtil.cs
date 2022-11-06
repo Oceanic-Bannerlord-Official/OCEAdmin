@@ -49,12 +49,27 @@ namespace OCEAdmin
             return admins;
         }
 
+        public static bool IsAdmin(NetworkCommunicator networkPeer)
+        {
+            bool isAdmin = false;
+            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
+
+            return isAdmin && isExists & networkPeer.IsSynchronized;
+        }
+
         public static void BroadcastToAdmins(string text)
         {
             foreach(NetworkCommunicator admin in GetAdmins())
             {
                 SendChatMessage(admin, text);
             }
+        }
+
+        public static void BroadcastToAll(string text)
+        {
+            GameNetwork.BeginBroadcastModuleEvent();
+            GameNetwork.WriteMessage(new ServerMessage(text));
+            GameNetwork.EndBroadcastModuleEvent(GameNetwork.EventBroadcastFlags.None);
         }
 
         public static string GetClanTag(NetworkCommunicator networkPeer)

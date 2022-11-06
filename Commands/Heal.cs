@@ -46,9 +46,10 @@ namespace OCEAdmin.Commands
                     if (peer.ControlledAgent != null)
                     {
                         peer.ControlledAgent.Health = peer.ControlledAgent.HealthLimit;
-                        MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed all players.", networkPeer.UserName));
                     }
                 }
+
+                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed all players.", networkPeer.UserName));
 
                 return true;
             }
@@ -75,6 +76,8 @@ namespace OCEAdmin.Commands
                 targetPeer.ControlledAgent.Health = targetPeer.ControlledAgent.HealthLimit;
 
                 MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName));
+
+                MPUtil.SendChatMessage(targetPeer, string.Format("** Command ** {0} has healed you.", networkPeer.UserName));
             }
 
             return true;
