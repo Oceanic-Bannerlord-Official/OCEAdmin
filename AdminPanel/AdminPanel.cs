@@ -194,9 +194,10 @@ namespace OCEAdmin
 
         public Tuple<bool,string> FindSingleMap(string searchString)
         {
-            List<string> foundMaps = FindMaps(searchString);
+            //List<string> foundMaps = FindMaps(searchString);
+            List<string> foundMaps = AdminPanel.Instance.GetAllAvailableMaps();
 
-            if(foundMaps.Count == 1)
+            if (foundMaps.Count == 1)
             {
                 return new Tuple<bool, string>(true, foundMaps[0]);
             }
