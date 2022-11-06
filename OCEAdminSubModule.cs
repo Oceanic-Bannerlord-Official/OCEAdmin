@@ -41,10 +41,12 @@ namespace OCEAdmin
             var original = typeof(ChatBox).GetMethod("ServerPrepareAndSendMessage", BindingFlags.NonPublic | BindingFlags.Instance);
             var prefix = typeof(PatchChatBox).GetMethod("Prefix");
             harmony.Patch(original, prefix: new HarmonyMethod(prefix));
+            MPUtil.WriteToConsole("Patched ChatBox::ServerPrepareAndSendMessage");
 
             var onPlayerKills = typeof(MissionLobbyComponent).GetMethod("OnPlayerKills", BindingFlags.NonPublic | BindingFlags.Instance);
             var patchPlayerKills = typeof(PatchMissionLobbyComponent).GetMethod("Prefix");
             harmony.Patch(onPlayerKills, prefix: new HarmonyMethod(patchPlayerKills));
+            MPUtil.WriteToConsole("Patched MissionLobbyComponent::OnPlayerKills");
         }
 
         protected void Populate()

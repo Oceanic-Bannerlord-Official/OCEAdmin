@@ -9,7 +9,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class HealCommand : Command
+    class Heal : Command
     {
         public bool CanUse(NetworkCommunicator networkPeer)
         {

@@ -28,6 +28,7 @@ namespace OCEAdmin
         }
 
         public static Telepathy.Client client;
+        private bool _isTicking = true;
 
         public UpdateManager()
         {
@@ -55,7 +56,7 @@ namespace OCEAdmin
 
         public void Tick()
         {
-            while (true)
+            while (_isTicking)
             {
                 client.Tick(60);
                 Thread.Sleep(1000 / 60);
@@ -129,6 +130,7 @@ namespace OCEAdmin
         public void Finish()
         {
             UniformManager.Instance.Populate();
+            _isTicking = false;
         }
     }
 }
