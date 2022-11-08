@@ -38,13 +38,13 @@ namespace OCEAdmin.HarmonyPatches
                     {
                         if (killerTeam.IsEnemyOf(killedAgent.Team))
                         {
-                            Traverse.Create(killerPeer).Field("Score").SetValue(killerPeer.Score + gameMode.GetScoreForKill(killedAgent));
-                            Traverse.Create(killerPeer).Field("KillCount").SetValue(killerPeer.KillCount + 1);
+                            Traverse.Create(killerPeer).Field("_score").SetValue(killerPeer.Score + gameMode.GetScoreForKill(killedAgent));
+                            Traverse.Create(killerPeer).Field("_killCount").SetValue(killerPeer.KillCount + 1);
                         }
                         else
                         {
-                            Traverse.Create(killerPeer).Field("Score").SetValue((int)((float)gameMode.GetScoreForKill(killedAgent) * 1.5f));
-                            Traverse.Create(killerPeer).Field("KillCount").SetValue(killerPeer.KillCount - 1);
+                            Traverse.Create(killerPeer).Field("_score").SetValue((int)((float)gameMode.GetScoreForKill(killedAgent) * 1.5f));
+                            Traverse.Create(killerPeer).Field("_killCount").SetValue(killerPeer.KillCount - 1);
                         }
                     }
 

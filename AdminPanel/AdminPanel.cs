@@ -184,7 +184,12 @@ namespace OCEAdmin
 
         public List<string> GetAllAvailableMaps()
         {
-            return GetMapsForCurrentGameType().Union(GetMapsInPool()).ToList();
+            var maps = new List<string>();
+
+            maps = GetMapsForCurrentGameType().Union(GetMapsInPool()).ToList();
+            maps.Union(MultiplayerGameTypes.GetGameTypeInfo("Captain").Scenes.ToList());
+
+            return maps; 
         }
 
         List<string> FindMaps(string searchString)
@@ -194,8 +199,7 @@ namespace OCEAdmin
 
         public Tuple<bool,string> FindSingleMap(string searchString)
         {
-            //List<string> foundMaps = FindMaps(searchString);
-            List<string> foundMaps = AdminPanel.Instance.GetAllAvailableMaps();
+            List<string> foundMaps = FindMaps(searchString);
 
             if (foundMaps.Count == 1)
             {
