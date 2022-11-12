@@ -28,6 +28,13 @@ namespace OCEAdmin.Commands
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
+            if(!ConfigManager.Instance.AllowLoginCommand)
+            {
+                MPUtil.SendChatMessage(networkPeer, 
+                    "** Command ** The login command has been disabled from the config file.");
+                return true;
+            }
+
             if (args.Length == 0 || args.Length > 1) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
                 GameNetwork.WriteMessage(new ServerMessage("Please only provide a password. Usage: !login <password>"));

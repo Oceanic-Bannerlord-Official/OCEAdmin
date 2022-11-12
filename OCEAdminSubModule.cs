@@ -30,8 +30,11 @@ namespace OCEAdmin
             // Creates a new instance of the in-game command manager.
             CommandManager.Instance.Initialize();
 
-            // Commences the uniform update service.
-            UpdateManager.Instance.Initialise();
+            // Commences the uniform service and it's update service.
+            if(ConfigManager.Instance.UniformSettings.Enabled)
+            {
+                UniformManager.Instance.Initialise();
+            }
         }
 
         protected override void OnSubModuleUnloaded() 

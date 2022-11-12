@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCEAdmin.Updating;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace OCEAdmin
                 }
                 return instance;
             }
+        }
+
+        public void Initialise()
+        {
+            UpdateManager.Instance.Initialise();
         }
 
         public void LoadClans()

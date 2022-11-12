@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCEAdmin.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,22 +33,28 @@ namespace OCEAdmin.Updating
         private bool _sentChecksum = false;
 
         public void Initialise() {
-            InitialiseRegistries();
+            if (ConfigManager.Instance.UniformSettings.UpdateFiles)
+            {
+                InitialiseRegistries();
 
-            client = new Telepathy.Client(1024 * 1024);
-            client.OnData = OnData;
-            client.OnDisconnected = Finish;
+                client = new Telepathy.Client(1024 * 1024);
+                client.OnData = OnData;
+                client.OnDisconnected = Finish;
 
-            Telepathy.Log.Info = MPUtil.WriteToConsole;
-            Telepathy.Log.Error = MPUtil.WriteToConsole;
-            Telepathy.Log.Warning = MPUtil.WriteToConsole;
+                Telepathy.Log.Info = MPUtil.WriteToConsole;
+                Telepathy.Log.Error = MPUtil.WriteToConsole;
+                Telepathy.Log.Warning = MPUtil.WriteToConsole;
 
-            MPUtil.WriteToConsole("Connecting to the uniform update server...");
-            client.Connect("localhost", 25565);
+                MPUtil.WriteToConsole("Connecting to the uniform update server...");
+                client.Connect("localhost", 25565);
 
-            System.Threading.Thread.Sleep(100);
-            Thread thr = new Thread(() => this.Tick());
-            thr.Start();
+                System.Threading.Thread.Sleep(100);
+                Thread thr = new Thread(() => this.Tick());
+                thr.Start();
+            } else
+            {
+                Finish();
+            }
         }
 
         private void Tick()

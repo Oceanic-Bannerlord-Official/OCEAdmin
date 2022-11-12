@@ -37,6 +37,12 @@ namespace OCEAdmin.Core
                 _config.Admins = new List<string>();
                 _config.Admins.Add("2.0.0.AdminIDHere");
                 _config.Admins.Add("2.0.0.AdminIDHere");
+                _config.AllowLoginCommand = true;
+                _config.UniformSettings = new UniformSettings()
+                {
+                    Enabled = false,
+                    UpdateFiles = false
+                };
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Config));
                 Stream fs = new FileStream(configPath, FileMode.Create);
