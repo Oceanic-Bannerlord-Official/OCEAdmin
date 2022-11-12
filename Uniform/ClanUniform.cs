@@ -12,55 +12,26 @@ namespace OCEAdmin
 {
     public class ClanUniform
     {
-        // The ingame clan tag
-        public string clanTag;
+        // List of factions that this uniform can be applied onto.
+        public List<string> factions;
 
-        // We use this to assign the officer uniform to these players.
-        public List<String> officerIDs;
-
-        public string unitOverride;
+        // List of units that this uniform is applicable to.
+        // todo: create a system to reject this uniform if a uniform
+        // has a unit that is not applicable with the faction list.
+        public List<string> units;
 
         // List of uniform parts.
         public List<UniformPart> uniformParts;
 
-        public void Serialize(string path)
+        // Returns if this uniform can be used with the inputted unit.
+        public bool IsForUnit(string args)
         {
-            string clanDir = Path.Combine(path, clanTag);
-
-            if (!Directory.Exists(clanDir))
+            foreach(string unit in units)
             {
-                Directory.CreateDirectory(clanDir);
-            }
-
-            string fileName = Path.Combine(path, clanTag);
-            fileName = string.Format("{0}/{1}_{2}.xml", fileName, clanTag, unitOverride);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(ClanUniform));
-            Stream fs = new FileStream(fileName, FileMode.Create);
-
-            XmlTextWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 4;
-
-            serializer.Serialize(writer, this);
-            writer.Close();
-        }
-
-        public bool IsForUnit(string unit)
-        {
-            if(this.unitOverride == unit)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool GetClan(string tag)
-        {
-            if(clanTag.Contains(tag))
-            {
-                return true;
+                if(args == unit)
+                {
+                    return true;
+                }
             }
 
             return false;

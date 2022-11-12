@@ -37,16 +37,7 @@ namespace OCEAdmin.Commands
         // Remember and apply health to new agent.
         // Color shield.
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
-        {
-            UniformManager uniformManager = AdminPanel.Instance.uniformManager;
-
-            if(!uniformManager.IsEnabled())
-            {
-                MPUtil.SendChatMessage(networkPeer, "The uniform manager has not been enabled. You cannot use this command.");
-
-                return true;
-            }
-
+        {  
             // Checking if the player is in a clan.
             if (!MPUtil.IsInClan(networkPeer))
             {
@@ -55,25 +46,34 @@ namespace OCEAdmin.Commands
                 return true;
             }
 
-            // Grabbing the clan string from the player's name.
-            string clan = MPUtil.GetClanTag(networkPeer);
-
             // Retrieving the character id from the player's current agent.
             string curUnit = MPUtil.GetUnitID(networkPeer);
 
-            if (!uniformManager.HasClanUniformForUnit(clan, curUnit))
+            // Grabbing the clan string from the player's name.
+            Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
+
+            if(clan == null)
             {
-                MPUtil.SendChatMessage(networkPeer, 
-                    string.Format("{0} has no uniform for your current unit type of {1}.", clan, curUnit));
+                MPUtil.SendChatMessage(networkPeer,
+                    string.Format("{0} is not registed with the uniform system.", clan.tag));
 
                 return true;
             }
 
-            ClanUniform clanUniform = uniformManager.GetUniform(clan);
-            bool isOfficer = clanUniform.officerIDs.Contains(MPUtil.GetPlayerID(networkPeer));
+            ClanUniform uniform = clan.GetUniformForUnit(curUnit);
+
+            if (uniform == null)
+            {
+                MPUtil.SendChatMessage(networkPeer, 
+                    string.Format("{0} has no uniform for your current unit type of {1}.", clan.tag, curUnit));
+
+                return true;
+            }
+
+            bool isOfficer = clan.officerIDs.Contains(MPUtil.GetPlayerID(networkPeer));
             List<Tuple<EquipmentIndex, string>> equipment = new List<Tuple<EquipmentIndex, string>>();
 
-            foreach (UniformPart part in clanUniform.uniformParts)
+            foreach (UniformPart part in uniform.uniformParts)
             {
                 equipment.Add(new Tuple<EquipmentIndex, string>(part.itemSlot, part.GetPart(isOfficer)));
             }

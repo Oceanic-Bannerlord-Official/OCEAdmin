@@ -139,7 +139,8 @@ namespace OCEAdmin
             _isTicking = false;
             MPUtil.WriteToConsole("Loading uniforms from storage.");
 
-            UniformManager.Instance.Populate();
+            UniformManager.Instance.LoadClans();
+            UniformManager.Instance.LoadUniforms();
         }
     }
 }

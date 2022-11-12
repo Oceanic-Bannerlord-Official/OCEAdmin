@@ -26,7 +26,7 @@ namespace OCEAdmin
                         var hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
                         var fileName = files[i];
 
-                        fileName = fileName.Replace(UniformManager.Instance.GetDir() + @"\", "");
+                        fileName = fileName.Replace(MPUtil.GetPluginDir() + @"\", "");
                         fileName = fileName.Replace("/", @"\");
 
                         MPUtil.WriteToConsole(string.Format("File name: {0} / Hash: {1}", fileName, hash));

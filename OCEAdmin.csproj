@@ -49,6 +49,12 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GitHubRelease|AnyCPU'">
+    <OutputPath>bin\GitHubRelease\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GitHubRelease|x64'">
+    <OutputPath>bin\x64\GitHubRelease\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\BannerlordServer\bin\Win64_Shipping_Server\0Harmony.dll</HintPath>
@@ -125,6 +131,7 @@
   <ItemGroup>
     <Compile Include="AdminPanel\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
+    <Compile Include="Uniform\Clan.cs" />
     <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
     <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
     <Compile Include="Updating\HashedFile.cs" />

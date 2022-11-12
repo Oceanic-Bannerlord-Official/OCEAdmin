@@ -13,6 +13,11 @@ namespace OCEAdmin
     {
         private static Random random = new Random();
 
+        public static string GetPluginDir()
+        {
+            return "../../OCEAdmin";
+        }
+
         public static void WriteToConsole(string text) {
             Debug.Print(string.Format("[OCEAdmin] - " + text), 0, Debug.DebugColor.Green);
         }
