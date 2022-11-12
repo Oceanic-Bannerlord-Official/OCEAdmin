@@ -14,9 +14,9 @@ namespace OCEAdmin.Core
 
         public static bool PlayerIsAdmin(string peerId)
         {
-            if(ConfigManager.Instance.Admins != null)
+            if(ConfigManager.Instance.GetConfig().Admins != null)
             {
-                foreach (var adminInfo in ConfigManager.Instance.Admins)
+                foreach (var adminInfo in ConfigManager.Instance.GetConfig().Admins)
                 {
                     if (peerId == adminInfo)
                     {

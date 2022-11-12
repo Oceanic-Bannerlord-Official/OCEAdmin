@@ -6,24 +6,40 @@ using System.Xml.Serialization;
 
 namespace OCEAdmin.Core
 {
-    public static class ConfigManager
+    public class ConfigManager
     {
-        private static Config _config;
-        public static Config Instance
+        private const string configFile = "config.xml";
+
+        private static ConfigManager instance;
+        public static ConfigManager Instance
         {
             get
             {
-                if (_config == null)
+                if (instance == null)
                 {
-                    _config = new Config();
+                    instance = new ConfigManager();
                 }
-                return _config;
+                return instance;
             }
+            set { }
         }
-        private const string configFile = "config.xml";
 
-        public static void LoadConfig()
+        private Config config;
+
+        public void SetConfig(Config config)
         {
+            ConfigManager.Instance.config = config;
+        }
+
+        public Config GetConfig()
+        {
+            return ConfigManager.Instance.config;
+        }
+
+        public void LoadConfig()
+        {
+            config = new Config();
+
             if (!Directory.Exists(MPUtil.GetPluginDir()))
             {
                 Directory.CreateDirectory(MPUtil.GetPluginDir());
@@ -33,15 +49,16 @@ namespace OCEAdmin.Core
 
             if (!File.Exists(configPath))
             {
-                _config.AdminPassword = MPUtil.RandomString(6);
-                _config.Admins = new List<string>();
-                _config.Admins.Add("2.0.0.AdminIDHere");
-                _config.Admins.Add("2.0.0.AdminIDHere");
-                _config.AllowLoginCommand = true;
-                _config.UniformSettings = new UniformSettings()
+                config.AdminPassword = MPUtil.RandomString(6);
+                config.Admins = new List<string>();
+                config.Admins.Add("2.0.0.AdminIDHere");
+                config.Admins.Add("2.0.0.AdminIDHere");
+                config.AllowLoginCommand = true;
+                config.UniformSettings = new UniformSettings()
                 {
                     Enabled = false,
-                    UpdateFiles = false
+                    UpdateFiles = false,
+                    UpdatePort = 8400
                 };
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Config));
@@ -51,19 +68,20 @@ namespace OCEAdmin.Core
                 writer.Formatting = Formatting.Indented;
                 writer.Indentation = 4;
 
-                serializer.Serialize(writer, _config);
+                serializer.Serialize(writer, config);
                 writer.Close();
             }
             else
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Config));
-                Config _config = new Config();
 
                 using (Stream reader = new FileStream(configPath, FileMode.Open))
                 {
-                    _config = (Config)serializer.Deserialize(reader);
+                    config = (Config)serializer.Deserialize(reader);       
                 }
             }
+
+            Instance.SetConfig(config);
         }
     }
 }

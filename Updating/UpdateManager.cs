@@ -33,7 +33,7 @@ namespace OCEAdmin.Updating
         private bool _sentChecksum = false;
 
         public void Initialise() {
-            if (ConfigManager.Instance.UniformSettings.UpdateFiles)
+            if (ConfigManager.Instance.GetConfig().UniformSettings.UpdateFiles)
             {
                 InitialiseRegistries();
 
@@ -46,7 +46,7 @@ namespace OCEAdmin.Updating
                 Telepathy.Log.Warning = MPUtil.WriteToConsole;
 
                 MPUtil.WriteToConsole("Connecting to the uniform update server...");
-                client.Connect("localhost", 25565);
+                client.Connect("localhost", ConfigManager.Instance.GetConfig().UniformSettings.UpdatePort);
 
                 System.Threading.Thread.Sleep(100);
                 Thread thr = new Thread(() => this.Tick());

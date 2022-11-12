@@ -14,6 +14,7 @@ namespace OCEAdmin.Core
     {
         public bool Enabled { get; set; }
         public bool UpdateFiles { get; set; }
+        public int UpdatePort { get; set; }
     }
 
 }

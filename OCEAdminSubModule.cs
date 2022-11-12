@@ -1,15 +1,6 @@
 ﻿using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
-using HarmonyLib;
-using System.Reflection;
-using System.IO;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using System.Xml;
-using System.Text;
-using System.Threading;
 using OCEAdmin.Patches;
-using OCEAdmin.Updating;
 using OCEAdmin.Commands;
 using OCEAdmin.Core;
 
@@ -25,13 +16,13 @@ namespace OCEAdmin
             PatchManager.LoadPatches();
 
             // Loads the configuration for OCEAdmin variables.
-            ConfigManager.LoadConfig();
+            ConfigManager.Instance.LoadConfig();
 
             // Creates a new instance of the in-game command manager.
             CommandManager.Instance.Initialize();
 
             // Commences the uniform service and it's update service.
-            if(ConfigManager.Instance.UniformSettings.Enabled)
+            if (ConfigManager.Instance.GetConfig().UniformSettings.Enabled)
             {
                 UniformManager.Instance.Initialise();
             }
