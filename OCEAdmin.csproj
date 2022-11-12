@@ -129,8 +129,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminPanel\AdminPanel.cs" />
+    <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
+    <Compile Include="Core\ConfigManager.cs" />
+    <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Uniform\Clan.cs" />
     <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
     <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
@@ -187,14 +189,12 @@
     <Compile Include="Commands\Goto.cs" />
     <Compile Include="Commands\Unban.cs" />
     <Compile Include="Commands\WarmupTime.cs" />
-    <Compile Include="Handlers\ChatHandler.cs" />
-    <Compile Include="Managers\CommandManager.cs" />
-    <Compile Include="Managers\AdminManager.cs" />
-    <Compile Include="Managers\BanManager.cs" />
-    <Compile Include="AdminPanel\Config.cs" />
-    <Compile Include="Managers\ConfigManager.cs" />
-    <Compile Include="HarmonyPatches\PatchChatBox.cs" />
-    <Compile Include="HarmonyPatches\PatchMaxNumberOfPlayers.cs" />
+    <Compile Include="OCEAdminHandler.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Core\AdminManager.cs" />
+    <Compile Include="Core\BanManager.cs" />
+    <Compile Include="Core\Config.cs" />
+    <Compile Include="Patches\PatchChatBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\MPUtil.cs" />
     <Compile Include="Uniform\ClanUniform.cs" />

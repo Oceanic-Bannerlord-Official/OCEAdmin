@@ -149,7 +149,7 @@ namespace Telepathy
                 // (receive pipe is shared across all loops)
                 ThreadFunctions.ReceiveLoop(0, state.client, MaxMessageSize, state.receivePipe, ReceiveQueueLimit);
             }
-            catch (SocketException exception)
+            catch (SocketException)
             {
                 // this happens if (for example) the ip address is correct
                 // but there is no server running on that ip/port

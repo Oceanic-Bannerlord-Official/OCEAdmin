@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Core;
 
-namespace OCEAdmin
+namespace OCEAdmin.Core
 {
     class BanManager
     {

@@ -2,103 +2,50 @@
 using TaleWorlds.MountAndBlade;
 using HarmonyLib;
 using System.Reflection;
-using OCEAdmin.Patches;
 using System.IO;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Text;
-using System;
 using System.Threading;
+using OCEAdmin.Patches;
+using OCEAdmin.Updating;
+using OCEAdmin.Commands;
+using OCEAdmin.Core;
 
 namespace OCEAdmin
 {
     public class OCEAdminSubModule : MBSubModuleBase
     {
-        public static OCEAdminSubModule Instance { get; private set; }
-
-        public const string baseDir = "../../OCEAdmin";
-        public string configFile = "config.xml";
-
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
 
-            MPUtil.WriteToConsole("Loading chat commands...");
-           
-            CommandManager cm = new CommandManager();
-            Harmony.DEBUG = true;
+            // This handles all the hotfixes or game code edits
+            PatchManager.LoadPatches();
 
-            var harmony = new Harmony("OCEAdmin.Bannerlord");
-            var original = typeof(ChatBox).GetMethod("ServerPrepareAndSendMessage", BindingFlags.NonPublic | BindingFlags.Instance);
-            var prefix = typeof(PatchChatBox).GetMethod("Prefix");
-            harmony.Patch(original, prefix: new HarmonyMethod(prefix));
-            MPUtil.WriteToConsole("Patched ChatBox::ServerPrepareAndSendMessage");
-        }
-        protected void Populate()
-        {
-            if (!Directory.Exists(baseDir))
-            {
-                Directory.CreateDirectory(baseDir);
-            }
+            // Loads the configuration for OCEAdmin variables.
+            ConfigManager.LoadConfig();
 
-            string configPath = Path.Combine(baseDir, configFile);
+            // Creates a new instance of the in-game command manager.
+            CommandManager.Instance.Initialize();
 
-            if (!File.Exists(configPath))
-            {
-                Config config = new Config();
-                config.AdminPassword = MPUtil.RandomString(6);
-                config.Admins = new List<string>();
-                config.Admins.Add("2.0.0.AdminIDHere");
-                config.Admins.Add("2.0.0.AdminIDHere");
-
-                ConfigManager.SetConfig(config);
-                XmlSerializer serializer = new XmlSerializer(typeof(Config));
-                Stream fs = new FileStream(configPath, FileMode.Create);
-
-                XmlTextWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
-                writer.Formatting = Formatting.Indented;
-                writer.Indentation = 4;
-
-                serializer.Serialize(writer, config);
-                writer.Close();
-            }
-            else
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(Config));
-                Config config = new Config();
-
-                using (Stream reader = new FileStream(configPath, FileMode.Open))
-                {
-                    config = (Config)serializer.Deserialize(reader);
-                }
-
-                ConfigManager.SetConfig(config);
-            }
-        }
-
-        protected override void OnSubModuleUnloaded() {
-            MPUtil.WriteToConsole("Unloading...");
-        }
-
-        public override void OnMultiplayerGameStart(Game game, object starterObject) {
-
-            MPUtil.WriteToConsole("Chat Handler is being loaded...");
-            game.AddGameHandler<ChatHandler>();
-            this.Populate();
-
-            Thread updateThread = new Thread(() => StartUpdateManager());
-            updateThread.Start();
-        }
-
-        public static void StartUpdateManager()
-        {
-            // Begin the update process for the uniforms.
+            // Commences the uniform update service.
             UpdateManager.Instance.Initialise();
         }
 
+        protected override void OnSubModuleUnloaded() 
+        {
+            MPUtil.WriteToConsole("Unloading...");
+        }
+
+        public override void OnMultiplayerGameStart(Game game, object starterObject) 
+        {
+            game.AddGameHandler<OCEAdminHandler>();
+        }
+
         public override void OnGameEnd(Game game) {
-            game.RemoveGameHandler<ChatHandler>();
+            game.RemoveGameHandler<OCEAdminHandler>();
         }
 
     }

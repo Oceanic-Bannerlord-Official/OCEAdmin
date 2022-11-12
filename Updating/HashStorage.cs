@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin
+namespace OCEAdmin.Updating
 {
     public class HashStorage
     {
@@ -15,7 +15,7 @@ namespace OCEAdmin
 
         public void GenerateFromDir()
         {
-            string[] files = Directory.GetFiles(Path.Combine(OCEAdminSubModule.baseDir, "uniforms"), "*", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(Path.Combine(MPUtil.GetPluginDir(), "uniforms"), "*", SearchOption.AllDirectories);
 
             for(int i = 0; i < files.Length; i++)
             {

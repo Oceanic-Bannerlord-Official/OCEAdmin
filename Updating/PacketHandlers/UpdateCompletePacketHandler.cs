@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OCEAdmin
+namespace OCEAdmin.Updating
 {
     [Handles(typeof(UpdateCompletePacket))]
     class UpdateCompletePacketHandler : IServerPacketHandler

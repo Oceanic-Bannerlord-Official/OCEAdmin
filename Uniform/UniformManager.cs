@@ -14,7 +14,6 @@ namespace OCEAdmin
     {
         public List<Clan> clans;
 
-        // Singleton
         private static UniformManager instance;
         public static UniformManager Instance
         {

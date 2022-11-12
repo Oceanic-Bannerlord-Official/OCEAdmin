@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin
+namespace OCEAdmin.Updating
 {
     [ProtoContract, PacketId(2)]
     public class SendFilePacket : IServerDataPacket

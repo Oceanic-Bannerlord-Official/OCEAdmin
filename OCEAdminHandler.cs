@@ -1,4 +1,6 @@
 ﻿using NetworkMessages.FromServer;
+using OCEAdmin.Commands;
+using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ using TaleWorlds.PlayerServices;
 
 namespace OCEAdmin
 {
-    class ChatHandler : GameHandler
+    class OCEAdminHandler : GameHandler
     {
         public override void OnAfterSave()
         {
@@ -63,7 +65,6 @@ namespace OCEAdmin
 
         private bool HandleClientEventPlayerMessageAll(NetworkCommunicator networkPeer, NetworkMessages.FromClient.PlayerMessageAll message)
         {
-            // Debug.Print(networkPeer.UserName + " user send a message: " + message.Message, 0, Debug.DebugColor.Green);
             if (message.Message.StartsWith("!")) {
                 string[] argsWithCommand = message.Message.Split(' ');
                 string command = argsWithCommand[0];

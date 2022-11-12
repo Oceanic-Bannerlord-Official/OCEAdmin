@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OCEAdmin
+namespace OCEAdmin.Updating
 {
     public class UpdateManager
     {
@@ -121,7 +121,7 @@ namespace OCEAdmin
         {
             MPUtil.WriteToConsole(string.Format("Received file: {0} / {1}", packet.path, packet.fileName));
 
-            string filePath = Path.Combine(OCEAdminSubModule.baseDir, packet.path);
+            string filePath = Path.Combine(MPUtil.GetPluginDir(), packet.path);
 
             Directory.CreateDirectory(filePath);
             File.WriteAllBytes(Path.Combine(filePath, packet.fileName), packet.data);
@@ -137,7 +137,7 @@ namespace OCEAdmin
         public void Finish()
         {
             _isTicking = false;
-            MPUtil.WriteToConsole("Loading uniforms from storage.");
+            MPUtil.WriteToConsole("Loading uniforms from storage...");
 
             UniformManager.Instance.LoadClans();
             UniformManager.Instance.LoadUniforms();

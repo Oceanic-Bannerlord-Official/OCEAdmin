@@ -6,23 +6,26 @@ using System.Linq;
 using System.Text;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using OCEAdmin.Core;
 
-namespace OCEAdmin
+namespace OCEAdmin.Commands
 {
     class CommandManager
     {
-        public static CommandManager Instance {get;set;}
-
-        public Dictionary<string, Command> commands;
-
-
-        public CommandManager() {
-            if (CommandManager.Instance == null) {
-                
-                this.Initialize();
-                CommandManager.Instance = this;
+        private static CommandManager instance;
+        public static CommandManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new CommandManager();
+                }
+                return instance;
             }
         }
+
+        public Dictionary<string, Command> commands;
 
         public bool Execute(NetworkCommunicator networkPeer, string command, string[] args) {
             Command executableCommand; 
@@ -43,7 +46,7 @@ namespace OCEAdmin
             return executableCommand.Execute(networkPeer, args);
         }
 
-        private void Initialize() {
+        public void Initialize() {
             this.commands = new Dictionary<string, Command>();
             foreach (Type mytype in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
                  .Where(mytype => mytype.GetInterfaces().Contains(typeof(Command))))

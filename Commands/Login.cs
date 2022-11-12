@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
+using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
@@ -33,7 +34,7 @@ namespace OCEAdmin.Commands
                 GameNetwork.EndModuleEventAsServer();
             }
             String password = args[0];
-            Config config = ConfigManager.GetConfig();
+            Config config = ConfigManager.Instance;
             if (!password.Equals(config.AdminPassword)) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
                 GameNetwork.WriteMessage(new ServerMessage("Incorrect password."));

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OCEAdmin
+namespace OCEAdmin.Updating
 {
     [ProtoContract, PacketId(1)]
     class SendFileListPacket : IDataPacket
