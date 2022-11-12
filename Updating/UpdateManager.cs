@@ -1,5 +1,4 @@
-﻿using OCEAdmin.Updating;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,41 +24,51 @@ namespace OCEAdmin
                 }
                 return instance;
             }
+            set { }
         }
 
-        public static Telepathy.Client client;
+        public Telepathy.Client client;
         private bool _isTicking = true;
+        private bool _sentChecksum = false;
 
-        public UpdateManager()
-        {
+        public void Initialise() {
             InitialiseRegistries();
 
-            Telepathy.Client _client = new Telepathy.Client(1024 * 1024);
-            _client = new Telepathy.Client(1024 * 1024);
-
-            _client.OnConnected = SendChecksum;
-            _client.OnData = OnData;
-            _client.OnDisconnected = Finish;
+            client = new Telepathy.Client(1024 * 1024);
+            client.OnData = OnData;
+            client.OnDisconnected = Finish;
 
             Telepathy.Log.Info = MPUtil.WriteToConsole;
             Telepathy.Log.Error = MPUtil.WriteToConsole;
             Telepathy.Log.Warning = MPUtil.WriteToConsole;
 
-            MPUtil.WriteToConsole("Connecting...");
-            _client.Connect("localhost", 1337);
-            client = _client;
+            MPUtil.WriteToConsole("Connecting to the uniform update server...");
+            client.Connect("localhost", 25565);
 
             System.Threading.Thread.Sleep(100);
             Thread thr = new Thread(() => this.Tick());
             thr.Start();
         }
 
-        public void Tick()
+        private void Tick()
         {
             while (_isTicking)
             {
+                if (client.Connected && !_sentChecksum)
+                {
+                    MPUtil.WriteToConsole("Connected to the uniform update server.");
+                    SendChecksum();
+                }
+
                 client.Tick(60);
                 Thread.Sleep(1000 / 60);
+            }
+            
+            // Close the socket if we no longer want to tick.
+            if(client.Connected)
+            {
+                client.Disconnect();
+                MPUtil.WriteToConsole("Uniform update socket closed.");
             }
         }
 
@@ -73,7 +82,7 @@ namespace OCEAdmin
             HandlerRegistry.storage[packetType].Handle(dataPacket);
         }
 
-        public void InitialiseRegistries()
+        private void InitialiseRegistries()
         {
             foreach (Type networkPacketType in Assembly.GetExecutingAssembly().GetTypes().Where(mytype => mytype.GetInterfaces().Contains(typeof(IServerDataPacket))))
             {
@@ -87,50 +96,50 @@ namespace OCEAdmin
             }
         }
 
-        public void SendChecksum()
+        private void SendChecksum()
         {
             hashStorage = new HashStorage();
             hashStorage.GenerateFromDir();
 
-            SendFileListPacket sendFileListPacket = new SendFileListPacket();
+            MPUtil.WriteToConsole("Generating checksum list for update server...");
+
+            List<HashedFile> hashMap = new List<HashedFile>();
+            hashMap = hashStorage.HashMap;
+
+            SendFileListPacket sendFileListPacket = new SendFileListPacket(hashMap);
             sendFileListPacket.requestType = RequestType.Checksum;
-            sendFileListPacket.hashedFiles = hashStorage.HashMap;
+
+            MPUtil.WriteToConsole("Sending checksum packet...");
 
             CommunicatorHelper.ClientSendPacket(sendFileListPacket);
+
+            MPUtil.WriteToConsole("Checksum sent!");
+            _sentChecksum = true;
         }
 
         public void ReceiveFile(SendFilePacket packet)
         {
-            string file = Path.Combine(OCEAdminSubModule.baseDir, Path.Combine(packet.path, packet.fileName));
+            MPUtil.WriteToConsole(string.Format("Received file: {0} / {1}", packet.path, packet.fileName));
 
-            Directory.CreateDirectory(packet.path);
-            File.WriteAllBytes(file, packet.data);
-        }
+            string filePath = Path.Combine(OCEAdminSubModule.baseDir, packet.path);
 
-        public List<HashedFile> GetRequiredUpdates(List<HashedFile> localCache, List<HashedFile> serverCache)
-        {
-            foreach (HashedFile serverFile in serverCache)
+            Directory.CreateDirectory(filePath);
+            File.WriteAllBytes(Path.Combine(filePath, packet.fileName), packet.data);
+
+            if(packet.transferDone)
             {
-                foreach (HashedFile localFile in localCache)
-                {
-                    // Find the file in the array, if it's not the same checksum we don't need to update.
-                    if (localFile.file == serverFile.file && localFile.checksum == serverFile.checksum)
-                    {
-                        // We don't need to deal with this file.
-                        serverCache.Remove(serverFile);
-                    }
-                }
+                Finish();
             }
-
-            return serverCache;
         }
 
         // We're all up to date or were unable to reach the update server.
         // Let's load the uniform manager with the clan data we have.
         public void Finish()
         {
-            UniformManager.Instance.Populate();
             _isTicking = false;
+            MPUtil.WriteToConsole("Loading uniforms from storage.");
+
+            UniformManager.Instance.Populate();
         }
     }
 }

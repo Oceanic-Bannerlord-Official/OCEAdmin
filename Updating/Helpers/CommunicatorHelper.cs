@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace OCEAdmin.Updating
+namespace OCEAdmin
 {
     class CommunicatorHelper
     {
@@ -19,7 +19,7 @@ namespace OCEAdmin.Updating
 
             Console.WriteLine("Sended packet Content " + BitConverter.ToString(ProtobufHelper.ProtoSerialize<Packet>(packet)));
             byte[] serialized = ProtobufHelper.ProtoSerialize<Packet>(packet);
-            UpdateManager.client.Send(new ArraySegment<byte>(serialized));
+            UpdateManager.Instance.client.Send(new ArraySegment<byte>(serialized));
         }
     }
 }

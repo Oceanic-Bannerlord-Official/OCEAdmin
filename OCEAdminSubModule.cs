@@ -1,18 +1,15 @@
-﻿using System;
-using System.Linq;
-using TaleWorlds.Core;
-using TaleWorlds.Library;
+﻿using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using HarmonyLib;
 using System.Reflection;
 using OCEAdmin.Patches;
 using System.IO;
 using System.Collections.Generic;
-using HarmonyLib.Tools;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Text;
-using OCEAdmin.HarmonyPatches;
+using System;
+using System.Threading;
 
 namespace OCEAdmin
 {
@@ -27,11 +24,6 @@ namespace OCEAdmin
         {
             base.OnSubModuleLoad();
 
-            this.Populate();
-            
-            // Begin the update process for the uniforms.
-            UpdateManager updateManager = new UpdateManager();
-
             MPUtil.WriteToConsole("Loading chat commands...");
            
             CommandManager cm = new CommandManager();
@@ -42,13 +34,7 @@ namespace OCEAdmin
             var prefix = typeof(PatchChatBox).GetMethod("Prefix");
             harmony.Patch(original, prefix: new HarmonyMethod(prefix));
             MPUtil.WriteToConsole("Patched ChatBox::ServerPrepareAndSendMessage");
-
-            var onPlayerKills = typeof(MissionLobbyComponent).GetMethod("OnPlayerKills", BindingFlags.NonPublic | BindingFlags.Instance);
-            var patchPlayerKills = typeof(PatchMissionLobbyComponent).GetMethod("Prefix");
-            harmony.Patch(onPlayerKills, prefix: new HarmonyMethod(patchPlayerKills));
-            MPUtil.WriteToConsole("Patched MissionLobbyComponent::OnPlayerKills");
         }
-
         protected void Populate()
         {
             if (!Directory.Exists(baseDir))
@@ -99,8 +85,18 @@ namespace OCEAdmin
 
             MPUtil.WriteToConsole("Chat Handler is being loaded...");
             game.AddGameHandler<ChatHandler>();
-            
+            this.Populate();
+
+            Thread updateThread = new Thread(() => StartUpdateManager());
+            updateThread.Start();
         }
+
+        public static void StartUpdateManager()
+        {
+            // Begin the update process for the uniforms.
+            UpdateManager.Instance.Initialise();
+        }
+
         public override void OnGameEnd(Game game) {
             game.RemoveGameHandler<ChatHandler>();
         }

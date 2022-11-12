@@ -23,9 +23,14 @@ namespace OCEAdmin
                 {
                     using (var stream = File.OpenRead(files[i]))
                     {
-                        var hash = md5.ComputeHash(stream);
-                        MPUtil.WriteToConsole(BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower());
-                        HashMap.Add(new HashedFile(files[i], BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower()));
+                        var hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                        var fileName = files[i];
+
+                        fileName = fileName.Replace(UniformManager.Instance.GetDir() + @"\", "");
+                        fileName = fileName.Replace("/", @"\");
+
+                        MPUtil.WriteToConsole(string.Format("File name: {0} / Hash: {1}", fileName, hash));
+                        HashMap.Add(new HashedFile(fileName, hash));
                     }
                 }
             }

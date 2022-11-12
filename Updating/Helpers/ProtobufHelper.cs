@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace OCEAdmin.Updating
+namespace OCEAdmin
 {
     class ProtobufHelper
     {

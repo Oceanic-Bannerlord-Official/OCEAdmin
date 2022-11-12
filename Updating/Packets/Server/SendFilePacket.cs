@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin.Updating
+namespace OCEAdmin
 {
-    [ProtoContract, PacketId(1)]
+    [ProtoContract, PacketId(2)]
     public class SendFilePacket : IServerDataPacket
     {
-        [ProtoMember(3)]
+        [ProtoMember(1)]
         public string path;
 
         [ProtoMember(2)]
@@ -18,5 +18,8 @@ namespace OCEAdmin.Updating
 
         [ProtoMember(3)]
         public byte[] data;
+
+        [ProtoMember(4)]
+        public bool transferDone;
     }
 }
