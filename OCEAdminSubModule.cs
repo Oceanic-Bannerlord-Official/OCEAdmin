@@ -3,6 +3,8 @@ using TaleWorlds.MountAndBlade;
 using OCEAdmin.Patches;
 using OCEAdmin.Commands;
 using OCEAdmin.Core;
+using System.Threading;
+using OCEAdmin.Features;
 
 namespace OCEAdmin
 {
@@ -28,14 +30,21 @@ namespace OCEAdmin
             }
         }
 
-        protected override void OnSubModuleUnloaded() 
-        {
-            MPUtil.WriteToConsole("Unloading...");
-        }
+        protected override void OnSubModuleUnloaded() { }
 
         public override void OnMultiplayerGameStart(Game game, object starterObject) 
         {
             game.AddGameHandler<OCEAdminHandler>();
+        }
+
+        public override void OnBeforeMissionBehaviorInitialize(Mission mission)
+        {
+            base.OnBeforeMissionBehaviorInitialize(mission);
+
+            if(ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
+            {
+                Mission.Current.AddMissionBehavior(new CavalryDismountMissionBehavior());
+            }
         }
 
         public override void OnGameEnd(Game game) {

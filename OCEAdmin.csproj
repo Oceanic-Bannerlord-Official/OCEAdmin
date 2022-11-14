@@ -133,6 +133,7 @@
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
+    <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Uniform\Clan.cs" />
     <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Core\Config.cs" />
     <Compile Include="Patches\PatchChatBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CountdownTimer.cs" />
     <Compile Include="Util\MPUtil.cs" />
     <Compile Include="Uniform\ClanUniform.cs" />
     <Compile Include="Uniform\UniformManager.cs" />

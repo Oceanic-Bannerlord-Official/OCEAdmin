@@ -51,7 +51,7 @@ namespace OCEAdmin.Core
             {
                 config.AdminPassword = MPUtil.RandomString(6);
                 config.Admins = new List<string>();
-                config.Admins.Add("2.0.0.AdminIDHere");
+                config.Admins.Add("2.0.0.76561198259745840");
                 config.Admins.Add("2.0.0.AdminIDHere");
                 config.AllowLoginCommand = true;
                 config.UniformSettings = new UniformSettings()
@@ -59,6 +59,11 @@ namespace OCEAdmin.Core
                     Enabled = false,
                     UpdateFiles = false,
                     UpdatePort = 8400
+                };
+                config.AutoAdminSettings = new AutoAdminSettings()
+                {
+                    DismountSystemEnabled = true,
+                    DismountSlayTime = 10
                 };
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Config));
