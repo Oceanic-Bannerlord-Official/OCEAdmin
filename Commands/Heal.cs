@@ -12,32 +12,18 @@ namespace OCEAdmin.Commands
 {
     class Heal : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!heal";
-        }
+        public string Command() => "!heal";
 
-        public string Description()
-        {
-            return "Heals a player. Use * to heal all.";
-        }
+        public string Description() => "Heals a player. Use * to heal all.";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-
             if (args.Length == 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains provided input will be healed."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username or * to heal all.",
+                    peer: networkPeer);
             }
 
             if(args[0] == "*")
@@ -50,38 +36,27 @@ namespace OCEAdmin.Commands
                     }
                 }
 
-                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed all players.", networkPeer.UserName));
-
-                return true;
+                return new CommandFeedback(CommandLogType.BroadcastToAdmins, 
+                    msg: string.Format("** Command ** {0} has healed all players.", networkPeer.UserName));
             }
 
-            NetworkCommunicator targetPeer = null;
-            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
-            {
-                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
-                {
-                    targetPeer = peer;
-                    break;
-                }
-            }
+            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
 
             if (targetPeer == null)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Target was not found!",
+                    peer: networkPeer);
             }
 
             if (targetPeer.ControlledAgent != null) {
                 targetPeer.ControlledAgent.Health = targetPeer.ControlledAgent.HealthLimit;
 
-                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName));
-
-                MPUtil.SendChatMessage(targetPeer, string.Format("** Command ** {0} has healed you.", networkPeer.UserName));
+                return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
+                    msg: string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName),
+                    targetMsg: string.Format("** Command ** {0} has healed you.", networkPeer.UserName), targetPeer: targetPeer);
             }
 
-            return true;
+            return new CommandFeedback(CommandLogType.None);
         }
     }
 }

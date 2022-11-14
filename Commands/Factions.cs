@@ -9,24 +9,13 @@ namespace OCEAdmin.Commands
 
     class Factions : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!factions";
-        }
+        public string Command() => "!factions";
 
-        public string Description()
-        {
-            return "Lists available factions. !factions";
-        }
+        public string Description() => "Lists available factions. !factions";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             List<string> availableFactions = AdminPanel.Instance.GetAllFactions();
 
@@ -35,28 +24,20 @@ namespace OCEAdmin.Commands
                 Tuple<bool,string> found = AdminPanel.Instance.FindSingleFaction(args[0]);
                 if(found.Item1)
                 {
-                    GameNetwork.BeginModuleEventAsServer(networkPeer);
-                    GameNetwork.WriteMessage(new ServerMessage(found.Item2));
-                    GameNetwork.EndModuleEventAsServer();
+                    return new CommandFeedback(CommandLogType.Player, found.Item2, peer: networkPeer);
                 }
                 else
                 {
-                    GameNetwork.BeginModuleEventAsServer(networkPeer);
-                    GameNetwork.WriteMessage(new ServerMessage("No factions have been found."));
-                    GameNetwork.EndModuleEventAsServer();
+                    return new CommandFeedback(CommandLogType.Player, "No factions have been found.", peer: networkPeer);
                 }
                 
             }
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Factions: "));
-            GameNetwork.EndModuleEventAsServer();
+            MPUtil.SendChatMessage(networkPeer, "Factions:");
 
             foreach (var faction in availableFactions)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage(faction));
-                GameNetwork.EndModuleEventAsServer();
+                MPUtil.SendChatMessage(networkPeer, faction);
             }
 
             string team1Faction = "";
@@ -65,11 +46,9 @@ namespace OCEAdmin.Commands
             string team2Faction = "";
             MultiplayerOptions.Instance.GetOptionFromOptionType(MultiplayerOptions.OptionType.CultureTeam2).GetValue(out team2Faction);
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Current Factions: " + team1Faction +" "+team2Faction));
-            GameNetwork.EndModuleEventAsServer();
-
-            return true;
+            return new CommandFeedback(CommandLogType.Player, 
+                msg: string.Format("Current factions: {0} vs {1}", team1Faction, team2Faction),
+                peer: networkPeer);
         }
     }
 }

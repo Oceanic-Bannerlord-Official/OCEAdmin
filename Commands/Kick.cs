@@ -12,54 +12,32 @@ namespace OCEAdmin.Commands
 {
     class OCEAdmin : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!kick";
-        }
+        public string Command() => "!kick";
 
-        public string Description()
-        {
-            return "Kicks a player. First username that contains the provided input will be kicked. Usage !kick <player name>";
-        }
+        public string Description() => "Kicks a player. First username that contains the provided input will be kicked. Usage !kick <player name>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Any player containing your provided input will be kicked. Be specific."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
+                    peer: networkPeer);
             }
 
-            NetworkCommunicator targetPeer = null;
-            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
-            {
-                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
-                {
-                    targetPeer = peer;
-                    break;
-                }
-            }
+            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
+
             if (targetPeer == null)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Target player was not found!",
+                    peer: networkPeer);
             }
 
-            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.UserName, targetPeer.UserName));
-
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
-            return true;
+
+            return new CommandFeedback(CommandLogType.BroadcastToAdmins,
+                msg: string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.UserName, targetPeer.UserName));
         }
     }
 }

@@ -17,34 +17,21 @@ namespace OCEAdmin.Commands
 {
     class Equip : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
+        public string Command() => "!equip";
 
-        public string Command()
-        {
-            return "!equip";
-        }
-
-        public string Description()
-        {
-            return "Equip a clan armor set for your current unit. 30s internal CD.";
-        }
+        public string Description() => "Equip a clan armor set for your current unit. 30s internal CD.";
 
         // Include Internal CD: 30s.
         // Remember and apply health to new agent.
         // Color shield.
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
-        {  
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
+        {
             // Checking if the player is in a clan.
             if (!MPUtil.IsInClan(networkPeer))
             {
-                MPUtil.SendChatMessage(networkPeer, "You aren't in a clan.");
-
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "You aren't in a clan.",
+                    peer: networkPeer);
             }
 
             // Retrieving the character id from the player's current agent.
@@ -53,22 +40,20 @@ namespace OCEAdmin.Commands
             // Grabbing the clan string from the player's name.
             Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
 
-            if(clan == null)
+            if (clan == null)
             {
-                MPUtil.SendChatMessage(networkPeer,
-                    string.Format("{0} is not registed with the uniform system.", clan.tag));
-
-                return true;
+                return new CommandFeedback(CommandLogType.Player,
+                    msg: string.Format("{0} is not registed with the uniform system.", clan.tag),
+                    peer: networkPeer);
             }
 
             ClanUniform uniform = clan.GetUniformForUnit(curUnit);
 
             if (uniform == null)
             {
-                MPUtil.SendChatMessage(networkPeer, 
-                    string.Format("{0} has no uniform for your current unit type of {1}.", clan.tag, curUnit));
-
-                return true;
+                return new CommandFeedback(CommandLogType.Player,
+                    msg: string.Format("{0} has no uniform for your current unit type of {1}.", clan.tag, curUnit),
+                    peer: networkPeer);
             }
 
             bool isOfficer = clan.officerIDs.Contains(MPUtil.GetPlayerID(networkPeer));
@@ -79,13 +64,13 @@ namespace OCEAdmin.Commands
                 equipment.Add(new Tuple<EquipmentIndex, string>(part.itemSlot, part.GetPart(isOfficer)));
             }
 
-            if(equipment != null)
+            if (equipment != null)
             {
                 AdminPanel.Instance.GivePlayerAgentCosmeticEquipment(networkPeer, equipment);
             }
-                   
 
-            return true;
+
+            return new CommandFeedback(CommandLogType.Player, msg: "Uniform set!", peer: networkPeer);
         }
     }
 }

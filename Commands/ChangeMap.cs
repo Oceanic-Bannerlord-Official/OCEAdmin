@@ -8,32 +8,18 @@ namespace OCEAdmin.Commands
 {
     class ChangeMap : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!changemap";
-        }
+        public string Command() => "!changemap";
 
-        public string Description()
-        {
-            return "Changes the map. Use !maps to see available map IDs. !chagemap <partial map id>";
-        }
+        public string Description() => "Changes the map. Use !maps to see available map IDs. !changemap <partial map id>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             // Obligatory argument check
             if (args.Length != 1)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Invalid number of arguments.", peer: networkPeer);
             }
              
             string searchString = args[0];
@@ -41,18 +27,13 @@ namespace OCEAdmin.Commands
 
             if(searchResult.Item1)
             {
-                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.UserName, searchResult.Item2));
-
                 AdminPanel.Instance.ChangeMap(searchResult.Item2);
-            }
-            else
-            {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage(searchResult.Item2));
-                GameNetwork.EndModuleEventAsServer();
+
+                return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg:
+                    string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.UserName, searchResult.Item2));
             }
 
-            return true;
+            return new CommandFeedback(CommandLogType.Player, msg: searchResult.Item2, peer: networkPeer);
         }
     }
 }

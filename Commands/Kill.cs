@@ -12,48 +12,26 @@ namespace OCEAdmin.Commands
 {
     class Kill : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!kill";
-        }
+        public string Command() => "!kill";
 
-        public string Description()
-        {
-            return "Kills a provided username. Usage !kill <player name>";
-        }
+        public string Description() => "Kills a provided username. Usage !kill <player name>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username. Player that contains provided input will be killed"));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
+                    peer: networkPeer);
             }
 
-            NetworkCommunicator targetPeer = null;
-            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
-            {
-                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
-                {
-                    targetPeer = peer;
-                    break;
-                }
-            }
+            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
+
             if (targetPeer == null)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player was not found!"));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Target player was not found!",
+                    peer: networkPeer);
             }
 
             if (!targetPeer.ControlledAgent.Equals(null)) {
@@ -76,11 +54,12 @@ namespace OCEAdmin.Commands
                 AttackCollisionData attackCollisionDataForDebugPurpose = AttackCollisionData.GetAttackCollisionDataForDebugPurpose(false, false, false, true, false, false, false, false, false, false, false, false, CombatCollisionResult.StrikeAgent, -1, 0, 2, blow.BoneIndex, BoneBodyPartType.Head, mainHandItemBoneIndex, Agent.UsageDirection.AttackLeft, -1, CombatHitResultFlags.NormalHit, 0.5f, 1f, 0f, 0f, 0f, 0f, 0f, 0f, Vec3.Up, blow.Direction, blow.Position, Vec3.Zero, Vec3.Zero, agent.Velocity, Vec3.Up);
                 agent.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
 
-                MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has slayed {1}.", networkPeer.UserName, targetPeer.UserName));
-                MPUtil.SendChatMessage(targetPeer, "** Command ** You have been slain.");
+                return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
+                    msg: string.Format("** Command ** {0} has slayed {1}.", networkPeer.UserName, targetPeer.UserName),
+                    targetMsg: "** Command ** You have been slain.", targetPeer: targetPeer);
             }
 
-            return true;
+            return new CommandFeedback(CommandLogType.Player, msg: "Target is not alive!", peer: networkPeer);
         }
     }
 }

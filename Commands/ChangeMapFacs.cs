@@ -7,22 +7,11 @@ namespace OCEAdmin.Commands
 {
     class ChangeMapFacs : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!mapfacs";
-        }
+        public string Command() => "!mapfacs";
 
-        public string Description()
-        {
-            return "Changes the map and the team factions. !chagemapfacs <map id> <team1 faction> <team2 faction>";
-        }
+        public string Description() => "Changes the map and the team factions. !chagemapfacs <map id> <team1 faction> <team2 faction>";
 
         bool ArgValid(Tuple<bool,string> args, NetworkCommunicator networkPeer, string messagePrefix="")
         {
@@ -31,41 +20,40 @@ namespace OCEAdmin.Commands
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
                 GameNetwork.WriteMessage(new ServerMessage(messagePrefix + args.Item2));
                 GameNetwork.EndModuleEventAsServer();
+
                 return false;
             }
             return true;
         }
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        // Legacy command. Fully implement into command feedback system at later date.
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             // Obligatory argument check
             if (args.Length != 3)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Invalid number of arguments.", peer: networkPeer);
             }
 
             string mapSearchString = args[0];
             Tuple<bool, string> mapSearchResult = AdminPanel.Instance.FindSingleMap(mapSearchString);
             if(!ArgValid(mapSearchResult,networkPeer))
             {
-                return true;
+                return new CommandFeedback(CommandLogType.None);
             }
 
             string faction1SearchString = args[1];
             Tuple<bool, string> faction1SearchResult = AdminPanel.Instance.FindSingleFaction(faction1SearchString);
             if (!ArgValid(faction1SearchResult, networkPeer,"Faction1: "))
             {
-                return true;
+                return new CommandFeedback(CommandLogType.None);
             }
 
             string faction2SearchString = args[2];
             Tuple<bool, string> faction2SearchResult = AdminPanel.Instance.FindSingleFaction(faction2SearchString);
             if (!ArgValid(faction2SearchResult, networkPeer, "Faction2: "))
             {
-                return true;
+                return new CommandFeedback(CommandLogType.None);
             }
 
             // All arguments are good, change the map and the factions
@@ -73,21 +61,14 @@ namespace OCEAdmin.Commands
             string faction1 = faction1SearchResult.Item2;
             string faction2 = faction2SearchResult.Item2;
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Map: " + mapName));
-            GameNetwork.EndModuleEventAsServer();
-
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Faction1: " + faction1));
-            GameNetwork.EndModuleEventAsServer();
-
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Faction2: " + faction2));
-            GameNetwork.EndModuleEventAsServer();
+            // Handle all command feedback in this command.
+            MPUtil.SendChatMessage(networkPeer, string.Format("Map: {0}", mapName));
+            MPUtil.SendChatMessage(networkPeer, string.Format("Faction 1: {0}", faction1));
+            MPUtil.SendChatMessage(networkPeer, string.Format("Faction 2: {0}", faction2));
 
             AdminPanel.Instance.ChangeMapAndFactions(mapName, faction1, faction2);
 
-            return true;
+            return new CommandFeedback(CommandLogType.None);
         }
     }
 }

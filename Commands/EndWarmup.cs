@@ -16,30 +16,17 @@ namespace OCEAdmin.Commands
 
     class EndWarmup : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!endwarmup";
-        }
+        public string Command() => "!endwarmup";
+        public string Description() => "Ends warmup mode <optional int time>";
 
-        public string Description()
-        {
-            return "Ends warmup mode instantly.";
-        }
-
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             AdminPanel.Instance.EndWarmup();
 
-            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has ended warmup.", networkPeer.UserName));
-
-            return true;
+            return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg: string.Format("** Command ** {0} has ended warmup.", networkPeer.UserName),
+                peer: networkPeer);
         }
     }
 }

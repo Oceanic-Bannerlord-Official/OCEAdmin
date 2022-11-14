@@ -12,34 +12,23 @@ namespace OCEAdmin.Commands
 {
     class GodMode : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!godmode";
-        }
+        public string Command() => "!godmode";
 
-        public string Description()
-        {
-            return "Makes you immune to all damage.";
-        }
+        public string Description() => "Makes you immune to all damage.";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (networkPeer.ControlledAgent != null) {
                 networkPeer.ControlledAgent.BaseHealthLimit = 2000;
                 networkPeer.ControlledAgent.HealthLimit = 2000;
                 networkPeer.ControlledAgent.Health = 2000;
                 networkPeer.ControlledAgent.SetMinimumSpeed(10);
-                networkPeer.ControlledAgent.SetMaximumSpeedLimit(10, false);
-                
+                networkPeer.ControlledAgent.SetMaximumSpeedLimit(10, false);           
             }
-            return true;
+
+            return new CommandFeedback(CommandLogType.Player, "God mode enabled.", peer: networkPeer);
         }
     }
 }

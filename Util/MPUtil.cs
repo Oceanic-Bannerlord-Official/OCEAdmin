@@ -55,6 +55,22 @@ namespace OCEAdmin
             return admins;
         }
 
+        public static NetworkCommunicator GetPeerFromName(string name)
+        {
+            NetworkCommunicator targetPeer = null;
+
+            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+            {
+                if (peer.UserName.ToLower().Contains(name.ToLower()))
+                {
+                    targetPeer = peer;
+                    break;
+                }
+            }
+
+            return targetPeer;
+        }
+
         public static bool IsAdmin(NetworkCommunicator networkPeer)
         {
             bool isAdmin = false;

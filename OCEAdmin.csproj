@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
@@ -172,14 +173,14 @@
     <Compile Include="Commands\ChangeMap.cs" />
     <Compile Include="Commands\ChangeMapFacs.cs" />
     <Compile Include="Commands\ChangeMission.cs" />
-    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\Core\Command.cs" />
     <Compile Include="Commands\EndWarmup.cs" />
     <Compile Include="Commands\Equip.cs" />
     <Compile Include="Commands\Factions.cs" />
     <Compile Include="Commands\GodMode.cs" />
     <Compile Include="Commands\Gold.cs" />
     <Compile Include="Commands\Help.cs" />
-    <Compile Include="Commands\id.cs" />
+    <Compile Include="Commands\Id.cs" />
     <Compile Include="Commands\Kick.cs" />
     <Compile Include="Commands\Kill.cs" />
     <Compile Include="Commands\Login.cs" />
@@ -190,7 +191,7 @@
     <Compile Include="Commands\Unban.cs" />
     <Compile Include="Commands\WarmupTime.cs" />
     <Compile Include="OCEAdminHandler.cs" />
-    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\Core\CommandManager.cs" />
     <Compile Include="Core\AdminManager.cs" />
     <Compile Include="Core\BanManager.cs" />
     <Compile Include="Core\Config.cs" />

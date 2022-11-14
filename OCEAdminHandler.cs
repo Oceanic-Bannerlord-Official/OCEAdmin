@@ -69,7 +69,7 @@ namespace OCEAdmin
                 string[] argsWithCommand = message.Message.Split(' ');
                 string command = argsWithCommand[0];
                 string[] args = argsWithCommand.Skip(1).ToArray();
-                CommandManager.Instance.Execute(networkPeer, command, args);
+                CommandManager.Instance.Execute(networkPeer, command, args).Log();
             }
             return true;
         }
