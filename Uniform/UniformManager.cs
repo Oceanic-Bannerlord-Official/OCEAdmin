@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCEAdmin.Updating;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,11 +13,8 @@ namespace OCEAdmin
 {
     public class UniformManager
     {
-        public List<ClanUniform> uniforms;
+        public List<Clan> clans;
 
-        public bool IsLoaded = false;
-
-        // Singleton
         private static UniformManager instance;
         public static UniformManager Instance
         {
@@ -30,137 +28,104 @@ namespace OCEAdmin
             }
         }
 
-        public bool IsEnabled()
+        public void Initialise()
         {
-            return false;
+            UpdateManager.Instance.Initialise();
         }
 
-        public void Populate()
+        public void LoadClans()
         {
-            // Refresh the list if it's already populated.
-            this.uniforms = new List<ClanUniform>();
+            this.clans = new List<Clan>();
 
-            string uniformDir = Path.Combine(GetDir(), "uniforms");
+            string uniformDir = Path.Combine(MPUtil.GetPluginDir(), "uniforms");
 
-            if(!Directory.Exists(uniformDir))
+            Directory.CreateDirectory(uniformDir);
+            IEnumerable<string> subdirs = Directory.GetDirectories(uniformDir);
+
+            foreach (string dir in subdirs)
             {
-                Directory.CreateDirectory(uniformDir);
-                GetTestData().Serialize(uniformDir);
-            }
-            else
-            {
-                IEnumerable<string> subdirs = Directory.GetDirectories(uniformDir);
+                string[] files = Directory.GetFiles(dir);
 
-                foreach(string dir in subdirs)
+                foreach (string file in files)
                 {
-                    string[] files = Directory.GetFiles(dir);
+                    string clanName = new DirectoryInfo(dir).Name + ".xml";
+                    string fileName = file.Replace("/", @"\").Replace(Path.GetDirectoryName(file) + @"\", "");
 
-                    foreach(string file in files)
+                    if (fileName == clanName)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(Clan));
+                        Clan clan = new Clan();
+
+                        using (Stream reader = new FileStream(file, FileMode.Open))
+                        {
+                            clan = (Clan)serializer.Deserialize(reader);
+                        }
+
+                        clans.Add(clan);
+
+                        MPUtil.WriteToConsole(string.Format("Clan '{0}' has been loaded!", clan.tag));
+                    }
+                }
+            }
+        }
+
+        public void LoadUniforms()
+        {
+            string uniformDir = Path.Combine(MPUtil.GetPluginDir(), "uniforms");
+
+            IEnumerable<string> subdirs = Directory.GetDirectories(uniformDir);
+
+            foreach(string dir in subdirs)
+            {
+                string[] files = Directory.GetFiles(dir);
+
+                foreach(string file in files)
+                {
+                    string clanName = new DirectoryInfo(dir).Name;
+                    string fileName = file.Replace("/", @"\").Replace(Path.GetDirectoryName(file) + @"\", "");
+
+                    if (fileName != clanName + ".xml")
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(ClanUniform));
                         ClanUniform clanUniform = new ClanUniform();
 
-                        using(Stream reader = new FileStream(file, FileMode.Open))
+                        using (Stream reader = new FileStream(file, FileMode.Open))
                         {
                             clanUniform = (ClanUniform)serializer.Deserialize(reader);
                         }
 
-                        uniforms.Add(clanUniform);
+                        bool foundClan = false;
 
-                        Debug.Print(string.Format("Loading uniform for {0} with unit type: {1}", clanUniform.clanTag, clanUniform.unitOverride), 0, Debug.DebugColor.Green);
+                        foreach(Clan clan in clans)
+                        {
+                            if(clan.tag == clanName)
+                            {
+                                clan.uniforms.Add(clanUniform);
+                                foundClan = true;
+                            }
+                        }
+
+                        if(!foundClan)
+                        {
+                            MPUtil.WriteToConsole(string.Format("Could not load uniform file: {0}. This is because you are missing {1}.xml in the uniform's folder.",
+                                file, clanName));
+                        }
+                        else
+                        {
+                            MPUtil.WriteToConsole(string.Format("Loading uniform '{0}' for {1}.", fileName, clanName));
+                        }
                     }
                 }
             }
-
-            IsLoaded = true;
         }
-
-        public ClanUniform GetTestData()
+    
+        public Clan GetClan(string clanTag)
         {
-            ClanUniform clanUniform = new ClanUniform();
-
-            clanUniform.clanTag = "ASTG";
-            clanUniform.unitOverride = "mp_heavy_infantry_vlandia_troop";
-            clanUniform.officerIDs = new List<String> { "2.0.0.76561198259745840" };
-            clanUniform.uniformParts = new List<UniformPart>();
-
-            UniformPart headPart = new UniformPart();
-            headPart.itemSlot = EquipmentIndex.Head;
-            headPart.variations = new List<string> { "mp_nasal_helmet_over_cloth_headwrap" };
-            headPart.officerVariations = new List<string> { "mp_nasal_helmet_over_cloth_headwrap" };
-
-            UniformPart chestPart = new UniformPart();
-            chestPart.itemSlot = EquipmentIndex.Body;
-            chestPart.variations = new List<string> { "mp_veteran_mercenary_armor" };
-            chestPart.officerVariations = new List<string> { "mp_veteran_mercenary_armor" };
-
-            UniformPart cloakPart = new UniformPart();
-            cloakPart.itemSlot = EquipmentIndex.Cape;
-            cloakPart.variations = new List<string> { "mp_battanian_leather_shoulder_a" };
-            cloakPart.officerVariations = new List<string> { "mp_battanian_leather_shoulder_a" };
-
-            UniformPart handsPart = new UniformPart();
-            handsPart.itemSlot = EquipmentIndex.Gloves;
-            handsPart.variations = new List<string> { "mp_leather_gloves" };
-            handsPart.officerVariations = new List<string> { "mp_leather_gloves" };
-
-            UniformPart legPart = new UniformPart();
-            legPart.itemSlot = EquipmentIndex.Leg;
-            legPart.variations = new List<string> { "mp_fine_town_boots" };
-            legPart.officerVariations = new List<string> { "mp_fine_town_boots" };
-
-            clanUniform.uniformParts.Add(headPart);
-            clanUniform.uniformParts.Add(chestPart);
-            clanUniform.uniformParts.Add(cloakPart);
-            clanUniform.uniformParts.Add(handsPart);
-            clanUniform.uniformParts.Add(legPart);
-
-            return clanUniform;
-        }
-
-        public string GetDir()
-        {
-            return "../../OCEAdmin";
-        }
-
-        public void Add(ClanUniform uniform)
-        {
-            uniforms.Add(uniform);
-        }
-
-        public bool HasClanUniform(string clan)
-        {
-            foreach (ClanUniform clanUniform in uniforms)
+            foreach(Clan clan in clans)
             {
-                if (clanUniform.GetClan(clan))
+                if(clan.tag == clanTag)
                 {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool HasClanUniformForUnit(string clan, string unit)
-        {
-            foreach (ClanUniform clanUniform in uniforms)
-            {
-                if (clanUniform.GetClan(clan) && clanUniform.IsForUnit(unit))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public ClanUniform GetUniform(string clan)
-        {
-            foreach (ClanUniform clanUniform in uniforms)
-            {
-                if (clanUniform.GetClan(clan))
-                {
-                    return clanUniform;
+                    return clan;
                 }
             }
 

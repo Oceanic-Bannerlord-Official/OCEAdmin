@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 
-namespace OCEAdmin
+namespace OCEAdmin.Core
 {
     public class AdminManager
     {
@@ -14,9 +14,9 @@ namespace OCEAdmin
 
         public static bool PlayerIsAdmin(string peerId)
         {
-            if(ConfigManager.GetConfig().Admins != null)
+            if(ConfigManager.Instance.GetConfig().Admins != null)
             {
-                foreach (var adminInfo in ConfigManager.GetConfig().Admins)
+                foreach (var adminInfo in ConfigManager.Instance.GetConfig().Admins)
                 {
                     if (peerId == adminInfo)
                     {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
@@ -41,7 +42,7 @@ namespace OCEAdmin.Commands
             NetworkCommunicator targetPeer = null;
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                if (peer.UserName.Contains(string.Join(" ", args)))
+                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
                 {
                     targetPeer = peer;
                     break;
@@ -76,6 +77,7 @@ namespace OCEAdmin.Commands
                 agent.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
 
                 MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has slayed {1}.", networkPeer.UserName, targetPeer.UserName));
+                MPUtil.SendChatMessage(targetPeer, "** Command ** You have been slain.");
             }
 
             return true;

@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Teleport : Command
+    class Goto : Command
     {
         public bool CanUse(NetworkCommunicator networkPeer)
         {
@@ -20,7 +21,7 @@ namespace OCEAdmin.Commands
 
         public string Command()
         {
-            return "!tp";
+            return "!goto";
         }
 
         public string Description()
@@ -41,7 +42,7 @@ namespace OCEAdmin.Commands
             NetworkCommunicator targetPeer = null;
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                if (peer.UserName.Contains(string.Join(" ", args)))
+                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
                 {
                     targetPeer = peer;
                     break;

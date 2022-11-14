@@ -15,7 +15,7 @@ using TaleWorlds.ObjectSystem;
 using TaleWorlds.MountAndBlade.Diamond;
 using System.Reflection;
 
-namespace OCEAdmin
+namespace OCEAdmin.Core
 {
     public struct MissionData
     {
@@ -184,7 +184,12 @@ namespace OCEAdmin
 
         public List<string> GetAllAvailableMaps()
         {
-            return GetMapsForCurrentGameType().Union(GetMapsInPool()).ToList();
+            var maps = new List<string>();
+
+            maps = GetMapsForCurrentGameType().Union(GetMapsInPool()).ToList();
+            maps.Union(MultiplayerGameTypes.GetGameTypeInfo("Captain").Scenes.ToList());
+
+            return maps; 
         }
 
         List<string> FindMaps(string searchString)
@@ -196,7 +201,7 @@ namespace OCEAdmin
         {
             List<string> foundMaps = FindMaps(searchString);
 
-            if(foundMaps.Count == 1)
+            if (foundMaps.Count == 1)
             {
                 return new Tuple<bool, string>(true, foundMaps[0]);
             }
@@ -722,6 +727,8 @@ namespace OCEAdmin
 
                 // Spawning the agent, player immediately takes control
                 Agent newAgent = Mission.Current.SpawnAgent(bda);
+                newAgent.SetClothingColor1(oldAgent.ClothingColor1);
+                newAgent.SetClothingColor2(oldAgent.ClothingColor2);
 
                 // Make sure we wield the default items
                 newAgent.WieldInitialWeapons();

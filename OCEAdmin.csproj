@@ -25,22 +25,75 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GitHubRelease|AnyCPU'">
+    <OutputPath>bin\GitHubRelease\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GitHubRelease|x64'">
+    <OutputPath>bin\x64\GitHubRelease\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\BannerlordServer\bin\Win64_Shipping_Server\0Harmony.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BannerlordServer\bin\Win64_Shipping_Server\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=3.0.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>packages\protobuf-net.3.1.25\lib\net462\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>packages\protobuf-net.Core.3.1.25\lib\net462\protobuf-net.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Immutable.7.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Primitives, Version=4.7.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ServiceModel.Primitives.4.7.0\lib\net461\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,10 +129,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminPanel\AdminPanel.cs" />
-    <Compile Include="Checksum\HashStorage.cs" />
+    <Compile Include="Core\AdminPanel.cs" />
+    <Compile Include="Commands\Bring.cs" />
+    <Compile Include="Core\ConfigManager.cs" />
+    <Compile Include="Patches\PatchManager.cs" />
+    <Compile Include="Uniform\Clan.cs" />
+    <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
+    <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
+    <Compile Include="Updating\HashedFile.cs" />
+    <Compile Include="Updating\HashStorage.cs" />
     <Compile Include="Commands\Heal.cs" />
-    <Compile Include="Managers\UpdateManager.cs" />
+    <Compile Include="Updating\Helpers\CommunicatorHelper.cs" />
+    <Compile Include="Updating\Helpers\ProtobufHelper.cs" />
+    <Compile Include="Updating\PacketHandlers\HandlerRegistry.cs" />
+    <Compile Include="Updating\PacketHandlers\IServerPacketHandler.cs" />
+    <Compile Include="Updating\PacketHandlers\UpdateCompletePacketHandler.cs" />
+    <Compile Include="Updating\PacketHandlers\SendFilePacketHandler.cs" />
+    <Compile Include="Updating\Packets\Client\SendFileListPacket.cs" />
+    <Compile Include="Updating\Packets\IDataPacket.cs" />
+    <Compile Include="Updating\Packets\IServerDataPacket.cs" />
+    <Compile Include="Updating\Packets\NetworkPacketRegistry.cs" />
+    <Compile Include="Updating\Packets\Packet.cs" />
+    <Compile Include="Updating\Packets\Server\SendFilePacket.cs" />
+    <Compile Include="Updating\Packets\Server\UpdateCompletePacket.cs" />
+    <Compile Include="Updating\Telepathy\Client.cs" />
+    <Compile Include="Updating\Telepathy\Common.cs" />
+    <Compile Include="Updating\Telepathy\ConnectionState.cs" />
+    <Compile Include="Updating\Telepathy\EventType.cs" />
+    <Compile Include="Updating\Telepathy\Log.cs" />
+    <Compile Include="Updating\Telepathy\MagnificentReceivePipe.cs" />
+    <Compile Include="Updating\Telepathy\MagnificentSendPipe.cs" />
+    <Compile Include="Updating\Telepathy\NetworkStreamExtensions.cs" />
+    <Compile Include="Updating\Telepathy\Pool.cs" />
+    <Compile Include="Updating\Telepathy\Server.cs" />
+    <Compile Include="Updating\Telepathy\ThreadFunctions.cs" />
+    <Compile Include="Updating\Telepathy\Utils.cs" />
+    <Compile Include="Updating\UpdateManager.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
     <Compile Include="Commands\AdminChat.cs" />
     <Compile Include="Commands\Ban.cs" />
@@ -101,17 +186,15 @@
     <Compile Include="Commands\Maps.cs" />
     <Compile Include="Commands\MapTime.cs" />
     <Compile Include="Commands\Reset.cs" />
-    <Compile Include="Commands\Teleport.cs" />
+    <Compile Include="Commands\Goto.cs" />
     <Compile Include="Commands\Unban.cs" />
     <Compile Include="Commands\WarmupTime.cs" />
-    <Compile Include="Handlers\ChatHandler.cs" />
-    <Compile Include="Managers\CommandManager.cs" />
-    <Compile Include="Managers\AdminManager.cs" />
-    <Compile Include="Managers\BanManager.cs" />
-    <Compile Include="AdminPanel\Config.cs" />
-    <Compile Include="Managers\ConfigManager.cs" />
-    <Compile Include="HarmonyPatches\PatchChatBox.cs" />
-    <Compile Include="HarmonyPatches\PatchMaxNumberOfPlayers.cs" />
+    <Compile Include="OCEAdminHandler.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Core\AdminManager.cs" />
+    <Compile Include="Core\BanManager.cs" />
+    <Compile Include="Core\Config.cs" />
+    <Compile Include="Patches\PatchChatBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\MPUtil.cs" />
     <Compile Include="Uniform\ClanUniform.cs" />

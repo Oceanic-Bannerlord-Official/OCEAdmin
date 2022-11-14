@@ -1,4 +1,5 @@
 ﻿using NetworkMessages.FromServer;
+using OCEAdmin.Core;
 using System;
 using TaleWorlds.MountAndBlade;
 
@@ -26,8 +27,7 @@ namespace OCEAdmin.Commands
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            AdminPanel.Instance.BroadcastMessage("Resetting the map.");
-
+            MPUtil.BroadcastToAll(string.Format("** Command ** {0} has reset the map.", networkPeer.UserName));
             AdminPanel.Instance.ResetMission();
 
             return true;

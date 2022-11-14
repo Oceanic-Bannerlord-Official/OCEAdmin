@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
+using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
@@ -27,13 +28,20 @@ namespace OCEAdmin.Commands
 
         public bool Execute(NetworkCommunicator networkPeer, string[] args)
         {
+            if(!ConfigManager.Instance.GetConfig().AllowLoginCommand)
+            {
+                MPUtil.SendChatMessage(networkPeer, 
+                    "** Command ** The login command has been disabled from the config file.");
+                return true;
+            }
+
             if (args.Length == 0 || args.Length > 1) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
                 GameNetwork.WriteMessage(new ServerMessage("Please only provide a password. Usage: !login <password>"));
                 GameNetwork.EndModuleEventAsServer();
             }
             String password = args[0];
-            Config config = ConfigManager.GetConfig();
+            Config config = ConfigManager.Instance.GetConfig();
             if (!password.Equals(config.AdminPassword)) {
                 GameNetwork.BeginModuleEventAsServer(networkPeer);
                 GameNetwork.WriteMessage(new ServerMessage("Incorrect password."));

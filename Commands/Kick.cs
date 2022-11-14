@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
+using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
@@ -41,7 +42,7 @@ namespace OCEAdmin.Commands
             NetworkCommunicator targetPeer = null;
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                if (peer.UserName.Contains(string.Join(" ", args)))
+                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
                 {
                     targetPeer = peer;
                     break;

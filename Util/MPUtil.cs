@@ -1,4 +1,5 @@
 ﻿using NetworkMessages.FromServer;
+using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace OCEAdmin
     public class MPUtil
     {
         private static Random random = new Random();
+
+        public static string GetPluginDir()
+        {
+            return "../../OCEAdmin";
+        }
 
         public static void WriteToConsole(string text) {
             Debug.Print(string.Format("[OCEAdmin] - " + text), 0, Debug.DebugColor.Green);
@@ -49,12 +55,27 @@ namespace OCEAdmin
             return admins;
         }
 
+        public static bool IsAdmin(NetworkCommunicator networkPeer)
+        {
+            bool isAdmin = false;
+            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
+
+            return isAdmin && isExists & networkPeer.IsSynchronized;
+        }
+
         public static void BroadcastToAdmins(string text)
         {
             foreach(NetworkCommunicator admin in GetAdmins())
             {
                 SendChatMessage(admin, text);
             }
+        }
+
+        public static void BroadcastToAll(string text)
+        {
+            GameNetwork.BeginBroadcastModuleEvent();
+            GameNetwork.WriteMessage(new ServerMessage(text));
+            GameNetwork.EndBroadcastModuleEvent(GameNetwork.EventBroadcastFlags.None);
         }
 
         public static string GetClanTag(NetworkCommunicator networkPeer)
