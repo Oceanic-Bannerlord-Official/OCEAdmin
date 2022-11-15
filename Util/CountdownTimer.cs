@@ -18,6 +18,8 @@ namespace OCEAdmin.Util
         private Thread _tickThread;
         private NetworkCommunicator _networkPeer;
 
+        private static List<CountdownTimer> _Instances = new List<CountdownTimer>();
+
         public event EventHandler<CountdownTimerEventArgs> OnTimerComplete;
 
         // Creates a new countdown timer with x amount of seconds.
@@ -26,6 +28,7 @@ namespace OCEAdmin.Util
             _tickTime = tickTime;
             _networkPeer = networkPeer;
             endTime = DateTime.Now.AddSeconds(seconds);
+            _Instances.Add(this);
 
             _ticking = true;
             _tickThread = new Thread(Tick);
@@ -50,6 +53,17 @@ namespace OCEAdmin.Util
                 Tick();
         }
 
+        public static bool PeerHasCountdown(NetworkCommunicator peer)
+        {
+            foreach(CountdownTimer countdown in _Instances)
+            {
+                if (countdown._networkPeer.VirtualPlayer.Id == peer.VirtualPlayer.Id)
+                    return true;
+            }
+
+            return false;
+        }
+
         protected virtual void OnCountdownComplete(CountdownTimerEventArgs e)
         {
             EventHandler<CountdownTimerEventArgs> handler = OnTimerComplete;
@@ -57,6 +71,8 @@ namespace OCEAdmin.Util
             {
                 handler(this, e);
             }
+
+            _Instances.Remove(this);
         }
     }
 

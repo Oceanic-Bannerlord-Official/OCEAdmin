@@ -384,7 +384,7 @@ namespace OCEAdmin.Core
             }
         }
 
-        private MultiplayerWarmupComponent.WarmupStates? GetWarmupState()
+        public MultiplayerWarmupComponent.WarmupStates? GetWarmupState()
         {
             MultiplayerWarmupComponent mwc = Mission.Current.GetMissionBehavior<MultiplayerWarmupComponent>();
 

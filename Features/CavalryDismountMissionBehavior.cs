@@ -28,12 +28,19 @@ namespace OCEAdmin.Features
 
         public override void OnAgentMount(Agent agent)
         {
+            if (!ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
+                return;
+
             NetworkCommunicator networkPeer = agent.MissionPeer.GetNetworkPeer();     
 
             if (networkPeer != null)
             {
                 // Exclude all agents that start with horses from the slay script.
                 if(!agent.SpawnEquipment[TaleWorlds.Core.EquipmentIndex.Horse].IsEmpty)
+                    return;
+
+                // If the peer already has a countdown, we don't need to create another.
+                if (CountdownTimer.PeerHasCountdown(networkPeer))
                     return;
 
                 NetworkCommunicator alreadyWarnedPlayer = alreadyWarnedPlayers.FirstOrDefault(s => s == networkPeer);

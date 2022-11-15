@@ -129,12 +129,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Autoadmin.cs" />
+    <Compile Include="Commands\ArcherLimit.cs" />
+    <Compile Include="Commands\CavLimit.cs" />
+    <Compile Include="Commands\AutoAdmin.cs" />
+    <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
+    <Compile Include="Features\SpecialistLimitGameHandler.cs" />
+    <Compile Include="Features\SpecialistLimitMissionBehavior.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Uniform\Clan.cs" />
     <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />

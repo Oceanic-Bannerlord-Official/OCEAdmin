@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.ObjectSystem;
 
 namespace OCEAdmin
 {
     public class MPUtil
     {
         private static Random random = new Random();
-
         public static string GetPluginDir()
         {
             return "../../OCEAdmin";
@@ -110,7 +111,6 @@ namespace OCEAdmin
             return false;
         }
 
-
         public static void Slay(NetworkCommunicator networkPeer)
         {
             Slay(networkPeer.ControlledAgent);
@@ -147,6 +147,39 @@ namespace OCEAdmin
             }
         }
 
+        public static Team GetDefenderTeam()
+        {
+            return Mission.Current.Teams.Defender;
+        }
+
+        public static Team GetAttackerTeam()
+        {
+            return Mission.Current.Teams.Attacker;
+        }
+
+        public static BasicCultureObject GetTeamCulture(NetworkCommunicator networkPeer)
+        {
+            MissionPeer component = networkPeer.GetComponent<MissionPeer>();
+
+            if (((component != null) ? component.Team : null) != null && component.Team.Side != BattleSideEnum.None)
+            {
+                string strValue = MultiplayerOptions.OptionType.CultureTeam1.GetStrValue(MultiplayerOptions.MultiplayerOptionsAccessMode.CurrentMapOptions);
+                if (component.Team.Side != BattleSideEnum.Attacker)
+                {
+                    strValue = MultiplayerOptions.OptionType.CultureTeam2.GetStrValue(MultiplayerOptions.MultiplayerOptionsAccessMode.CurrentMapOptions);
+                }
+
+                return MBObjectManager.Instance.GetObject<BasicCultureObject>(strValue);
+            }
+
+            return null;
+        }
+
+        public static Team GetPeerTeam(NetworkCommunicator networkPeer)
+        {
+            return networkPeer.GetComponent<MissionPeer>().Team;
+        }
+
         public static string GetPlayerID(NetworkCommunicator networkPeer)
         {
             return networkPeer.VirtualPlayer.Id.ToString();
@@ -156,5 +189,10 @@ namespace OCEAdmin
         {
             return networkPeer.ControlledAgent.Character.StringId;
         }
+
+        public static TargetIconType[] cavClasses = new TargetIconType[] { TargetIconType.Cavalry_Heavy, TargetIconType.Cavalry_Light,
+            TargetIconType.HorseArcher_Heavy, TargetIconType.HorseArcher_Light };
+
+        public static TargetIconType[] archerClasses = new TargetIconType[] { TargetIconType.Archer_Heavy, TargetIconType.Archer_Light };
     }
 }

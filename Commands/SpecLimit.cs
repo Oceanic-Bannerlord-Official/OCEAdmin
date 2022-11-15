@@ -9,18 +9,18 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class AutoAdmin : Command
+    class SpecLimit : Command
     {
         public Permissions CanUse() => Permissions.Admin;
 
-        public string Command() => "!autoadmin";
+        public string Command() => "!speclimit";
 
-        public string Description() => "Toggles cavalry auto admin. <optional true|false>";
+        public string Description() => "Toggles specialist limits. <optional true|false>";
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             // Set it to be opposite of what we have currently.
-            bool status = !ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled;
+            bool status = !ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled;
 
             // If there is a true or false value, override the toggle and make it this value.
             if (args[0] != null)
@@ -29,12 +29,10 @@ namespace OCEAdmin.Commands
             }
 
             // This won't save or persist to the config.
-            ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled = status;
-
-
+            ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled = status;
 
             return new CommandFeedback(CommandLogType.Player,
-                msg: string.Format("** Command ** {0} has enabled cavalry dismonut auto-admin.", networkPeer.UserName));
+                msg: string.Format("** Command ** {0} has enabled specialist limits.", networkPeer.UserName));
         }
     }
 }
