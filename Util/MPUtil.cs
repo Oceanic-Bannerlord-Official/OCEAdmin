@@ -110,10 +110,15 @@ namespace OCEAdmin
             return false;
         }
 
+
         public static void Slay(NetworkCommunicator networkPeer)
         {
-            if (!networkPeer.ControlledAgent.Equals(null)) {
-                Agent agent = networkPeer.ControlledAgent;
+            Slay(networkPeer.ControlledAgent);
+        }
+
+        public static void Slay(Agent agent)
+        {
+            if (!agent.Equals(null)) {
                 Blow blow = new Blow(agent.Index);
                 blow.DamageType = TaleWorlds.Core.DamageTypes.Pierce;
                 blow.BoneIndex = agent.Monster.HeadLookDirectionBoneIndex;
@@ -130,6 +135,14 @@ namespace OCEAdmin
                 blow.DamageCalculated = true;
                 sbyte mainHandItemBoneIndex = agent.Monster.MainHandItemBoneIndex;
                 AttackCollisionData attackCollisionDataForDebugPurpose = AttackCollisionData.GetAttackCollisionDataForDebugPurpose(false, false, false, true, false, false, false, false, false, false, false, false, CombatCollisionResult.StrikeAgent, -1, 0, 2, blow.BoneIndex, BoneBodyPartType.Head, mainHandItemBoneIndex, Agent.UsageDirection.AttackLeft, -1, CombatHitResultFlags.NormalHit, 0.5f, 1f, 0f, 0f, 0f, 0f, 0f, 0f, Vec3.Up, blow.Direction, blow.Position, Vec3.Zero, Vec3.Zero, agent.Velocity, Vec3.Up);
+
+                Agent agentHorse = agent.MountAgent;
+
+                if (!agentHorse.Equals(null))
+                {
+                    agentHorse.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
+                }
+
                 agent.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
             }
         }
