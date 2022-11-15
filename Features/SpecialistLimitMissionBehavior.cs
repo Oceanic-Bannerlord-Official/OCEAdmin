@@ -71,6 +71,11 @@ namespace OCEAdmin.Features
 			}
 
 			TeamSpecialistCollection teamSpecialists = this.GetCollection(team);
+
+			// Use-case of swapping from cavalry to archer or vise versa,
+			// make sure it's all cleared incase.
+			teamSpecialists.Remove(networkPeer);
+
 			teamSpecialists.Add(networkPeer, unitType);
 
 			return true;
