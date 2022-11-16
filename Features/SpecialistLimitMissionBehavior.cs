@@ -52,15 +52,23 @@ namespace OCEAdmin.Features
 				return true;
 
 			// Identify the index to a class type since Bannerlord doesn't do that for us.
-			UnitType unitType = this.GetSpecialistType(networkPeer, message.SelectedTroopIndex);
+			UnitType requestedUnitType = this.GetSpecialistType(networkPeer, message.SelectedTroopIndex);
 
-			if (unitType.Equals(UnitType.Infantry))
+			if (requestedUnitType.Equals(UnitType.Infantry))
 				return true;
 
 			Team team = MPUtil.GetPeerTeam(networkPeer);
+			TeamSpecialistCollection teamSpecialists = this.GetCollection(team);
+
+			UnitType existingSpecialist = teamSpecialists.GetSpecialist(networkPeer);
+
+			// If we're trying to swap from the same class type within a class (i.e light
+			// cavalry to heavy cavalry), we don't want to do any further checks.
+			if (existingSpecialist == requestedUnitType)
+				return true;
 
 			// Specialists for the team are full, inform the player and reject the request.
-			if (!this.HasAvaliableSpecs(team, unitType))
+			if (!this.HasAvaliableSpecs(team, requestedUnitType))
 			{
 				MPUtil.SendChatMessage(networkPeer, "** SPECIALIST LIMITS ** Your class swap has been rejected.");
 				MPUtil.SendChatMessage(networkPeer, "** SPECIALIST LIMITS ** That class is currently full.");
@@ -70,13 +78,11 @@ namespace OCEAdmin.Features
 				return false;
 			}
 
-			TeamSpecialistCollection teamSpecialists = this.GetCollection(team);
-
 			// Use-case of swapping from cavalry to archer or vise versa,
 			// make sure it's all cleared incase.
 			teamSpecialists.Remove(networkPeer);
 
-			teamSpecialists.Add(networkPeer, unitType);
+			teamSpecialists.Add(networkPeer, requestedUnitType);
 
 			return true;
 		}
@@ -145,24 +151,39 @@ namespace OCEAdmin.Features
 			public List<NetworkCommunicator> Cavalry { get; }
 			public List<NetworkCommunicator> Archers { get; }
 
-			public void Add(NetworkCommunicator peer, UnitType unitType)
+			public void Add(NetworkCommunicator networkPeer, UnitType unitType)
 			{
 				switch (unitType)
 				{
 					case UnitType.Cavalry:
-						Cavalry.Add(peer);
+						Cavalry.Add(networkPeer);
 						break;
 					case UnitType.Archer:
-						Archers.Add(peer);
+						Archers.Add(networkPeer);
 						break;
 				}
 			}
 
-			public void Remove(NetworkCommunicator peer)
+			public void Remove(NetworkCommunicator networkPeer)
 			{
-				Cavalry.Remove(peer);
-				Archers.Remove(peer);
+				Cavalry.Remove(networkPeer);
+				Archers.Remove(networkPeer);
 			}
+
+			public UnitType GetSpecialist(NetworkCommunicator networkPeer)
+            {
+				if(Cavalry.Find(peer => peer.VirtualPlayer.Id == networkPeer.VirtualPlayer.Id) != null)
+                {
+					return UnitType.Cavalry;
+                }
+
+				if(Archers.Find(peer => peer.VirtualPlayer.Id == networkPeer.VirtualPlayer.Id) != null)
+                {
+					return UnitType.Archer;
+                }
+
+				return UnitType.Infantry;
+            }
 		}
 
 		private enum UnitType
