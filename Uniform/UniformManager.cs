@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
+using TaleWorlds.MountAndBlade;
+using TaleWorlds.ObjectSystem;
 
 namespace OCEAdmin
 {
@@ -119,6 +121,72 @@ namespace OCEAdmin
             }
         }
     
+        public bool PlayerHasUniform(NetworkCommunicator networkPeer)
+        {
+            Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
+
+            if (clan == null)
+                return false;
+
+            string curUnit = MPUtil.GetUnitID(networkPeer);
+
+            MPUtil.WriteToConsole("Checking for uniform");
+
+            // If it hasn't been set, we're in the unit select and need to find the unit
+            // by it's index.
+            if(curUnit == null)
+            {
+                curUnit = MPUtil.GetUnitIDFromIndex(networkPeer);
+                MPUtil.WriteToConsole("Overridden curUnit!");
+            }
+
+            if (curUnit == null)
+                return false;
+
+            ClanUniform uniform = clan.GetUniformForUnit(curUnit);
+
+            MPUtil.WriteToConsole("Has uniform1 / " + curUnit);
+
+            if (uniform == null)
+                return false;
+
+            MPUtil.WriteToConsole("Has uniform2");
+
+            return true;
+        }
+
+        public Dictionary<string, string> GetUniformCosmeticsDictionary(NetworkCommunicator networkPeer)
+        {
+            Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
+
+            if (clan != null)
+            {
+                string curUnit = MPUtil.GetUnitID(networkPeer);
+
+                if (curUnit == null)
+                {
+                    curUnit = MPUtil.GetUnitIDFromIndex(networkPeer);
+                }
+
+                ClanUniform uniform = clan.GetUniformForUnit(curUnit);
+
+                if (uniform != null)
+                {
+                    bool isOfficer = clan.officerIDs.Contains(MPUtil.GetPlayerID(networkPeer));
+                    Dictionary<string, string> equipment = new Dictionary<string, string>();
+
+                    foreach (UniformPart part in uniform.uniformParts)
+                    {
+                        equipment.Add(part.itemSlot.ToString(), part.GetPart(isOfficer));
+                    }
+
+                    return equipment;
+                }
+            }
+
+            return null;
+        }
+
         public Clan GetClan(string clanTag)
         {
             foreach(Clan clan in clans)

@@ -14,14 +14,14 @@ namespace OCEAdmin
         {
             base.OnSubModuleLoad();
 
-            // This handles all the hotfixes or game code edits
-            PatchManager.LoadPatches();
-
             // Loads the configuration for OCEAdmin variables.
             ConfigManager.Instance.LoadConfig();
 
             // Creates a new instance of the in-game command manager.
             CommandManager.Instance.Initialize();
+
+            // This handles all the hotfixes or game code edits
+            PatchManager.LoadPatches();
 
             // Commences the uniform service and it's update service.
             if (ConfigManager.Instance.GetConfig().UniformSettings.Enabled)

@@ -9,6 +9,7 @@ using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.ObjectSystem;
+using static TaleWorlds.MountAndBlade.MultiplayerClassDivisions;
 
 namespace OCEAdmin
 {
@@ -185,8 +186,29 @@ namespace OCEAdmin
             return networkPeer.VirtualPlayer.Id.ToString();
         }
 
+        public static string GetUnitIDFromIndex(NetworkCommunicator peer)
+        {
+            BasicCultureObject culture = MPUtil.GetTeamCulture(peer);
+            int index = peer.GetComponent<MissionPeer>().SelectedTroopIndex;
+
+            List<MultiplayerClassDivisions.MPHeroClass> classes = MultiplayerClassDivisions.GetMPHeroClasses(culture).ToList<MultiplayerClassDivisions.MPHeroClass>();
+
+            for (int i = 0; i < classes.Count; i++)
+            {
+                if (index == i)
+                {
+                    return classes[i].StringId;
+                }
+            }
+
+            return null;
+        }
+
         public static string GetUnitID(NetworkCommunicator networkPeer)
         {
+            if (networkPeer.ControlledAgent == null)
+                return null;
+
             return networkPeer.ControlledAgent.Character.StringId;
         }
 
