@@ -19,7 +19,6 @@ namespace OCEAdmin.Patches
         {
 			__state = missionPeer;
 
-			MPUtil.WriteToConsole(__state.GetNetworkPeer().UserName);
 			return true;
         }
 

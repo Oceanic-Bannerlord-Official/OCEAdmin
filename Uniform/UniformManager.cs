@@ -130,14 +130,11 @@ namespace OCEAdmin
 
             string curUnit = MPUtil.GetUnitID(networkPeer);
 
-            MPUtil.WriteToConsole("Checking for uniform");
-
             // If it hasn't been set, we're in the unit select and need to find the unit
             // by it's index.
             if(curUnit == null)
             {
                 curUnit = MPUtil.GetUnitIDFromIndex(networkPeer);
-                MPUtil.WriteToConsole("Overridden curUnit!");
             }
 
             if (curUnit == null)
@@ -145,12 +142,8 @@ namespace OCEAdmin
 
             ClanUniform uniform = clan.GetUniformForUnit(curUnit);
 
-            MPUtil.WriteToConsole("Has uniform1 / " + curUnit);
-
             if (uniform == null)
                 return false;
-
-            MPUtil.WriteToConsole("Has uniform2");
 
             return true;
         }

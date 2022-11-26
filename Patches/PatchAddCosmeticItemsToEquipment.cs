@@ -51,20 +51,19 @@ namespace OCEAdmin.Patches
 				else if(IsModdedType(choosenCosmetics)) {
 					string cosmetic;
 
+					// We want all empty slots to be blank.
+					if(EquipmentIndexWhitelist.Contains(equipmentIndex))
+                    {
+						equipment[equipmentIndex] = new EquipmentElement();
+					}
+
 					// if we find the slot key in cosmetics, output to replace
 					if (choosenCosmetics.TryGetValue(equipmentIndex.ToString(), out cosmetic)) {
 						EquipmentElement equipmentElement = equipment[equipmentIndex];
 
-						if (cosmetic != "")
-						{
-							ItemObject itemObject = MBObjectManager.Instance.GetObject<ItemObject>(cosmetic);
-							equipmentElement.CosmeticItem = itemObject;
-							equipment[equipmentIndex] = equipmentElement;
-						}
-						else
-						{
-							equipment[equipmentIndex] = new EquipmentElement();
-						}
+						ItemObject itemObject = MBObjectManager.Instance.GetObject<ItemObject>(cosmetic);
+						equipmentElement.CosmeticItem = itemObject;
+						equipment[equipmentIndex] = equipmentElement;	
 					}
 				}
 				else
@@ -89,6 +88,9 @@ namespace OCEAdmin.Patches
         }
 
 		private static string[] equipmentIndexes = { "NumAllWeaponSlots", "Body", "Cape", "Gloves", "Leg" };
+
+		private static List<EquipmentIndex> EquipmentIndexWhitelist = 
+			new List<EquipmentIndex> { EquipmentIndex.NumAllWeaponSlots, EquipmentIndex.Body, EquipmentIndex.Cape, EquipmentIndex.Gloves, EquipmentIndex.Leg };
 
 		public static bool IsModdedType(Dictionary<string, string> choosenCosmetics)
         {
