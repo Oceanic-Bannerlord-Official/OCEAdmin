@@ -17,6 +17,8 @@ namespace OCEAdmin
     {
         public List<Clan> clans;
 
+        public Dictionary<string, bool> usingUniform = new Dictionary<string, bool>();
+
         private static UniformManager instance;
         public static UniformManager Instance
         {
@@ -123,9 +125,20 @@ namespace OCEAdmin
     
         public bool PlayerHasUniform(NetworkCommunicator networkPeer)
         {
+            string playerID = networkPeer.VirtualPlayer.Id.ToString();
+
+            bool useUniform = true;
+
+            if (UniformManager.Instance.usingUniform.ContainsKey(playerID))
+            {
+                useUniform = UniformManager.Instance.usingUniform[playerID];
+            }
+
+            MPUtil.WriteToConsole("useUniforM: " + useUniform.ToString());
+
             Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
 
-            if (clan == null)
+            if (clan == null || useUniform == false)
                 return false;
 
             string curUnit = MPUtil.GetUnitID(networkPeer);

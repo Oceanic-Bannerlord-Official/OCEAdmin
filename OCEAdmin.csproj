@@ -157,6 +157,7 @@
     <Compile Include="Commands\ArcherLimit.cs" />
     <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\AutoAdmin.cs" />
+    <Compile Include="Commands\Uniform.cs" />
     <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Core\AdminPanel.cs" />

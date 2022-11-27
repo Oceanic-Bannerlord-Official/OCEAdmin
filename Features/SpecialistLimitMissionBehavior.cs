@@ -55,8 +55,8 @@ namespace OCEAdmin.Features
 				return true;
 
 			// Don't want specialist limits in warmup.
-			if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
-				return true;
+			//if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
+				//return true;
 
 			// Identify the index to a class type since Bannerlord doesn't do that for us.
 			UnitType requestedUnitType = this.GetSpecialistType(networkPeer, message.SelectedTroopIndex);

@@ -43,7 +43,7 @@ namespace OCEAdmin.Commands
                 case CommandLogType.Player:
                     if(msg != null && peer != null)
                     {
-                        MPUtil.SendChatMessage(peer, targetMsg);
+                        MPUtil.SendChatMessage(peer, msg);
                     }
                     break;
                 case CommandLogType.Both:
