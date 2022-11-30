@@ -45,7 +45,7 @@ namespace OCEAdmin.Core
                 Directory.CreateDirectory(MPUtil.GetPluginDir());
             }
 
-            string configPath = Path.Combine(MPUtil.GetPluginDir(), configFile);
+            string configPath = Path.Combine(MPUtil.GetPluginDirNoData(), configFile);
 
             if (!File.Exists(configPath))
             {

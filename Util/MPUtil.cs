@@ -18,7 +18,12 @@ namespace OCEAdmin
         private static Random random = new Random();
         public static string GetPluginDir()
         {
-            return "../../OCEAdmin";
+            return "../../Modules/OCEAdmin/data";
+        }
+
+        public static string GetPluginDirNoData()
+        {
+            return "../../Modules/OCEAdmin";
         }
 
         public static void WriteToConsole(string text) {
