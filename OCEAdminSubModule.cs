@@ -35,20 +35,36 @@ namespace OCEAdmin
         public override void OnMultiplayerGameStart(Game game, object starterObject) 
         {
             game.AddGameHandler<OCEAdminHandler>();
-            game.AddGameHandler<SpecialistLimitGameHandler>();
+
+            if (ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled)
+            {
+                game.AddGameHandler<SpecialistLimitGameHandler>();
+            }
         }
 
         public override void OnBeforeMissionBehaviorInitialize(Mission mission)
         {
             base.OnBeforeMissionBehaviorInitialize(mission);
 
-            Mission.Current.AddMissionBehavior(new CavalryDismountMissionBehavior());
-            Mission.Current.AddMissionBehavior(new SpecialistLimitMissionBehavior());
+            if (ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled)
+            {
+                Mission.Current.AddMissionBehavior(new SpecialistLimitMissionBehavior());
+            }
+
+            if (ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
+            {
+                Mission.Current.AddMissionBehavior(new CavalryDismountMissionBehavior());
+            }
         }
 
-        public override void OnGameEnd(Game game) {
+        public override void OnGameEnd(Game game)
+        {
             game.RemoveGameHandler<OCEAdminHandler>();
-            game.RemoveGameHandler<SpecialistLimitGameHandler>();
+
+            if (ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled)
+            {
+                game.RemoveGameHandler<SpecialistLimitGameHandler>();
+            }
         }
 
     }

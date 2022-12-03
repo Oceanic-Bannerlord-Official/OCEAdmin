@@ -35,7 +35,10 @@ namespace OCEAdmin.Features
         // Remove a player's contribution to the spec limit on their previous team when swapping.
         public void OnTeamChanged(NetworkCommunicator networkPeer, Team prevTeam, Team newTeam)
         {
-			if(networkPeer != null && prevTeam != null && newTeam != null)
+			if (!ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled)
+				return;
+
+			if (networkPeer != null && prevTeam != null && newTeam != null)
             {
 				this.GetCollection(prevTeam).Remove(networkPeer);
 			}
@@ -44,6 +47,9 @@ namespace OCEAdmin.Features
 		// Called from the GameHandler reroute of when a player has disconnected from the server.
 		public void OnPlayerDisconnect(NetworkCommunicator networkPeer)
         {
+			if (!ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled)
+				return;
+
 			Team team = MPUtil.GetPeerTeam(networkPeer);
 			this.GetCollection(team).Remove(networkPeer);
 		}
@@ -55,8 +61,8 @@ namespace OCEAdmin.Features
 				return true;
 
 			// Don't want specialist limits in warmup.
-			//if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
-				//return true;
+			if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
+				return true;
 
 			// Identify the index to a class type since Bannerlord doesn't do that for us.
 			UnitType requestedUnitType = this.GetSpecialistType(networkPeer, message.SelectedTroopIndex);
