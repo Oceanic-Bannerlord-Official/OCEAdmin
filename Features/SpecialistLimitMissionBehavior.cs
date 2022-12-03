@@ -125,7 +125,7 @@ namespace OCEAdmin.Features
 			{
 				return false;
 			}
-			else if (teamSpecialists.Archers.Count >= ConfigManager.Instance.GetConfig().SpecialistSettings.ArcherLimit)
+			else if (unitType.Equals(UnitType.Archer) && teamSpecialists.Archers.Count >= ConfigManager.Instance.GetConfig().SpecialistSettings.ArcherLimit)
 			{
 				return false;
 			}

@@ -220,6 +220,7 @@ namespace OCEAdmin
         public static TargetIconType[] cavClasses = new TargetIconType[] { TargetIconType.Cavalry_Heavy, TargetIconType.Cavalry_Light,
             TargetIconType.HorseArcher_Heavy, TargetIconType.HorseArcher_Light };
 
-        public static TargetIconType[] archerClasses = new TargetIconType[] { TargetIconType.Archer_Heavy, TargetIconType.Archer_Light };
+        public static TargetIconType[] archerClasses = new TargetIconType[] { TargetIconType.Archer_Heavy, TargetIconType.Archer_Light, 
+            TargetIconType.Crossbowman_Heavy, TargetIconType.Crossbowman_Light };
     }
 }
