@@ -31,6 +31,9 @@ namespace OCEAdmin.Features
             if (!ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
                 return;
 
+            if (agent.IsAIControlled)
+                return;   
+
             NetworkCommunicator networkPeer = agent.MissionPeer.GetNetworkPeer();     
 
             if (networkPeer != null)
