@@ -68,12 +68,18 @@ namespace OCEAdmin
 
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                if (peer.UserName.ToLower().Contains(name.ToLower()))
+                if (peer.IsSynchronized)
                 {
-                    targetPeer = peer;
-                    break;
+                    MPUtil.WriteToConsole("Name compare: " + peer.UserName.ToLower() + " / " + name.ToLower());
+
+                    if (peer.UserName.ToLower().Contains(name.ToLower()))
+                    {
+                        return peer;
+                    }
                 }
             }
+
+            MPUtil.WriteToConsole("Returning nothing!");
 
             return targetPeer;
         }
@@ -136,7 +142,7 @@ namespace OCEAdmin
 
         public static void Slay(Agent agent)
         {
-            if (!agent.Equals(null)) {
+            if (agent != null) {
                 Blow blow = new Blow(agent.Index);
                 blow.DamageType = TaleWorlds.Core.DamageTypes.Pierce;
                 blow.BoneIndex = agent.Monster.HeadLookDirectionBoneIndex;
@@ -156,7 +162,7 @@ namespace OCEAdmin
 
                 Agent agentHorse = agent.MountAgent;
 
-                if (!agentHorse.Equals(null))
+                if (agentHorse != null)
                 {
                     agentHorse.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
                 }

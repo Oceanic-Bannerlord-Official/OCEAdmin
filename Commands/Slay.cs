@@ -10,13 +10,13 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Kill : Command
+    class Slay : Command
     {
         public Permissions CanUse() => Permissions.Admin;
 
-        public string Command() => "!kill";
+        public string Command() => "!slay";
 
-        public string Description() => "Kills a provided username. Usage !kill <player name>";
+        public string Description() => "Kills a provided username. Usage !slay <player name>";
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
