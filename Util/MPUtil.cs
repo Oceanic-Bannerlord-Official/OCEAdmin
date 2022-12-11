@@ -101,9 +101,21 @@ namespace OCEAdmin
             GameNetwork.EndBroadcastModuleEvent(GameNetwork.EventBroadcastFlags.None);
         }
 
+        // We need to find a player's clan tag through the username string.
         public static string GetClanTag(NetworkCommunicator networkPeer)
         {
             string username = networkPeer.VirtualPlayer.UserName;
+
+            // If the username doesn't have clan brackets, there is
+            // no clan tag.
+            if (!username.Contains("[") || !username.Contains("]"))
+                return null;
+
+            // Checking that the starting bracket is first, otherwise
+            // it's probably not a clan tag.
+            if (username.IndexOf("[") < username.IndexOf("]"))
+                return null;
+
             return username.Substring(username.IndexOf("[") + 1, username.IndexOf("]") - 1);
         }
 
