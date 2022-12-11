@@ -25,7 +25,7 @@ namespace OCEAdmin.Commands
                 return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username and an amount.",
                     peer: networkPeer);
             }
-            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
+            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args.Take(args.Length -1 )));
 
             if (targetPeer == null) {
                 return new CommandFeedback(CommandLogType.Player, msg: "Target was not found!",

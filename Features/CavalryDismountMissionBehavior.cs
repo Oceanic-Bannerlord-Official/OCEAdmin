@@ -31,6 +31,9 @@ namespace OCEAdmin.Features
             if (!ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
                 return;
 
+            if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
+                return;
+
             if (agent.IsAIControlled)
                 return;   
 

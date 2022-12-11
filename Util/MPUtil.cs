@@ -68,12 +68,18 @@ namespace OCEAdmin
 
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                if (peer.UserName.ToLower().Contains(name.ToLower()))
+                if (peer.IsSynchronized)
                 {
-                    targetPeer = peer;
-                    break;
+                    MPUtil.WriteToConsole("Name compare: " + peer.UserName.ToLower() + " / " + name.ToLower());
+
+                    if (peer.UserName.ToLower().Contains(name.ToLower()))
+                    {
+                        return peer;
+                    }
                 }
             }
+
+            MPUtil.WriteToConsole("Returning nothing!");
 
             return targetPeer;
         }
@@ -101,9 +107,21 @@ namespace OCEAdmin
             GameNetwork.EndBroadcastModuleEvent(GameNetwork.EventBroadcastFlags.None);
         }
 
+        // We need to find a player's clan tag through the username string.
         public static string GetClanTag(NetworkCommunicator networkPeer)
         {
             string username = networkPeer.VirtualPlayer.UserName;
+
+            // If the username doesn't have clan brackets, there is
+            // no clan tag.
+            if (!username.Contains("[") || !username.Contains("]"))
+                return null;
+
+            // Checking that the starting bracket is first, otherwise
+            // it's probably not a clan tag.
+            if (username.IndexOf("[") < username.IndexOf("]"))
+                return null;
+
             return username.Substring(username.IndexOf("[") + 1, username.IndexOf("]") - 1);
         }
 
@@ -124,7 +142,7 @@ namespace OCEAdmin
 
         public static void Slay(Agent agent)
         {
-            if (!agent.Equals(null)) {
+            if (agent != null) {
                 Blow blow = new Blow(agent.Index);
                 blow.DamageType = TaleWorlds.Core.DamageTypes.Pierce;
                 blow.BoneIndex = agent.Monster.HeadLookDirectionBoneIndex;
@@ -144,7 +162,7 @@ namespace OCEAdmin
 
                 Agent agentHorse = agent.MountAgent;
 
-                if (!agentHorse.Equals(null))
+                if (agentHorse != null)
                 {
                     agentHorse.RegisterBlow(blow, attackCollisionDataForDebugPurpose);
                 }
