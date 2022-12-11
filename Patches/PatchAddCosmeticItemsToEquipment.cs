@@ -54,7 +54,7 @@ namespace OCEAdmin.Patches
 					// We want all empty slots to be blank.
 					if(EquipmentIndexWhitelist.Contains(equipmentIndex))
                     {
-						equipment[equipmentIndex] = new EquipmentElement();
+						//equipment[equipmentIndex] = new EquipmentElement();
 					}
 
 					// if we find the slot key in cosmetics, output to replace
