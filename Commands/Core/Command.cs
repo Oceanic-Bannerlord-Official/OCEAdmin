@@ -9,10 +9,16 @@ namespace OCEAdmin.Commands
     interface Command
     {
         string Command();
-        bool CanUse(NetworkCommunicator networkPeer);
+        Permissions CanUse();
 
-        bool Execute(NetworkCommunicator networkPeer, string[] args);
+        CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args);
 
         string Description();
+    }
+
+    public enum Permissions
+    {
+        Player,
+        Admin
     }
 }

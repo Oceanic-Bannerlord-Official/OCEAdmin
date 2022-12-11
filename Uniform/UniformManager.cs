@@ -8,12 +8,16 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
+using TaleWorlds.MountAndBlade;
+using TaleWorlds.ObjectSystem;
 
 namespace OCEAdmin
 {
     public class UniformManager
     {
         public List<Clan> clans;
+
+        public Dictionary<string, bool> usingUniform = new Dictionary<string, bool>();
 
         private static UniformManager instance;
         public static UniformManager Instance
@@ -119,6 +123,76 @@ namespace OCEAdmin
             }
         }
     
+        public bool PlayerHasUniform(NetworkCommunicator networkPeer)
+        {
+            string playerID = networkPeer.VirtualPlayer.Id.ToString();
+
+            bool useUniform = true;
+
+            if (UniformManager.Instance.usingUniform.ContainsKey(playerID))
+            {
+                useUniform = UniformManager.Instance.usingUniform[playerID];
+            }
+
+            MPUtil.WriteToConsole("useUniforM: " + useUniform.ToString());
+
+            Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
+
+            if (clan == null || useUniform == false)
+                return false;
+
+            string curUnit = MPUtil.GetUnitID(networkPeer);
+
+            // If it hasn't been set, we're in the unit select and need to find the unit
+            // by it's index.
+            if(curUnit == null)
+            {
+                curUnit = MPUtil.GetUnitIDFromIndex(networkPeer);
+            }
+
+            if (curUnit == null)
+                return false;
+
+            ClanUniform uniform = clan.GetUniformForUnit(curUnit);
+
+            if (uniform == null)
+                return false;
+
+            return true;
+        }
+
+        public Dictionary<string, string> GetUniformCosmeticsDictionary(NetworkCommunicator networkPeer)
+        {
+            Clan clan = UniformManager.Instance.GetClan(MPUtil.GetClanTag(networkPeer));
+
+            if (clan != null)
+            {
+                string curUnit = MPUtil.GetUnitID(networkPeer);
+
+                if (curUnit == null)
+                {
+                    curUnit = MPUtil.GetUnitIDFromIndex(networkPeer);
+                }
+
+                ClanUniform uniform = clan.GetUniformForUnit(curUnit);
+
+                if (uniform != null)
+                {
+                    bool isOfficer = clan.officerIDs.Contains(MPUtil.GetPlayerID(networkPeer));
+                    Dictionary<string, string> equipment = new Dictionary<string, string>();
+
+                    foreach (UniformPart part in uniform.uniformParts)
+                    {
+                        equipment.Add(part.itemSlot.ToString(), part.GetPart(isOfficer));
+                    }
+
+                    return equipment;
+                }
+            }
+
+            return null;
+        }
+
         public Clan GetClan(string clanTag)
         {
             foreach(Clan clan in clans)

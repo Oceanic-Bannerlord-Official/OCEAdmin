@@ -11,51 +11,38 @@ namespace OCEAdmin.Commands
 {
     class Login : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            return true;
-        }
+        public Permissions CanUse() => Permissions.Player;
 
-        public string Command()
-        {
-            return "!login";
-        }
+        public string Command() => "!login";
 
-        public string Description()
-        {
-            return "Used to login with the admin password. Usage !login <password>";
-        }
+        public string Description() => "Used to login with the admin password. Usage !login <password>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if(!ConfigManager.Instance.GetConfig().AllowLoginCommand)
             {
-                MPUtil.SendChatMessage(networkPeer, 
-                    "** Command ** The login command has been disabled from the config file.");
-                return true;
+                return new CommandFeedback(CommandLogType.Player, 
+                    msg: "** Command ** The login command has been disabled from the config file.", peer: networkPeer);
             }
 
             if (args.Length == 0 || args.Length > 1) {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please only provide a password. Usage: !login <password>"));
-                GameNetwork.EndModuleEventAsServer();
-            }
-            String password = args[0];
-            Config config = ConfigManager.Instance.GetConfig();
-            if (!password.Equals(config.AdminPassword)) {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Incorrect password."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player,
+                  msg: "Please only provide a password. Usage: !login <password>", peer: networkPeer);
             }
 
-            MPUtil.BroadcastToAdmins(string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.UserName));
-            
+            String password = args[0];
+            Config config = ConfigManager.Instance.GetConfig();
+
+            if (!password.Equals(config.AdminPassword)) {
+                return new CommandFeedback(CommandLogType.Player,
+                  msg: "Incorrect password.", peer: networkPeer);
+            }
+       
             AdminManager.Admins.Add(networkPeer.VirtualPlayer.Id.ToString(), true);
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Login successful. Welcome!"));
-            GameNetwork.EndModuleEventAsServer();
-            return true;
+
+            return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
+                msg: string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.UserName),
+                targetMsg: "Login successful. Welcome!", targetPeer: networkPeer);
         }
     }
 }

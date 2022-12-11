@@ -11,32 +11,20 @@ namespace OCEAdmin.Commands
 {
     class Unban : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!unban";
-        }
+        public string Command() => "!unban";
 
-        public string Description()
-        {
-            return "Unbans a player. Usage !unban <Player Name>";
-        }
+        public string Description() => "Unbans a player. Usage !unban <Player Name>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
+                    peer: networkPeer);
             }
+
             string[] banlist = BanManager.BanList();
             string username = string.Join(" ", args);
             int index = -1;
@@ -49,17 +37,14 @@ namespace OCEAdmin.Commands
             }
 
             if (index == -1) {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Username was not found!"));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Username not found on banlist!",
+                    peer: networkPeer);
             }
             string[] newBanlist = banlist.Where((val, idx) => idx != index).ToArray();
             BanManager.UpdateList(newBanlist);
 
-            MPUtil.BroadcastToAdmins(string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, username));
-
-            return true;
+            return new CommandFeedback(CommandLogType.BroadcastToAdmins, 
+                msg: string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, username));
         }
     }
 }

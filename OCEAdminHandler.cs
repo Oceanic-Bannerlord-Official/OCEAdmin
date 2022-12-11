@@ -16,13 +16,9 @@ namespace OCEAdmin
 {
     class OCEAdminHandler : GameHandler
     {
-        public override void OnAfterSave()
-        {
-        }
+        public override void OnAfterSave() {}
 
-        public override void OnBeforeSave()
-        {
-        }
+        public override void OnBeforeSave() { }
 
         protected override void OnGameNetworkBegin()
         {
@@ -41,8 +37,7 @@ namespace OCEAdmin
         }
 
         protected override void OnPlayerDisconnect(VirtualPlayer peer)
-        {
-            
+        {      
             if (AdminManager.PlayerIsAdmin(peer.Id.ToString()))
             {
                 AdminManager.Admins.Remove(peer.Id.ToString());
@@ -69,7 +64,7 @@ namespace OCEAdmin
                 string[] argsWithCommand = message.Message.Split(' ');
                 string command = argsWithCommand[0];
                 string[] args = argsWithCommand.Skip(1).ToArray();
-                CommandManager.Instance.Execute(networkPeer, command, args);
+                CommandManager.Instance.Execute(networkPeer, command, args).Log();
             }
             return true;
         }

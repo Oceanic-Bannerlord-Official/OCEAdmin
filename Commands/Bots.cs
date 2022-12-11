@@ -12,62 +12,41 @@ namespace OCEAdmin.Commands
 
     class Bots : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
+        public string Command() => "!bots";
 
-        public string Command()
-        {
-            return "!bots";
-        }
+        public string Description() => "Changes the number of bots. !bots <num bots team1> <num bots team2>";
 
-        public string Description()
-        {
-            return "Changes the number of bots. !bots <num bots team1> <num bots team2>";
-        }
-
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             // Obligatory argument check
             if (args.Length != 2)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Invalid number of arguments. There should only be two."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Invalid number of arguments.",
+                    peer: networkPeer);
             }
+
             int numBotsTeam1 = -1;
             if (!Int32.TryParse(args[0], out numBotsTeam1) || numBotsTeam1 < 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Team 1 cannot be a negative number."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Team 1 cannot be a negative number.",
+                    peer: networkPeer);
             }
 
             int numBotsTeam2 = -1;
             if (!Int32.TryParse(args[1], out numBotsTeam2) || numBotsTeam2 < 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Team 2 cannot be a negative number."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Team 2 cannot be a negative number.",
+                    peer: networkPeer);
             }
 
             AdminPanel.Instance.SetBots(numBotsTeam1, numBotsTeam2);
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Team1 Bots: "+numBotsTeam1.ToString()));
-            GameNetwork.EndModuleEventAsServer();
+            MPUtil.SendChatMessage(networkPeer, string.Format("Team 1 Bots: {0}", numBotsTeam1.ToString()));
+            MPUtil.SendChatMessage(networkPeer, string.Format("Team 2 Bots: {0}", numBotsTeam2.ToString()));
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Team2 Bots: " + numBotsTeam2.ToString()));
-            GameNetwork.EndModuleEventAsServer();
-
-            return true;
+            // We handle the feedback here instead.
+            return new CommandFeedback(CommandLogType.None);
         }
     }
 }

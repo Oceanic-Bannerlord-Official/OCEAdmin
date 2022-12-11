@@ -11,38 +11,24 @@ namespace OCEAdmin.Commands
 {
     class Help : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            return true;
-        }
+        public Permissions CanUse() => Permissions.Player;
+        public string Command() => "!help";
 
-        public string Command()
-        {
-            return "!help";
-        }
+        public string Description() => "Help message. Returns all the avaliable commands.";
 
-        public string Description()
-        {
-            return "Help message. Returns all the avaliable commands.";
-        }
-
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             string[] commands = CommandManager.Instance.commands.Keys.ToArray();
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("-==== Command List ===-"));
-            GameNetwork.EndModuleEventAsServer();
+            MPUtil.SendChatMessage(networkPeer, "-==== Command List ===-");
 
             foreach (string command in commands) {
                 Command commandExecutable = CommandManager.Instance.commands[command];
-                if(commandExecutable.CanUse(networkPeer))
+                if(CommandManager.Instance.HasPermission(networkPeer, commandExecutable.CanUse()))
                 {
-                    GameNetwork.BeginModuleEventAsServer(networkPeer);
-                    GameNetwork.WriteMessage(new ServerMessage(command + ": " + commandExecutable.Description()));
-                    GameNetwork.EndModuleEventAsServer();
+                    MPUtil.SendChatMessage(networkPeer, string.Format("{0}: {1}", command, commandExecutable.Description()));
                 }
             }
-            return true;
+            return new CommandFeedback(CommandLogType.None);
         }
     }
 }

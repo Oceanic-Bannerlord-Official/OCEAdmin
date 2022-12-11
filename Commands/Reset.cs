@@ -8,29 +8,18 @@ namespace OCEAdmin.Commands
 {
     class Reset : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!reset";
-        }
+        public string Command() => "!reset";
 
-        public string Description()
-        {
-            return "Resets the current mission. !reset";
-        }
+        public string Description() => "Resets the current mission. !reset";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            MPUtil.BroadcastToAll(string.Format("** Command ** {0} has reset the map.", networkPeer.UserName));
             AdminPanel.Instance.ResetMission();
 
-            return true;
+            return new CommandFeedback(CommandLogType.BroadcastToAdmins,
+                msg: string.Format("** Command ** {0} has reset the map.", networkPeer.UserName));
         }
     }
 }

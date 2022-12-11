@@ -15,24 +15,13 @@ namespace OCEAdmin.Commands
 
     class Maps : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!maps";
-        }
+        public string Command() => "!maps";
 
-        public string Description()
-        {
-            return "Lists available maps for the current, or a different, game type. !maps <game type>";
-        }
+        public string Description() => "Lists available maps for the current, or a different, game type. !maps <game type>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             List<string> availableMaps = new List<string>();
 
@@ -45,25 +34,19 @@ namespace OCEAdmin.Commands
                 availableMaps = AdminPanel.Instance.GetAllAvailableMaps();
             }
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Maps: "));
-            GameNetwork.EndModuleEventAsServer();
+            MPUtil.SendChatMessage(networkPeer, "Maps: ");
 
             foreach (var map in availableMaps)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage(map));
-                GameNetwork.EndModuleEventAsServer();
+                MPUtil.SendChatMessage(networkPeer, map);
             }
 
             string currentMapId = "";
             MultiplayerOptions.Instance.GetOptionFromOptionType(MultiplayerOptions.OptionType.Map).GetValue(out currentMapId);
 
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage("Current Map: "+currentMapId));
-            GameNetwork.EndModuleEventAsServer();
+            MPUtil.SendChatMessage(networkPeer, string.Format("Current map: {0}", currentMapId));
 
-            return true;
+            return new CommandFeedback(CommandLogType.None);
         }
     }
 }

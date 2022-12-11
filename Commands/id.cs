@@ -8,28 +8,15 @@ namespace OCEAdmin.Commands
 
     class Id : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            return true;
-        }
+        public Permissions CanUse() => Permissions.Player;
+        public string Command() => "!id";
 
-        public string Command()
-        {
-            return "!id";
-        }
+        public string Description() => "Returns your unique ID into the chatbox.";
 
-        public string Description()
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            return "Returns your unique ID into the chatbox.";
-        }
-
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
-        {
-            GameNetwork.BeginModuleEventAsServer(networkPeer);
-            GameNetwork.WriteMessage(new ServerMessage(networkPeer.PlayerConnectionInfo.PlayerID.ToString()));
-            GameNetwork.EndModuleEventAsServer();
-
-            return true;
+            return new CommandFeedback(CommandLogType.Player, msg: networkPeer.PlayerConnectionInfo.PlayerID.ToString(),
+                peer: networkPeer);
         }
     }
 }

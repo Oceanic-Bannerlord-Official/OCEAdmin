@@ -45,20 +45,33 @@ namespace OCEAdmin.Core
                 Directory.CreateDirectory(MPUtil.GetPluginDir());
             }
 
-            string configPath = Path.Combine(MPUtil.GetPluginDir(), configFile);
+            string configPath = Path.Combine(MPUtil.GetPluginDirNoData(), configFile);
 
             if (!File.Exists(configPath))
             {
                 config.AdminPassword = MPUtil.RandomString(6);
                 config.Admins = new List<string>();
-                config.Admins.Add("2.0.0.AdminIDHere");
+                config.Admins.Add("2.0.0.76561198259745840");
                 config.Admins.Add("2.0.0.AdminIDHere");
                 config.AllowLoginCommand = true;
+                config.SpecialistSettings = new SpecialistSettings()
+                {
+                    Enabled = true,
+                    ArcherLimit = 20,
+                    CavLimit = 10,
+                    UseCavPercentage = true,
+                    UseArcherPercentage = true
+                };
                 config.UniformSettings = new UniformSettings()
                 {
                     Enabled = false,
                     UpdateFiles = false,
                     UpdatePort = 8400
+                };
+                config.AutoAdminSettings = new AutoAdminSettings()
+                {
+                    DismountSystemEnabled = true,
+                    DismountSlayTime = 10
                 };
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Config));
@@ -77,7 +90,7 @@ namespace OCEAdmin.Core
 
                 using (Stream reader = new FileStream(configPath, FileMode.Open))
                 {
-                    config = (Config)serializer.Deserialize(reader);       
+                    config = (Config)serializer.Deserialize(reader);
                 }
             }
 

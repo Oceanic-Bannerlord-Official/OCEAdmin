@@ -27,23 +27,32 @@ namespace OCEAdmin.Commands
 
         public Dictionary<string, Command> commands;
 
-        public bool Execute(NetworkCommunicator networkPeer, string command, string[] args) {
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string command, string[] args) {
             Command executableCommand; 
             bool exists = commands.TryGetValue(command, out executableCommand);
+
             if (!exists) {
-                // networkPeer.
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("This command does not exist.", false));
-                GameNetwork.EndModuleEventAsServer();
-                return false;
+                return new CommandFeedback(CommandLogType.Player, "This command does not exist.", peer: networkPeer);
             }
-            if (!executableCommand.CanUse(networkPeer)) {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("You are not authorised to run this command.", false));
-                GameNetwork.EndModuleEventAsServer();
-                return false;
+            if (!HasPermission(networkPeer, executableCommand.CanUse())) {
+                return new CommandFeedback(CommandLogType.Player, "You are not authorised to run this command.", peer: networkPeer);
             }
+
             return executableCommand.Execute(networkPeer, args);
+        }
+
+        public bool HasPermission(NetworkCommunicator networkPeer, Permissions perms)
+        {
+            switch(perms)
+            {
+                case Permissions.Player:
+                    return true;
+                default:
+                    bool isAdmin = false;
+                    bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
+
+                    return isExists && isAdmin;
+            }
         }
 
         public void Initialize() {

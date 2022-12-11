@@ -12,62 +12,40 @@ namespace OCEAdmin.Commands
 {
     class Bring : Command
     {
-        public bool CanUse(NetworkCommunicator networkPeer)
-        {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-            return isExists && isAdmin;
-        }
+        public Permissions CanUse() => Permissions.Admin;
 
-        public string Command()
-        {
-            return "!bring";
-        }
+        public string Command() => "!bring";
 
-        public string Description()
-        {
-            return "Brings another player to you. Usage !tp <Target User>";
-        }
+        public string Description() => "Brings another player to you. Usage !tp <Target User>";
 
-        public bool Execute(NetworkCommunicator networkPeer, string[] args)
+        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Please provide a username."));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
+                    peer: networkPeer);
             }
 
-            NetworkCommunicator targetPeer = null;
-            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
-            {
-                if (peer.UserName.ToLower().Contains(string.Join(" ", args).ToLower()))
-                {
-                    targetPeer = peer;
-                    break;
-                }
-            }
+            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
+
             if (targetPeer == null)
             {
-                GameNetwork.BeginModuleEventAsServer(networkPeer);
-                GameNetwork.WriteMessage(new ServerMessage("Target player not found"));
-                GameNetwork.EndModuleEventAsServer();
-                return true;
+                return new CommandFeedback(CommandLogType.Player, msg: "Target was not found!",
+                    peer: networkPeer);
             }
-
 
             if (networkPeer.ControlledAgent != null && targetPeer.ControlledAgent != null) {
                 Vec3 targetPos = networkPeer.ControlledAgent.Position;
                 targetPos.x = targetPos.x + 1;
                 targetPeer.ControlledAgent.TeleportToPosition( targetPos );
 
-                MPUtil.SendChatMessage(targetPeer, string.Format("** Command ** {0} has brought you to them.", networkPeer.UserName));
-                MPUtil.SendChatMessage(networkPeer, string.Format("** Command ** You have brought {0} to you.", targetPeer.UserName));
+                return new CommandFeedback(CommandLogType.Both, 
+                    msg: string.Format("** Command ** You have brought {0} to you.", targetPeer.UserName), peer: networkPeer,
+                    targetMsg: string.Format("** Command ** {0} has brought you to them.", networkPeer.UserName), targetPeer: targetPeer);
             }
 
-
-            return true;
+            return new CommandFeedback(CommandLogType.Player, msg: "Player is not alive. Can't bring.",
+                    peer: networkPeer);
         }
     }
 }

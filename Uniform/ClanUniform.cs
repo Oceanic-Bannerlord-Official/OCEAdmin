@@ -24,17 +24,14 @@ namespace OCEAdmin
         public List<UniformPart> uniformParts;
 
         // Returns if this uniform can be used with the inputted unit.
-        public bool IsForUnit(string args)
+        public bool IsForUnit(string unit)
         {
-            foreach(string unit in units)
-            {
-                if(args == unit)
-                {
-                    return true;
-                }
-            }
+            return units.Contains(unit);
+        }
 
-            return false;
+        public bool IsForFaction(string fac)
+        {
+            return factions.Contains(fac);
         }
     }
 }
