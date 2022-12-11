@@ -51,7 +51,16 @@ namespace OCEAdmin.Features
 				return;
 
 			Team team = MPUtil.GetPeerTeam(networkPeer);
-			this.GetCollection(team).Remove(networkPeer);
+
+			if (team == null)
+				return;
+
+			TeamSpecialistCollection collection = this.GetCollection(team);
+
+			if (collection == null)
+				return;
+
+			collection.Remove(networkPeer);
 		}
 
 		// Called from the GameHandler reroute of when a player is attempting to select a class.
@@ -61,8 +70,8 @@ namespace OCEAdmin.Features
 				return true;
 
 			// Don't want specialist limits in warmup.
-			if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
-				return true;
+			//if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
+				//return true;
 
 			// Identify the index to a class type since Bannerlord doesn't do that for us.
 			UnitType requestedUnitType = this.GetSpecialistType(networkPeer, message.SelectedTroopIndex);
@@ -98,7 +107,7 @@ namespace OCEAdmin.Features
 				MissionPeer component = networkPeer.GetComponent<MissionPeer>();
 
 				GameNetwork.BeginBroadcastModuleEvent();
-				GameNetwork.WriteMessage(new UpdateSelectedTroopIndex(networkPeer, component.SelectedTroopIndex));
+				GameNetwork.WriteMessage(new UpdateSelectedTroopIndex(networkPeer, 0));
 				GameNetwork.EndBroadcastModuleEvent(GameNetwork.EventBroadcastFlags.ExcludeOtherTeamPlayers, networkPeer);
 
 				return false;
@@ -201,6 +210,12 @@ namespace OCEAdmin.Features
 
 			public void Remove(NetworkCommunicator networkPeer)
 			{
+				if (networkPeer.VirtualPlayer == null)
+					return;
+
+				if (networkPeer.VirtualPlayer.Id == null)
+					return;
+
 				Cavalry.RemoveAll(peer => peer.VirtualPlayer.Id == networkPeer.VirtualPlayer.Id);
 				Archers.RemoveAll(peer => peer.VirtualPlayer.Id == networkPeer.VirtualPlayer.Id);
 			}

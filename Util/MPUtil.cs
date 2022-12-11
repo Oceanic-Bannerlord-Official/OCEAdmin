@@ -183,7 +183,10 @@ namespace OCEAdmin
 
         public static Team GetPeerTeam(NetworkCommunicator networkPeer)
         {
-            return networkPeer.GetComponent<MissionPeer>().Team;
+            if(networkPeer.GetComponent<MissionPeer>() != null)
+                return networkPeer.GetComponent<MissionPeer>().Team;
+
+            return null;
         }
 
         public static string GetPlayerID(NetworkCommunicator networkPeer)
