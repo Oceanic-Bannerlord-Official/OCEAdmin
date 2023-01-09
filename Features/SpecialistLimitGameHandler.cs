@@ -53,7 +53,12 @@ namespace OCEAdmin.Features
 
 		protected override void OnPlayerDisconnect(VirtualPlayer peer)
 		{
-			Mission.Current.GetMissionBehavior<SpecialistLimitMissionBehavior>().OnPlayerDisconnect((NetworkCommunicator)peer.Communicator);
+			SpecialistLimitMissionBehavior mb = Mission.Current.GetMissionBehavior<SpecialistLimitMissionBehavior>();
+
+			if(mb != null)
+            {
+				mb.OnPlayerDisconnect((NetworkCommunicator)peer.Communicator);
+			}
 		}
 	}
 }
