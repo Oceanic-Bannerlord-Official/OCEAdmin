@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace SMExtended.API.Endpoints
     {
         public GetNicknameEndPoint()
         {
-            this.Url = "http://localhost/oceadmin-website/api/get-nickname.php";
+            this.Url = ConfigManager.Instance.GetConfig().APIUrl + "get-nickname.php";
             this.Prepare();
         }
     }

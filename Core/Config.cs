@@ -7,6 +7,7 @@ namespace OCEAdmin.Core
         public string AdminPassword { get; set; }
         public List<string> Admins { get; set; }
         public bool AllowLoginCommand { get; set; }
+        public string APIUrl { get; set; }
         public SpecialistSettings SpecialistSettings { get; set; }
         public AutoAdminSettings AutoAdminSettings { get; set; }
         public UniformSettings UniformSettings { get; set; }

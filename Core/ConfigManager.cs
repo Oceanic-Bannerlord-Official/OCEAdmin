@@ -53,6 +53,7 @@ namespace OCEAdmin.Core
                 config.Admins = new List<string>();
                 config.Admins.Add("2.0.0.76561198259745840");
                 config.Admins.Add("2.0.0.AdminIDHere");
+                config.APIUrl = "http://localhost/oceadmin-website/api/";
                 config.AllowLoginCommand = true;
                 config.SpecialistSettings = new SpecialistSettings()
                 {
