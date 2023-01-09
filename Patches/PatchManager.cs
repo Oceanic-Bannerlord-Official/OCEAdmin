@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
-using TaleWorlds.MountAndBlade.Diamond;
 
 namespace OCEAdmin.Patches
 {
@@ -23,7 +22,6 @@ namespace OCEAdmin.Patches
             _harmony = new Harmony("OCEAdmin.Bannerlord");
 
             LoadChatBoxPatch();
-            LoadNicknamePatch();
 
             if (ConfigManager.Instance.GetConfig().UniformSettings.Enabled)
             {
@@ -60,15 +58,6 @@ namespace OCEAdmin.Patches
             _harmony.Patch(original, prefix: new HarmonyMethod(prefix));
 
             MPUtil.WriteToConsole("Patched MultiplayerMissionAgentVisualSpawnComponent::AddCosmeticItemsToEquipment");
-        }
-
-        private static void LoadNicknamePatch()
-        {
-            var original = typeof(GameNetwork).GetMethod("AddNetworkPeer", BindingFlags.NonPublic | BindingFlags.Static);
-            var prefix = typeof(PatchAddNetworkPeer).GetMethod("Prefix");
-            _harmony.Patch(original, prefix: new HarmonyMethod(prefix));
-
-            MPUtil.WriteToConsole("Patched GameNetwork::AddNetworkPeer");
         }
     }
 }
