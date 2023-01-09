@@ -154,6 +154,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\EndPoint.cs" />
+    <Compile Include="API\Endpoints\GetNicknameEndPoint.cs" />
+    <Compile Include="API\Endpoints\SetNicknameEndPoint.cs" />
+    <Compile Include="API\Structs\APIResponse.cs" />
+    <Compile Include="API\Structs\Identity.cs" />
+    <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\ArcherLimit.cs" />
     <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\AutoAdmin.cs" />
@@ -166,6 +172,8 @@
     <Compile Include="Database\Handler.cs" />
     <Compile Include="Database\Query.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
+    <Compile Include="Features\Nicknames\NicknameManager.cs" />
+    <Compile Include="Features\Nicknames\PatchAddNetworkPeer.cs" />
     <Compile Include="Features\SpecialistLimitGameHandler.cs" />
     <Compile Include="Features\SpecialistLimitMissionBehavior.cs" />
     <Compile Include="Patches\PatchAddCosmeticItemsToEquipment.cs" />
