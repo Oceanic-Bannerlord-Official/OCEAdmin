@@ -154,14 +154,63 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\EndPoint.cs" />
+    <Compile Include="API\Endpoints\GetNicknameEndPoint.cs" />
+    <Compile Include="API\Endpoints\SetNicknameEndPoint.cs" />
+    <Compile Include="API\Structs\APIResponse.cs" />
+    <Compile Include="API\Structs\Identity.cs" />
+    <Compile Include="API\WebRequest.cs" />
+    <Compile Include="Commands\ArcherLimit.cs" />
+    <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\AutoAdmin.cs" />
+    <Compile Include="Commands\Uniform.cs" />
+    <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
+    <Compile Include="Database\Handler.cs" />
+    <Compile Include="Database\Query.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
+    <Compile Include="Features\Nicknames\NicknameManager.cs" />
+    <Compile Include="Features\Nicknames\PatchAddNetworkPeer.cs" />
+    <Compile Include="Features\SpecialistLimitGameHandler.cs" />
+    <Compile Include="Features\SpecialistLimitMissionBehavior.cs" />
+    <Compile Include="Patches\PatchAddCosmeticItemsToEquipment.cs" />
+    <Compile Include="Patches\PatchGetUsedCosmeticsFromPeer.cs" />
     <Compile Include="Patches\PatchManager.cs" />
+    <Compile Include="Uniform\Clan.cs" />
+    <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
+    <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
+    <Compile Include="Updating\HashedFile.cs" />
+    <Compile Include="Updating\HashStorage.cs" />
     <Compile Include="Commands\Heal.cs" />
+    <Compile Include="Updating\Helpers\CommunicatorHelper.cs" />
+    <Compile Include="Updating\Helpers\ProtobufHelper.cs" />
+    <Compile Include="Updating\PacketHandlers\HandlerRegistry.cs" />
+    <Compile Include="Updating\PacketHandlers\IServerPacketHandler.cs" />
+    <Compile Include="Updating\PacketHandlers\UpdateCompletePacketHandler.cs" />
+    <Compile Include="Updating\PacketHandlers\SendFilePacketHandler.cs" />
+    <Compile Include="Updating\Packets\Client\SendFileListPacket.cs" />
+    <Compile Include="Updating\Packets\IDataPacket.cs" />
+    <Compile Include="Updating\Packets\IServerDataPacket.cs" />
+    <Compile Include="Updating\Packets\NetworkPacketRegistry.cs" />
+    <Compile Include="Updating\Packets\Packet.cs" />
+    <Compile Include="Updating\Packets\Server\SendFilePacket.cs" />
+    <Compile Include="Updating\Packets\Server\UpdateCompletePacket.cs" />
+    <Compile Include="Updating\Telepathy\Client.cs" />
+    <Compile Include="Updating\Telepathy\Common.cs" />
+    <Compile Include="Updating\Telepathy\ConnectionState.cs" />
+    <Compile Include="Updating\Telepathy\EventType.cs" />
+    <Compile Include="Updating\Telepathy\Log.cs" />
+    <Compile Include="Updating\Telepathy\MagnificentReceivePipe.cs" />
+    <Compile Include="Updating\Telepathy\MagnificentSendPipe.cs" />
+    <Compile Include="Updating\Telepathy\NetworkStreamExtensions.cs" />
+    <Compile Include="Updating\Telepathy\Pool.cs" />
+    <Compile Include="Updating\Telepathy\Server.cs" />
+    <Compile Include="Updating\Telepathy\ThreadFunctions.cs" />
+    <Compile Include="Updating\Telepathy\Utils.cs" />
+    <Compile Include="Updating\UpdateManager.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
     <Compile Include="Commands\AdminChat.cs" />
     <Compile Include="Commands\Ban.cs" />
@@ -194,6 +243,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\CountdownTimer.cs" />
     <Compile Include="Util\MPUtil.cs" />
+    <Compile Include="Uniform\ClanUniform.cs" />
+    <Compile Include="Uniform\UniformManager.cs" />
+    <Compile Include="Uniform\UniformPart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
