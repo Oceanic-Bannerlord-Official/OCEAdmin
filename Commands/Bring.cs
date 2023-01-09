@@ -10,7 +10,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class Bring : Command
+    class Bring : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

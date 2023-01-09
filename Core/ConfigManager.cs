@@ -54,6 +54,7 @@ namespace OCEAdmin.Core
                 config.Admins.Add("2.0.0.76561198259745840");
                 config.Admins.Add("2.0.0.AdminIDHere");
                 config.APIUrl = "http://localhost/oceadmin-website/api/";
+                config.APIKey = "abcdefghijklmnopqrstuvwxyz";
                 config.AllowLoginCommand = true;
                 config.AutoAdminSettings = new AutoAdminSettings()
                 {

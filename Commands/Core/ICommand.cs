@@ -6,7 +6,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    interface Command
+    interface ICommand
     {
         string Command();
         Permissions CanUse();
@@ -14,11 +14,5 @@ namespace OCEAdmin.Commands
         CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args);
 
         string Description();
-    }
-
-    public enum Permissions
-    {
-        Player,
-        Admin
     }
 }

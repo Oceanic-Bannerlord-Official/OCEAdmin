@@ -10,7 +10,7 @@ namespace OCEAdmin.Commands
     // First/Second arg is not a number
     // First/Second Command less than 0
 
-    class Bots : Command
+    class Bots : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
         public string Command() => "!bots";

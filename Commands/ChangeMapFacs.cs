@@ -5,7 +5,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class ChangeMapFacs : Command
+    class ChangeMapFacs : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

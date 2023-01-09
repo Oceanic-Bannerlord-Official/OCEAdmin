@@ -7,7 +7,7 @@ using OCEAdmin.Core;
 namespace OCEAdmin.Commands
 {
 
-    class Factions : Command
+    class Factions : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

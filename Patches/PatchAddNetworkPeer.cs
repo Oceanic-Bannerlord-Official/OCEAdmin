@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Newtonsoft.Json;
+using OCEAdmin.Core;
 using OCEAdmin.Features.Nicknames;
 using SMExtended.API;
 using SMExtended.API.Endpoints;
@@ -18,21 +19,20 @@ namespace OCEAdmin.Patches
     {
         public static bool Prefix(NetworkCommunicator networkPeer)
         {
-
-            var steamID = networkPeer.VirtualPlayer.Id.ToString();
-
+            string steamID = MPUtil.GetSteamID(networkPeer);
             EndPoint endpoint = new GetNicknameEndPoint();
 
             endpoint.SetArgs(new List<Tuple<string, string>> {
-                Tuple.Create("steam", steamID)
+                Tuple.Create("steam", steamID),
+                Tuple.Create("key", ConfigManager.Instance.GetConfig().APIKey)
             });
 
             endpoint.Request();
-            string result = endpoint.result;
 
-            if (result != null)
+            if (endpoint.response.data != null)
             {
-                Identity identity = JsonConvert.DeserializeObject<Identity>(result);
+                Identity identity = JsonConvert.DeserializeObject<Identity>(endpoint.response.data);
+
                 string nickname = identity.nickname;
 
                 // Add it to the nickname storage.

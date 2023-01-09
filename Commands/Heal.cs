@@ -10,7 +10,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class Heal : Command
+    class Heal : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

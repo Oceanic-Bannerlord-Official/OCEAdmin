@@ -5,7 +5,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class MapTime : Command
+    class MapTime : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

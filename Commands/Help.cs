@@ -9,7 +9,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Help : Command
+    class Help : ICommand
     {
         public Permissions CanUse() => Permissions.Player;
         public string Command() => "!help";
@@ -22,7 +22,7 @@ namespace OCEAdmin.Commands
             MPUtil.SendChatMessage(networkPeer, "-==== Command List ===-");
 
             foreach (string command in commands) {
-                Command commandExecutable = CommandManager.Instance.commands[command];
+                ICommand commandExecutable = CommandManager.Instance.commands[command];
                 if(CommandManager.Instance.HasPermission(networkPeer, commandExecutable.CanUse()))
                 {
                     MPUtil.SendChatMessage(networkPeer, string.Format("{0}: {1}", command, commandExecutable.Description()));

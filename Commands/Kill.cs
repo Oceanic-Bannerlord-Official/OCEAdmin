@@ -10,7 +10,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Kill : Command
+    class Kill : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

@@ -13,14 +13,10 @@ namespace SMExtended.API
 
         protected WebRequest request;
 
-        public delegate void OnResponse(APIResponse response);
-        public OnResponse OnResponseHandler;
-
-        public string result;
+        public APIResponse response;
 
         public EndPoint()
         {
-            result = null;
             this.Prepare();
         }
 
@@ -36,11 +32,7 @@ namespace SMExtended.API
         // including any auth tokens to verify steam account.
         public virtual void Request() 
         {
-            APIResponse response = JsonConvert.DeserializeObject<APIResponse>(request.GetResponse());
-
-            this.OnResponseHandler(response);
-
-            result = response.data;
+            response = JsonConvert.DeserializeObject<APIResponse>(request.GetResponse());
         }
 
         // Appends added arguments to the fetch request.

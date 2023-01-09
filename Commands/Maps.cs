@@ -13,7 +13,7 @@ using OCEAdmin.Core;
 namespace OCEAdmin.Commands
 {
 
-    class Maps : Command
+    class Maps : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

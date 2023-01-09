@@ -14,7 +14,7 @@ using OCEAdmin.Core;
 namespace OCEAdmin.Commands
 {
 
-    class EndWarmup : Command
+    class EndWarmup : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 
