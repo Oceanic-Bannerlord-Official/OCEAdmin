@@ -127,8 +127,6 @@ namespace OCEAdmin.Core
             }
         }
 
-        public UniformManager uniformManager;
-
         public bool MissionIsRunning
         {
             get
