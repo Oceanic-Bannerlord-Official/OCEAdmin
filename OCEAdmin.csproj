@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin\bin\Win64_Shipping_Server\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -87,6 +87,9 @@
     <Reference Include="protobuf-net.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>packages\protobuf-net.Core.3.1.25\lib\net462\protobuf-net.Core.dll</HintPath>
     </Reference>
+    <Reference Include="SwordMusketServer">
+      <HintPath>..\swordmusketmptest\bin\Win64_Shipping_Server\SwordMusketServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -130,6 +133,10 @@
     <Reference Include="TaleWorlds.DotNet">
       <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\TaleWorlds.DotNet.dll</HintPath>
     </Reference>
+    <Reference Include="TaleWorlds.Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\TaleWorlds.Engine.dll</HintPath>
+    </Reference>
     <Reference Include="TaleWorlds.Library">
       <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\TaleWorlds.Library.dll</HintPath>
     </Reference>
@@ -154,22 +161,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\EndPoint.cs" />
-    <Compile Include="API\Endpoints\GetNicknameEndPoint.cs" />
-    <Compile Include="API\Endpoints\SetNicknameEndPoint.cs" />
-    <Compile Include="API\Structs\APIResponse.cs" />
-    <Compile Include="API\Structs\Identity.cs" />
-    <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\AutoAdmin.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Commands\Core\Permissions.cs" />
-    <Compile Include="Commands\Nick.cs" />
+    <None Include="Commands\Nick.csold" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
-    <Compile Include="Features\Nicknames\NicknameManager.cs" />
-    <Compile Include="Patches\PatchAddNetworkPeer.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Commands\Heal.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
@@ -208,6 +207,17 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Module\SubModule.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>set DEST_FOLDER="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin"
+
+md %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
+
+xcopy /y "$(ProjectDir)Module" %25DEST_FOLDER%25
+xcopy /y "$(ProjectDir)bin\Debug\OCEAdmin.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
+xcopy /y "$(ProjectDir)bin\Debug\0Harmony.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

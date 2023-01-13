@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using OCEAdmin.Core;
+using SwordMusketServer.CommonBehaviourServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,6 @@ namespace OCEAdmin.Patches
             _harmony = new Harmony("OCEAdmin.Bannerlord");
 
             LoadChatBoxPatch();
-            LoadNicknamePatch();
         }
 
         private static void LoadChatBoxPatch()
@@ -31,15 +31,6 @@ namespace OCEAdmin.Patches
             var prefix = typeof(PatchChatBox).GetMethod("Prefix");
             _harmony.Patch(original, prefix: new HarmonyMethod(prefix));
             MPUtil.WriteToConsole("Patched ChatBox::ServerPrepareAndSendMessage");
-        }
-
-        private static void LoadNicknamePatch()
-        {
-            var original = typeof(GameNetwork).GetMethod("AddNetworkPeer", BindingFlags.NonPublic | BindingFlags.Static);
-            var prefix = typeof(PatchAddNetworkPeer).GetMethod("Prefix");
-            _harmony.Patch(original, prefix: new HarmonyMethod(prefix));
-
-            MPUtil.WriteToConsole("Patched GameNetwork::AddNetworkPeer");
         }
     }
 }

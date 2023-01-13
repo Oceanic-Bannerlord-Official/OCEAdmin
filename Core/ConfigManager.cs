@@ -52,9 +52,7 @@ namespace OCEAdmin.Core
                 config.AdminPassword = MPUtil.RandomString(6);
                 config.Admins = new List<string>();
                 config.Admins.Add("2.0.0.76561198259745840");
-                config.Admins.Add("2.0.0.AdminIDHere");
-                config.APIUrl = "http://localhost/oceadmin-website/api/";
-                config.APIKey = "abcdefghijklmnopqrstuvwxyz";
+                config.Admins.Add("2.0.0.76561198026885688");
                 config.AllowLoginCommand = true;
                 config.AutoAdminSettings = new AutoAdminSettings()
                 {

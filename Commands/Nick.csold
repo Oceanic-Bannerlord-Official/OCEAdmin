@@ -17,9 +17,9 @@ namespace OCEAdmin.Commands
     {
         public Permissions CanUse() => Permissions.Player;
 
-        public string Command() => "!Nick";
+        public string Command() => "!nick";
 
-        public string Description() => "Changes your nickname when you rejoin the server. !nick <string [35] nickname>";
+        public string Description() => "Changes your nickname when you rejoin the server. !nick <string [30] nickname>";
 
         // We don't want to give the client the abillity to overwhelm
         // the API server. Rate limit them.
@@ -33,9 +33,9 @@ namespace OCEAdmin.Commands
                     peer: networkPeer);
             }
 
-            if (args.Length >= 35)
+            if (args.Length >= 30)
             {
-                return new CommandFeedback(CommandLogType.Player, msg: "Nickname must be less than 35 characters.",
+                return new CommandFeedback(CommandLogType.Player, msg: "Nickname must be less than 30 characters.",
                     peer: networkPeer);
             }
 
@@ -70,7 +70,7 @@ namespace OCEAdmin.Commands
             endpoint.SetArgs(new List<Tuple<string, string>> {
                 Tuple.Create("steam", steamID),
                 Tuple.Create("nick", name),
-                Tuple.Create("key", ConfigManager.Instance.GetConfig().APIKey)
+                Tuple.Create("api", ConfigManager.Instance.GetConfig().APIKey)
             });
 
             // Fire and forget. We don't actually need to
