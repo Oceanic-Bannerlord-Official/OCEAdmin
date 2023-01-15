@@ -27,6 +27,48 @@ namespace OCEAdmin.Commands
 
         public Dictionary<string, ICommand> commands;
 
+        public List<CommandSession> commandSessions = new List<CommandSession>();
+
+        public const float commandSessionTimeOut = 15f;
+
+        public CommandSession GetCommandSession(NetworkCommunicator peer, ICommand command)
+        {
+            foreach(CommandSession session in commandSessions)
+            {
+                if(session.executor == peer && session.command == command)
+                {
+                    TimeSpan diff = DateTime.Now - session.timeExecuted;
+
+                    if(diff.TotalSeconds >= commandSessionTimeOut)
+                    {
+                        commandSessions.Remove(session);
+
+                        return null;
+                    }
+                    else
+                    {
+                        return session;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public CommandSession CreateCommandSession(ICommand command, NetworkCommunicator executor, List<NetworkCommunicator> peersResult)
+        {
+            CommandSession session = new CommandSession()
+            {
+                command = command,
+                executor = executor,
+                peers = peersResult
+            };
+
+            commandSessions.Add(session);
+
+            return session;
+        }
+
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string command, string[] args) {
             ICommand executableCommand; 
             bool exists = commands.TryGetValue(command, out executableCommand);

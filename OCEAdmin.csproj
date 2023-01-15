@@ -162,8 +162,10 @@
     <Compile Include="Commands\AutoAdmin.cs" />
     <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
+    <Compile Include="Commands\Core\CommandSession.cs" />
     <Compile Include="Commands\Core\Permissions.cs" />
     <None Include="Commands\Nick.csold" />
+    <Compile Include="Commands\Core\PeerSearchCommand.cs" />
     <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />

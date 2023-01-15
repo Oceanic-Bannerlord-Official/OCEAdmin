@@ -68,10 +68,11 @@ namespace OCEAdmin.Commands
         }
 
         // CommandLogType
-        public CommandFeedback(CommandLogType commandLogType = CommandLogType.Player, string msg = null, string targetMsg = null, NetworkCommunicator peer = null, NetworkCommunicator targetPeer = null)
+        public CommandFeedback(CommandLogType commandLogType = CommandLogType.Player, string msg = null, List<string> msgs = null, string targetMsg = null, NetworkCommunicator peer = null, NetworkCommunicator targetPeer = null)
         {
             this.commandLogType = commandLogType;
             this.msg = msg;
+            this.msgs = msgs;
             this.targetMsg = targetMsg;
             this.peer = peer;
             this.targetPeer = targetPeer;

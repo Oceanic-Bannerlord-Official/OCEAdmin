@@ -6,11 +6,10 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    interface ICommand
+    public interface ICommand
     {
         string Command();
         Permissions CanUse();
-
         CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args);
 
         string Description();

@@ -7,37 +7,37 @@ using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using OCEAdmin.Core;
+using MySqlX.XDevAPI;
+using TaleWorlds.Diamond;
 
 namespace OCEAdmin.Commands
 {
-    class Kill : ICommand
+    class Kill : PeerSearchCommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public override Permissions CanUse() => Permissions.Admin;
 
-        public string Command() => "!kill";
+        public override string Command() => "!kill";
 
-        public string Description() => "Kills a provided username. Usage !kill <player name>";
+        public override string Description() => "Kills a provided username. Usage !kill <player name>";
 
-        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
+        public override CommandFeedback OnSearchValidation(NetworkCommunicator networkPeer, string[] args)
         {
             if (args.Length == 0)
             {
-                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide an input.",
                     peer: networkPeer);
             }
 
-            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
+            return null;
+        }
 
-            if (targetPeer == null)
+        public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
+        {
+            if (targetPeer != null || targetPeer.ControlledAgent != null)
             {
-                return new CommandFeedback(CommandLogType.Player, msg: "Target player was not found!",
-                    peer: networkPeer);
-            }
-
-            if (targetPeer.ControlledAgent != null) {
                 MPUtil.Slay(targetPeer.ControlledAgent);
 
-                return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
+                return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget,
                     msg: string.Format("** Command ** {0} has slayed {1}.", networkPeer.UserName, targetPeer.UserName),
                     targetMsg: "** Command ** You have been slain.", targetPeer: targetPeer);
             }
