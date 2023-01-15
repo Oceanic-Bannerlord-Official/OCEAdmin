@@ -50,10 +50,18 @@ namespace OCEAdmin.Core
             if (!File.Exists(configPath))
             {
                 config.AdminPassword = MPUtil.RandomString(6);
-                config.Admins = new List<string>();
-                config.Admins.Add("2.0.0.76561198259745840");
-                config.Admins.Add("2.0.0.76561198026885688");
                 config.AllowLoginCommand = true;
+                config.Admins = new List<string>
+                {
+                    "2.0.0.76561198259745840",
+                    "2.0.0.76561198026885688"
+                };
+                config.SpecialistSettings = new SpecialistSettings()
+                {
+                    Enabled = true,
+                    ArcherLimit = 20,
+                    CavLimit = 10
+                };
                 config.AutoAdminSettings = new AutoAdminSettings()
                 {
                     DismountSystemEnabled = true,
