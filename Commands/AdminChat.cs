@@ -9,7 +9,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class AdminChat : Command
+    class AdminChat : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

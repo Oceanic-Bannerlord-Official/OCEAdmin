@@ -10,7 +10,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Goto : Command
+    class Goto : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
         public string Command() => "!goto";

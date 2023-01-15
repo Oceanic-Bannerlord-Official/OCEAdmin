@@ -5,7 +5,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class ChangeMission : Command
+    class ChangeMission : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

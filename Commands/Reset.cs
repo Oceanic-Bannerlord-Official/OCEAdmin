@@ -6,7 +6,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class Reset : Command
+    class Reset : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

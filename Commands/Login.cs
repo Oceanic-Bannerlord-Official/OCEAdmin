@@ -9,7 +9,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Login : Command
+    class Login : ICommand
     {
         public Permissions CanUse() => Permissions.Player;
 

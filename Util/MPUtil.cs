@@ -26,6 +26,11 @@ namespace OCEAdmin
             return "../../Modules/OCEAdmin";
         }
 
+        public static string GetSteamID(NetworkCommunicator networkPeer)
+        {
+            return networkPeer.VirtualPlayer.Id.Id2.ToString();
+        }
+
         public static void WriteToConsole(string text) {
             Debug.Print(string.Format("[OCEAdmin] - " + text), 0, Debug.DebugColor.Green);
         }

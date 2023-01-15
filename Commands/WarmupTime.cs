@@ -6,7 +6,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class WarmupTime : Command
+    class WarmupTime : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

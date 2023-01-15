@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin.Updating
+namespace OCEAdmin.Commands
 {
-    interface IServerDataPacket
+    public enum Permissions
     {
+        Player,
+        Admin
     }
 }

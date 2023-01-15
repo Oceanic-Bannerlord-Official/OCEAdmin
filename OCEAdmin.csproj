@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -87,6 +87,9 @@
     <Reference Include="protobuf-net.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>packages\protobuf-net.Core.3.1.25\lib\net462\protobuf-net.Core.dll</HintPath>
     </Reference>
+    <Reference Include="SwordMusketServer">
+      <HintPath>..\swordmusketmptest\bin\Win64_Shipping_Server\SwordMusketServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -130,6 +133,10 @@
     <Reference Include="TaleWorlds.DotNet">
       <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\TaleWorlds.DotNet.dll</HintPath>
     </Reference>
+    <Reference Include="TaleWorlds.Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\TaleWorlds.Engine.dll</HintPath>
+    </Reference>
     <Reference Include="TaleWorlds.Library">
       <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\bin\Win64_Shipping_Server\TaleWorlds.Library.dll</HintPath>
     </Reference>
@@ -154,55 +161,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\ArcherLimit.cs" />
-    <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\AutoAdmin.cs" />
-    <Compile Include="Commands\Uniform.cs" />
-    <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
+    <Compile Include="Commands\Core\Permissions.cs" />
+    <None Include="Commands\Nick.csold" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
-    <Compile Include="Database\Handler.cs" />
-    <Compile Include="Database\Query.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
-    <Compile Include="Features\SpecialistLimitGameHandler.cs" />
-    <Compile Include="Features\SpecialistLimitMissionBehavior.cs" />
-    <Compile Include="Patches\PatchAddCosmeticItemsToEquipment.cs" />
-    <Compile Include="Patches\PatchGetUsedCosmeticsFromPeer.cs" />
     <Compile Include="Patches\PatchManager.cs" />
-    <Compile Include="Uniform\Clan.cs" />
-    <Compile Include="Updating\CustomAttributes\HandlesAttribute.cs" />
-    <Compile Include="Updating\CustomAttributes\PacketIdAttribute.cs" />
-    <Compile Include="Updating\HashedFile.cs" />
-    <Compile Include="Updating\HashStorage.cs" />
     <Compile Include="Commands\Heal.cs" />
-    <Compile Include="Updating\Helpers\CommunicatorHelper.cs" />
-    <Compile Include="Updating\Helpers\ProtobufHelper.cs" />
-    <Compile Include="Updating\PacketHandlers\HandlerRegistry.cs" />
-    <Compile Include="Updating\PacketHandlers\IServerPacketHandler.cs" />
-    <Compile Include="Updating\PacketHandlers\UpdateCompletePacketHandler.cs" />
-    <Compile Include="Updating\PacketHandlers\SendFilePacketHandler.cs" />
-    <Compile Include="Updating\Packets\Client\SendFileListPacket.cs" />
-    <Compile Include="Updating\Packets\IDataPacket.cs" />
-    <Compile Include="Updating\Packets\IServerDataPacket.cs" />
-    <Compile Include="Updating\Packets\NetworkPacketRegistry.cs" />
-    <Compile Include="Updating\Packets\Packet.cs" />
-    <Compile Include="Updating\Packets\Server\SendFilePacket.cs" />
-    <Compile Include="Updating\Packets\Server\UpdateCompletePacket.cs" />
-    <Compile Include="Updating\Telepathy\Client.cs" />
-    <Compile Include="Updating\Telepathy\Common.cs" />
-    <Compile Include="Updating\Telepathy\ConnectionState.cs" />
-    <Compile Include="Updating\Telepathy\EventType.cs" />
-    <Compile Include="Updating\Telepathy\Log.cs" />
-    <Compile Include="Updating\Telepathy\MagnificentReceivePipe.cs" />
-    <Compile Include="Updating\Telepathy\MagnificentSendPipe.cs" />
-    <Compile Include="Updating\Telepathy\NetworkStreamExtensions.cs" />
-    <Compile Include="Updating\Telepathy\Pool.cs" />
-    <Compile Include="Updating\Telepathy\Server.cs" />
-    <Compile Include="Updating\Telepathy\ThreadFunctions.cs" />
-    <Compile Include="Updating\Telepathy\Utils.cs" />
-    <Compile Include="Updating\UpdateManager.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
     <Compile Include="Commands\AdminChat.cs" />
     <Compile Include="Commands\Ban.cs" />
@@ -210,13 +178,12 @@
     <Compile Include="Commands\ChangeMap.cs" />
     <Compile Include="Commands\ChangeMapFacs.cs" />
     <Compile Include="Commands\ChangeMission.cs" />
-    <Compile Include="Commands\Core\Command.cs" />
+    <Compile Include="Commands\Core\ICommand.cs" />
     <Compile Include="Commands\EndWarmup.cs" />
     <Compile Include="Commands\Factions.cs" />
     <Compile Include="Commands\GodMode.cs" />
     <Compile Include="Commands\Gold.cs" />
     <Compile Include="Commands\Help.cs" />
-    <Compile Include="Commands\Id.cs" />
     <Compile Include="Commands\Kick.cs" />
     <Compile Include="Commands\Kill.cs" />
     <Compile Include="Commands\Login.cs" />
@@ -235,14 +202,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\CountdownTimer.cs" />
     <Compile Include="Util\MPUtil.cs" />
-    <Compile Include="Uniform\ClanUniform.cs" />
-    <Compile Include="Uniform\UniformManager.cs" />
-    <Compile Include="Uniform\UniformPart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Module\SubModule.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>set DEST_FOLDER="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin"
+
+md %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
+
+xcopy /y "$(ProjectDir)Module" %25DEST_FOLDER%25
+xcopy /y "$(ProjectDir)bin\Debug\OCEAdmin.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
+xcopy /y "$(ProjectDir)bin\Debug\0Harmony.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

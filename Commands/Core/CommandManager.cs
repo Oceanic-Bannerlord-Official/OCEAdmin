@@ -25,10 +25,10 @@ namespace OCEAdmin.Commands
             }
         }
 
-        public Dictionary<string, Command> commands;
+        public Dictionary<string, ICommand> commands;
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string command, string[] args) {
-            Command executableCommand; 
+            ICommand executableCommand; 
             bool exists = commands.TryGetValue(command, out executableCommand);
 
             if (!exists) {
@@ -56,11 +56,11 @@ namespace OCEAdmin.Commands
         }
 
         public void Initialize() {
-            this.commands = new Dictionary<string, Command>();
+            this.commands = new Dictionary<string, ICommand>();
             foreach (Type mytype in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
-                 .Where(mytype => mytype.GetInterfaces().Contains(typeof(Command))))
+                 .Where(mytype => mytype.GetInterfaces().Contains(typeof(ICommand))))
             {
-                Command command = (Command) Activator.CreateInstance(mytype);
+                ICommand command = (ICommand) Activator.CreateInstance(mytype);
                 if (!commands.ContainsKey(command.Command())) {
                     MPUtil.WriteToConsole("** Chat Command " + command.Command() + " has been loaded!");
                     commands.Add(command.Command(), command);

@@ -9,7 +9,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class Unban : Command
+    class Unban : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

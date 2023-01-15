@@ -11,7 +11,7 @@ using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
 namespace OCEAdmin.Commands
 {
-    class Ban : Command
+    class Ban : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

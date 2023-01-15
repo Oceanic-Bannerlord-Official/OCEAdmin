@@ -6,7 +6,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class ChangeMap : Command
+    class ChangeMap : ICommand
     {
         public Permissions CanUse() => Permissions.Admin;
 

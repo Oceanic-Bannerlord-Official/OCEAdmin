@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+	<Name value="OCEAdmin" />
+	<Id value="OCEAdmin" />
+	<Version value="v1.0.3" />
+  <ModuleCategory value="MultiplayerOptional" />
+  <Official value="false" />
+	<DefaultModule value="false" />
+    <DependedModules>
+		<DependedModule Id="Native" DependentVersion="v1.0.3" Optional="false" />
+	</DependedModules>
+    <SubModules>
+	   <SubModule>
+		    <Name value="OCEAdmin"/>
+		    <DLLName value="OCEAdmin.dll"/>
+			<SubModuleClassType value="OCEAdmin.OCEAdminSubModule"/>
+			<Tags>
+			 <Tag value="custom" key="DedicatedServerType"/>
+			</Tags>
+        </SubModule>
+    </SubModules>
+</Module>
