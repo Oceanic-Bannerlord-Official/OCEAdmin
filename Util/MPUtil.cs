@@ -75,8 +75,6 @@ namespace OCEAdmin
             {
                 if (peer.IsSynchronized)
                 {
-                    MPUtil.WriteToConsole("Name compare: " + peer.UserName.ToLower() + " / " + name.ToLower());
-
                     if (peer.UserName.ToLower().Contains(name.ToLower()))
                     {
                         return peer;
@@ -84,9 +82,25 @@ namespace OCEAdmin
                 }
             }
 
-            MPUtil.WriteToConsole("Returning nothing!");
-
             return targetPeer;
+        }
+
+        public static List<NetworkCommunicator> GetPeersFromName(string name)
+        {
+            List<NetworkCommunicator> targetPeers = null;
+
+            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+            {
+                if (peer.IsSynchronized)
+                {
+                    if (peer.UserName.ToLower().Contains(name.ToLower()))
+                    {
+                        targetPeers.Add(peer);
+                    }
+                }
+            }
+
+            return targetPeers;
         }
 
         public static bool IsAdmin(NetworkCommunicator networkPeer)
@@ -110,34 +124,6 @@ namespace OCEAdmin
             GameNetwork.BeginBroadcastModuleEvent();
             GameNetwork.WriteMessage(new ServerMessage(text));
             GameNetwork.EndBroadcastModuleEvent(GameNetwork.EventBroadcastFlags.None);
-        }
-
-        // We need to find a player's clan tag through the username string.
-        public static string GetClanTag(NetworkCommunicator networkPeer)
-        {
-            string username = networkPeer.VirtualPlayer.UserName;
-
-            // If the username doesn't have clan brackets, there is
-            // no clan tag.
-            if (!username.Contains("[") || !username.Contains("]"))
-                return null;
-
-            // Checking that the starting bracket is first, otherwise
-            // it's probably not a clan tag.
-            if (username.IndexOf("[") < username.IndexOf("]"))
-                return null;
-
-            return username.Substring(username.IndexOf("[") + 1, username.IndexOf("]") - 1);
-        }
-
-        public static bool IsInClan(NetworkCommunicator networkPeer)
-        {
-            if (networkPeer.VirtualPlayer.UserName.Substring(0, 1) == "[")
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public static void Slay(NetworkCommunicator networkPeer)

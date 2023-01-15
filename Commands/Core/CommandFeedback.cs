@@ -15,6 +15,7 @@ namespace OCEAdmin.Commands
         public NetworkCommunicator targetPeer;
 
         public string msg;
+        public List<string> msgs;
         public string targetMsg;
 
         public void Log()
@@ -43,7 +44,17 @@ namespace OCEAdmin.Commands
                 case CommandLogType.Player:
                     if(msg != null && peer != null)
                     {
-                        MPUtil.SendChatMessage(peer, msg);
+                        if(msgs != null)
+                        {
+                            foreach(string listMsg in msgs)
+                            {
+                                MPUtil.SendChatMessage(peer, listMsg);
+                            }
+                        }
+                        else
+                        {
+                            MPUtil.SendChatMessage(peer, msg);
+                        }
                     }
                     break;
                 case CommandLogType.Both:
