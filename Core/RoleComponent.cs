@@ -52,8 +52,6 @@ namespace OCEAdmin
         // is running through.
         private CommandSession session;
 
-        public List<CommandSession> commandSessions = new List<CommandSession>();
-
         public const float commandSessionTimeOut = 15f;
 
         public bool HasPermission(Role role)
@@ -63,13 +61,16 @@ namespace OCEAdmin
 
         public CommandSession GetCommandSession(ICommand command)
         {
+            if (session == null)
+                return null;
+
             if(session.command.Command() == command.Command())
             {
                 TimeSpan diff = DateTime.Now - session.timeExecuted;
 
                 if (diff.TotalSeconds >= commandSessionTimeOut)
                 {
-                    commandSessions.Remove(session);
+                    session = null;
 
                     return null;
                 }
