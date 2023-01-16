@@ -1,5 +1,6 @@
 ﻿using NetworkMessages.FromServer;
 using OCEAdmin.Core;
+using OCEAdmin.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace OCEAdmin.Commands
             bool status = !ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled;
 
             // If there is a true or false value, override the toggle and make it this value.
-            if (args[0] != null)
+            if (args.Length > 0)
             {
                 bool.TryParse(args[0], out status);
             }
@@ -31,8 +32,23 @@ namespace OCEAdmin.Commands
             // This won't save or persist to the config.
             ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled = status;
 
-            return new CommandFeedback(CommandLogType.Player,
-                msg: string.Format("** Command ** {0} has enabled specialist limits.", networkPeer.UserName));
+            if(ConfigManager.Instance.GetConfig().SpecialistSettings.Enabled)
+            {
+                Mission.Current.AddMissionBehavior(new SpecialistLimitMissionBehavior());
+            } else
+            {
+                SpecialistLimitMissionBehavior missionBehavior = Mission.Current.GetMissionBehavior<SpecialistLimitMissionBehavior>();
+
+                if (missionBehavior != null)
+                {
+                    Mission.Current.RemoveMissionBehavior(missionBehavior);
+                }
+            }
+
+            string statusString = (status == true) ? "enabled" : "disabled";
+
+            return new CommandFeedback(CommandLogType.BroadcastToAdmins,
+                msg: string.Format("** Command ** {0} has {1} the specialist management behaviour script.", networkPeer.UserName, statusString));
         }
     }
 }

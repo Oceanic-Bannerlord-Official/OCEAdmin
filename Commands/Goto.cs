@@ -10,29 +10,15 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class Goto : ICommand
+    class Goto : PeerSearchCommand
     {
-        public Permissions CanUse() => Permissions.Admin;
-        public string Command() => "!goto";
+        public override Permissions CanUse() => Permissions.Admin;
+        public override string Command() => "!goto";
         
-        public string Description() => "Teleport yourself to another. Usage !tp <Target User>";
+        public override string Description() => "Teleport yourself to another. Usage !tp <Target User>";
 
-        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
+        public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
-            if (args.Length == 0)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
-                    peer: networkPeer);
-            }
-
-            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
-
-            if (targetPeer == null)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Target was not found!",
-                    peer: networkPeer);
-            }
-
             if (networkPeer.ControlledAgent != null && targetPeer.ControlledAgent != null) {
                 Vec3 targetPos = targetPeer.ControlledAgent.Position;
                 targetPos.x = targetPos.x + 1;

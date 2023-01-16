@@ -2,44 +2,33 @@
 using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 
 namespace OCEAdmin.Commands
 {
-    class Bring : ICommand
+    class Bring : PeerSearchCommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public override Permissions CanUse() => Permissions.Admin;
 
-        public string Command() => "!bring";
+        public override string Command() => "!bring";
 
-        public string Description() => "Brings another player to you. Usage !tp <Target User>";
+        public override string Description() => "Brings another player to you. Usage !bring <Target User>";
 
-        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
+        public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
-            if (args.Length == 0)
+            if (networkPeer.ControlledAgent != null && targetPeer.ControlledAgent != null)
             {
-                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
-                    peer: networkPeer);
-            }
-
-            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
-
-            if (targetPeer == null)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Target was not found!",
-                    peer: networkPeer);
-            }
-
-            if (networkPeer.ControlledAgent != null && targetPeer.ControlledAgent != null) {
                 Vec3 targetPos = networkPeer.ControlledAgent.Position;
                 targetPos.x = targetPos.x + 1;
-                targetPeer.ControlledAgent.TeleportToPosition( targetPos );
+                targetPeer.ControlledAgent.TeleportToPosition(targetPos);
 
-                return new CommandFeedback(CommandLogType.Both, 
+                return new CommandFeedback(CommandLogType.Both,
                     msg: string.Format("** Command ** You have brought {0} to you.", targetPeer.UserName), peer: networkPeer,
                     targetMsg: string.Format("** Command ** {0} has brought you to them.", networkPeer.UserName), targetPeer: targetPeer);
             }

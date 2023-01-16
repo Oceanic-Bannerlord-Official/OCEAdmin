@@ -20,12 +20,6 @@ namespace OCEAdmin.Commands
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            if (args.Length == 0)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username or * to heal all.",
-                    peer: networkPeer);
-            }
-
             if(args[0] == "*")
             {
                 foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
@@ -51,9 +45,16 @@ namespace OCEAdmin.Commands
             if (targetPeer.ControlledAgent != null) {
                 targetPeer.ControlledAgent.Health = targetPeer.ControlledAgent.HealthLimit;
 
-                return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
-                    msg: string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName),
-                    targetMsg: string.Format("** Command ** {0} has healed you.", networkPeer.UserName), targetPeer: targetPeer);
+                if(targetPeer.UserName != networkPeer.UserName)
+                {
+                    return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget,
+                        msg: string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName),
+                        targetMsg: string.Format("** Command ** {0} has healed you.", networkPeer.UserName), targetPeer: targetPeer);
+                }
+                else
+                {
+                    return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg: string.Format("** Command ** {0} has healed themself.", networkPeer.UserName));
+                }
             }
 
             return new CommandFeedback(CommandLogType.None);

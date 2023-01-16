@@ -42,11 +42,11 @@ namespace OCEAdmin.Commands
                     }
                     break;
                 case CommandLogType.Player:
-                    if(msg != null && peer != null)
+                    if ((msg != null || msgs != null) && peer != null)
                     {
-                        if(msgs != null)
+                        if (msgs != null)
                         {
-                            foreach(string listMsg in msgs)
+                            foreach (string listMsg in msgs)
                             {
                                 MPUtil.SendChatMessage(peer, listMsg);
                             }

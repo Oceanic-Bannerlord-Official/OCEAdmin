@@ -87,8 +87,7 @@ namespace OCEAdmin
 
         public static List<NetworkCommunicator> GetPeersFromName(string name)
         {
-            List<NetworkCommunicator> targetPeers = null;
-
+            List<NetworkCommunicator> targetPeers = new List<NetworkCommunicator>();
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
                 if (peer.IsSynchronized)

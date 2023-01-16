@@ -26,10 +26,10 @@ namespace OCEAdmin.Commands
         {
             var selection = new List<string>
             {
-                $"{command.Command()} has found {peers.Count} targets."
+                $"** Command - {command.Command()} has found {peers.Count} targets."
             };
 
-            int i = 0;
+            int i = 1;
 
             foreach(NetworkCommunicator peer in peers)
             {
@@ -37,7 +37,7 @@ namespace OCEAdmin.Commands
                 i++;
             }
 
-            selection.Add($"Retype {command.Command()} <1-4> in the next 15s to confirm the target.");
+            selection.Add($"Retype {command.Command()} 1-4 in the next 15s to confirm the target.");
 
             return selection;
         }
@@ -54,7 +54,7 @@ namespace OCEAdmin.Commands
 
         public NetworkCommunicator GetPeerAtSelectedIndex(int index)
         {
-            return peers[index];
+            return peers[index-1];
         }
     }
 }

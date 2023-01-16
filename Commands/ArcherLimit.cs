@@ -15,7 +15,7 @@ namespace OCEAdmin.Commands
 
         public string Command() => "!archerlimit";
 
-        public string Description() => "Sets the limit on archers <int amount>. % is usable.";
+        public string Description() => "Sets the limit on archers <int amount>.";
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {

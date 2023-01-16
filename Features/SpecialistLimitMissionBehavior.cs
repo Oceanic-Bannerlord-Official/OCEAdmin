@@ -25,12 +25,12 @@ namespace OCEAdmin.Features
 			MissionPeer.OnTeamChanged += this.OnTeamChanged;
 		}
 
-        public override void OnAfterMissionCreated()
+        public override void OnBehaviorInitialize()
         {
-            base.OnAfterMissionCreated();
+            base.OnBehaviorInitialize();
 
-			DefenderCollection = new TeamSpecialistCollection();
-			AttackerCollection = new TeamSpecialistCollection();
+            DefenderCollection = new TeamSpecialistCollection();
+            AttackerCollection = new TeamSpecialistCollection();
         }
 
         public override void OnRemoveBehavior()

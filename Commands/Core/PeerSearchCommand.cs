@@ -12,22 +12,22 @@ namespace OCEAdmin.Commands
 {
     public class PeerSearchCommand : ICommand
     {
-        public virtual Permissions CanUse()
-        {
-            throw new NotImplementedException();
-        }
+        public virtual Permissions CanUse() => Permissions.Admin;
 
-        public virtual string Command()
-        {
-            throw new NotImplementedException();
-        }
+        public virtual string Command() => null;
 
-        public virtual string Description()
-        {
-            throw new NotImplementedException();
-        }
+        public virtual string Description() => null;       
 
-        public virtual CommandFeedback OnSearchValidation(NetworkCommunicator networkPeer, string[] args) { return null; }
+        public virtual CommandFeedback OnSearchValidation(NetworkCommunicator networkPeer, string[] args) 
+        {
+            if (args.Length == 0)
+            {
+                return new CommandFeedback(CommandLogType.Player, msg: "Please provide an input.",
+                    peer: networkPeer);
+            }
+
+            return null;
+        }
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
@@ -37,7 +37,7 @@ namespace OCEAdmin.Commands
             CommandFeedback searchValidation = OnSearchValidation(networkPeer, args);
 
             // If we validated unsuccessfully, we don't need to continue.
-            if(searchValidation != null)
+            if (searchValidation != null)
             {
                 return searchValidation;
             }
@@ -56,7 +56,6 @@ namespace OCEAdmin.Commands
                 {
                     // We now know that we have an integer.
                     int index = int.Parse(input);
-
                     if (index < 0 || index > session.peers.Count)
                     {
                         // Extend the session.
@@ -80,8 +79,7 @@ namespace OCEAdmin.Commands
             {
                 peers = MPUtil.GetPeersFromName(input);
             }
-
-            if (peers == null)
+            if (peers.Count < 1)
             {
                 return new CommandFeedback(CommandLogType.Player, msg: "No target player was found!",
                     peer: networkPeer);

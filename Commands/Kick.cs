@@ -10,30 +10,16 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class OCEAdmin : ICommand
+    class OCEAdmin : PeerSearchCommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public override Permissions CanUse() => Permissions.Admin;
 
-        public string Command() => "!kick";
+        public override string Command() => "!kick";
 
-        public string Description() => "Kicks a player. First username that contains the provided input will be kicked. Usage !kick <player name>";
+        public override string Description() => "Kicks a player. First username that contains the provided input will be kicked. Usage !kick <player name>";
 
-        public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
+        public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
-            if (args.Length == 0)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Please provide a username.",
-                    peer: networkPeer);
-            }
-
-            NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
-
-            if (targetPeer == null)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Target player was not found!",
-                    peer: networkPeer);
-            }
-
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins,

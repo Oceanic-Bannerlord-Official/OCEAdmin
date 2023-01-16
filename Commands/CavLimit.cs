@@ -15,7 +15,7 @@ namespace OCEAdmin.Commands
 
         public string Command() => "!cavlimit";
 
-        public string Description() => "Sets the limit on cavalry <int amount>. % is usable.";
+        public string Description() => "Sets the limit on cavalry <int amount>.";
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {

@@ -37,7 +37,7 @@ namespace OCEAdmin.Commands
             }
 
             if (index == -1) {
-                return new CommandFeedback(CommandLogType.Player, msg: "Username not found on banlist!",
+                return new CommandFeedback(CommandLogType.Player, msg: "Username was not found on banlist!",
                     peer: networkPeer);
             }
             string[] newBanlist = banlist.Where((val, idx) => idx != index).ToArray();

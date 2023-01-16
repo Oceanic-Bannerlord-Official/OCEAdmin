@@ -35,11 +35,11 @@ namespace OCEAdmin.Commands
         {
             foreach(CommandSession session in commandSessions)
             {
-                if(session.executor == peer && session.command == command)
+                if (session.executor.VirtualPlayer.Id == peer.VirtualPlayer.Id && session.command.Command() == command.Command())
                 {
                     TimeSpan diff = DateTime.Now - session.timeExecuted;
 
-                    if(diff.TotalSeconds >= commandSessionTimeOut)
+                    if (diff.TotalSeconds >= commandSessionTimeOut)
                     {
                         commandSessions.Remove(session);
 
@@ -61,7 +61,8 @@ namespace OCEAdmin.Commands
             {
                 command = command,
                 executor = executor,
-                peers = peersResult
+                peers = peersResult,
+                timeExecuted = DateTime.Now
             };
 
             commandSessions.Add(session);
@@ -103,9 +104,14 @@ namespace OCEAdmin.Commands
                  .Where(mytype => mytype.GetInterfaces().Contains(typeof(ICommand))))
             {
                 ICommand command = (ICommand) Activator.CreateInstance(mytype);
-                if (!commands.ContainsKey(command.Command())) {
-                    MPUtil.WriteToConsole("** Chat Command " + command.Command() + " has been loaded!");
-                    commands.Add(command.Command(), command);
+
+                if(command.Command() != null)
+                {
+                    if (!commands.ContainsKey(command.Command()))
+                    {
+                        MPUtil.WriteToConsole("** Chat Command " + command.Command() + " has been loaded!");
+                        commands.Add(command.Command(), command);
+                    }
                 }
             }
 

@@ -20,20 +20,9 @@ namespace OCEAdmin.Commands
 
         public override string Description() => "Kills a provided username. Usage !kill <player name>";
 
-        public override CommandFeedback OnSearchValidation(NetworkCommunicator networkPeer, string[] args)
-        {
-            if (args.Length == 0)
-            {
-                return new CommandFeedback(CommandLogType.Player, msg: "Please provide an input.",
-                    peer: networkPeer);
-            }
-
-            return null;
-        }
-
         public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
-            if (targetPeer != null || targetPeer.ControlledAgent != null)
+            if (targetPeer.ControlledAgent != null)
             {
                 MPUtil.Slay(targetPeer.ControlledAgent);
 
@@ -42,7 +31,7 @@ namespace OCEAdmin.Commands
                     targetMsg: "** Command ** You have been slain.", targetPeer: targetPeer);
             }
 
-            return new CommandFeedback(CommandLogType.Player, msg: "Target is not alive!", peer: networkPeer);
+            return new CommandFeedback(CommandLogType.Player, msg: "Target is no longer alive!", peer: networkPeer);
         }
     }
 }
