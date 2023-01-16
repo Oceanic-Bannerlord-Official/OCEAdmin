@@ -9,7 +9,7 @@ namespace OCEAdmin.Commands
     public interface ICommand
     {
         string Command();
-        Permissions CanUse();
+        Role CanUse();
         CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args);
 
         string Description();

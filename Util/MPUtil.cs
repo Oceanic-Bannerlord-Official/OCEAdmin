@@ -2,10 +2,12 @@
 using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Core;
+using TaleWorlds.Diamond;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.ObjectSystem;
@@ -48,23 +50,20 @@ namespace OCEAdmin
             GameNetwork.EndModuleEventAsServer();
         }
 
-        public static List<NetworkCommunicator> GetAdmins() {
-            var admins = new List<NetworkCommunicator>();
+        public static List<NetworkCommunicator> GetPermittedRoles(Role role) {
+            var peers = new List<NetworkCommunicator>();
+
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                bool isAdmin = false;
-                bool isExists = AdminManager.Admins.TryGetValue(peer.VirtualPlayer.Id.ToString(), out isAdmin);
+                RoleComponent component = peer.GetRoleComponent();
 
-                if (isAdmin && isExists)
+                if(component.role >= role)
                 {
-                    if (peer.IsSynchronized)
-                    {
-                        admins.Add(peer);
-                    }
+                    peers.Add(peer);
                 }
             }
 
-            return admins;
+            return peers;
         }
 
         public static NetworkCommunicator GetPeerFromName(string name)
@@ -102,17 +101,14 @@ namespace OCEAdmin
             return targetPeers;
         }
 
-        public static bool IsAdmin(NetworkCommunicator networkPeer)
+        public static bool IsPermitted(NetworkCommunicator networkPeer, Role role)
         {
-            bool isAdmin = false;
-            bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-
-            return isAdmin && isExists & networkPeer.IsSynchronized;
+            return (networkPeer.GetRoleComponent().role >= role) & networkPeer.IsSynchronized;
         }
 
         public static void BroadcastToAdmins(string text)
         {
-            foreach(NetworkCommunicator admin in GetAdmins())
+            foreach(NetworkCommunicator admin in GetPermittedRoles(Role.Admin))
             {
                 SendChatMessage(admin, text);
             }

@@ -16,7 +16,7 @@ namespace OCEAdmin.Commands
 
     class EndWarmup : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!endwarmup";
         public string Description() => "Ends warmup mode <optional int time>";

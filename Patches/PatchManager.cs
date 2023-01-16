@@ -21,7 +21,16 @@ namespace OCEAdmin.Patches
             Harmony.DEBUG = true;
             _harmony = new Harmony("OCEAdmin.Bannerlord");
 
-            LoadChatBoxPatch();
+            LoadDefaultBehaviorPatch();
+            LoadChatBoxPatch(); 
+        }
+
+        private static void LoadDefaultBehaviorPatch()
+        {
+            var original = typeof(MissionState).GetMethod("AddDefaultMissionBehaviorsTo", BindingFlags.NonPublic | BindingFlags.Static);
+            var postfix = typeof(PatchMissionStateDefaults).GetMethod("Postfix");
+            _harmony.Patch(original, postfix: new HarmonyMethod(postfix));
+            MPUtil.WriteToConsole("MissionState::PatchMissionStateDefaults");
         }
 
         private static void LoadChatBoxPatch()

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin.Commands
+namespace OCEAdmin
 {
-    public enum Permissions
+    public enum Role
     {
         Player,
-        Admin
+        Admin,
+        Superadmin
     }
 }

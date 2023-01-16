@@ -12,7 +12,7 @@ namespace OCEAdmin.Commands
 
     class Bots : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
         public string Command() => "!bots";
 
         public string Description() => "Changes the number of bots. !bots <num bots team1> <num bots team2>";

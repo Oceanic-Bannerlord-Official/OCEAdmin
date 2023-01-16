@@ -7,7 +7,7 @@ namespace OCEAdmin.Commands
 {
     class ChangeMapFacs : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!mapfacs";
 

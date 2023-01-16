@@ -13,7 +13,7 @@ namespace OCEAdmin.Commands
 {
     class Gold : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!gold";
 

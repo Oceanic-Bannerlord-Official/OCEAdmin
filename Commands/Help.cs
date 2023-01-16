@@ -11,7 +11,7 @@ namespace OCEAdmin.Commands
 {
     class Help : ICommand
     {
-        public Permissions CanUse() => Permissions.Player;
+        public Role CanUse() => Role.Player;
         public string Command() => "!help";
 
         public string Description() => "Help message. Returns all the avaliable commands.";
@@ -21,9 +21,12 @@ namespace OCEAdmin.Commands
             string[] commands = CommandManager.Instance.commands.Keys.ToArray();
             MPUtil.SendChatMessage(networkPeer, "-==== Command List ===-");
 
+            RoleComponent component = networkPeer.GetRoleComponent();
+
             foreach (string command in commands) {
                 ICommand commandExecutable = CommandManager.Instance.commands[command];
-                if(CommandManager.Instance.HasPermission(networkPeer, commandExecutable.CanUse()))
+
+                if(component.HasPermission(commandExecutable.CanUse()))
                 {
                     MPUtil.SendChatMessage(networkPeer, string.Format("{0}: {1}", command, commandExecutable.Description()));
                 }

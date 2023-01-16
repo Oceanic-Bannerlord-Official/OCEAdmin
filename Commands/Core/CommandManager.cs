@@ -27,75 +27,20 @@ namespace OCEAdmin.Commands
 
         public Dictionary<string, ICommand> commands;
 
-        public List<CommandSession> commandSessions = new List<CommandSession>();
-
-        public const float commandSessionTimeOut = 15f;
-
-        public CommandSession GetCommandSession(NetworkCommunicator peer, ICommand command)
-        {
-            foreach(CommandSession session in commandSessions)
-            {
-                if (session.executor.VirtualPlayer.Id == peer.VirtualPlayer.Id && session.command.Command() == command.Command())
-                {
-                    TimeSpan diff = DateTime.Now - session.timeExecuted;
-
-                    if (diff.TotalSeconds >= commandSessionTimeOut)
-                    {
-                        commandSessions.Remove(session);
-
-                        return null;
-                    }
-                    else
-                    {
-                        return session;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        public CommandSession CreateCommandSession(ICommand command, NetworkCommunicator executor, List<NetworkCommunicator> peersResult)
-        {
-            CommandSession session = new CommandSession()
-            {
-                command = command,
-                executor = executor,
-                peers = peersResult,
-                timeExecuted = DateTime.Now
-            };
-
-            commandSessions.Add(session);
-
-            return session;
-        }
-
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string command, string[] args) {
             ICommand executableCommand; 
             bool exists = commands.TryGetValue(command, out executableCommand);
 
+            RoleComponent component = networkPeer.GetRoleComponent();
+
             if (!exists) {
                 return new CommandFeedback(CommandLogType.Player, "This command does not exist.", peer: networkPeer);
             }
-            if (!HasPermission(networkPeer, executableCommand.CanUse())) {
+            if (component.role < executableCommand.CanUse()) {
                 return new CommandFeedback(CommandLogType.Player, "You are not authorised to run this command.", peer: networkPeer);
             }
 
             return executableCommand.Execute(networkPeer, args);
-        }
-
-        public bool HasPermission(NetworkCommunicator networkPeer, Permissions perms)
-        {
-            switch(perms)
-            {
-                case Permissions.Player:
-                    return true;
-                default:
-                    bool isAdmin = false;
-                    bool isExists = AdminManager.Admins.TryGetValue(networkPeer.VirtualPlayer.Id.ToString(), out isAdmin);
-
-                    return isExists && isAdmin;
-            }
         }
 
         public void Initialize() {

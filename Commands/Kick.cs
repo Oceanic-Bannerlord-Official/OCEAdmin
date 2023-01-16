@@ -12,7 +12,7 @@ namespace OCEAdmin.Commands
 {
     class OCEAdmin : PeerSearchCommand
     {
-        public override Permissions CanUse() => Permissions.Admin;
+        public override Role CanUse() => Role.Admin;
 
         public override string Command() => "!kick";
 

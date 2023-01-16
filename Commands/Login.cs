@@ -11,7 +11,7 @@ namespace OCEAdmin.Commands
 {
     class Login : ICommand
     {
-        public Permissions CanUse() => Permissions.Player;
+        public Role CanUse() => Role.Player;
 
         public string Command() => "!login";
 
@@ -37,8 +37,9 @@ namespace OCEAdmin.Commands
                 return new CommandFeedback(CommandLogType.Player,
                   msg: "Incorrect password.", peer: networkPeer);
             }
-       
-            AdminManager.Admins.Add(networkPeer.VirtualPlayer.Id.ToString(), true);
+
+            RoleComponent component = networkPeer.GetRoleComponent();
+            component.UpdateRole(Role.Admin);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
                 msg: string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.UserName),

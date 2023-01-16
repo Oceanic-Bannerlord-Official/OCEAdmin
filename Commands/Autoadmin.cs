@@ -12,7 +12,7 @@ namespace OCEAdmin.Commands
 {
     class AutoAdmin : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!autoadmin";
 

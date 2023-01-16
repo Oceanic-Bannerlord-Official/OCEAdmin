@@ -12,7 +12,7 @@ namespace OCEAdmin.Commands
 {
     class Heal : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!heal";
 

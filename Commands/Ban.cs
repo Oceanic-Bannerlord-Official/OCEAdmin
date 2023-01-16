@@ -13,7 +13,7 @@ namespace OCEAdmin.Commands
 {
     class Ban : PeerSearchCommand
     {
-        public override Permissions CanUse() => Permissions.Admin;
+        public override Role CanUse() => Role.Admin;
 
         public override string Command() => "!ban";
 

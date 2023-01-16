@@ -8,7 +8,7 @@ namespace OCEAdmin.Commands
 {
     class WarmupTime : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!warmuptime";
 

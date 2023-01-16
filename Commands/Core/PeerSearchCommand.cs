@@ -1,4 +1,5 @@
 ﻿using MySqlX.XDevAPI;
+using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace OCEAdmin.Commands
 {
     public class PeerSearchCommand : ICommand
     {
-        public virtual Permissions CanUse() => Permissions.Admin;
+        public virtual Role CanUse() => Role.Admin;
 
         public virtual string Command() => null;
 
@@ -42,7 +43,9 @@ namespace OCEAdmin.Commands
                 return searchValidation;
             }
 
-            CommandSession session = CommandManager.Instance.GetCommandSession(networkPeer, this);
+            RoleComponent component = networkPeer.GetRoleComponent();
+            CommandSession session = component.GetCommandSession(this);
+
             List<NetworkCommunicator> peers = new List<NetworkCommunicator>();
             bool search = true;
             string input = string.Join(" ", args);
@@ -86,7 +89,7 @@ namespace OCEAdmin.Commands
             }
             else if (peers.Count > 1 && peers.Count <= 4)
             {
-                session = CommandManager.Instance.CreateCommandSession(this, networkPeer, peers);
+                session = component.CreateCommandSession(this, peers);
 
                 return new CommandFeedback(CommandLogType.Player, msgs: session.GenerateSelectionString(),
                     peer: networkPeer);
@@ -101,7 +104,7 @@ namespace OCEAdmin.Commands
             // to consume it.
             if (session != null)
             {
-                CommandManager.Instance.commandSessions.Remove(session);
+                component.ConsumeCommandSession();
             }
 
             // Reroute the old command implementation

@@ -163,13 +163,17 @@
     <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Commands\Core\CommandSession.cs" />
-    <Compile Include="Commands\Core\Permissions.cs" />
+    <Compile Include="Core\NetworkCommunicatorExtensions.cs" />
+    <Compile Include="Core\Role.cs" />
     <None Include="Commands\Nick.csold" />
     <Compile Include="Commands\Core\PeerSearchCommand.cs" />
     <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\ConfigManager.cs" />
+    <Compile Include="Patches\PatchMissionStateDefaults.cs" />
+    <Compile Include="Core\RoleComponent.cs" />
+    <Compile Include="Core\RoleBehavior.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
     <Compile Include="Features\SpecialistLimitGameHandler.cs" />
     <Compile Include="Features\SpecialistLimitMissionBehavior.cs" />
@@ -199,7 +203,6 @@
     <Compile Include="Commands\WarmupTime.cs" />
     <Compile Include="OCEAdminHandler.cs" />
     <Compile Include="Commands\Core\CommandManager.cs" />
-    <Compile Include="Core\AdminManager.cs" />
     <Compile Include="Core\BanManager.cs" />
     <Compile Include="Core\Config.cs" />
     <Compile Include="Patches\PatchChatBox.cs" />

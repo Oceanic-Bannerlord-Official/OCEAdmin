@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace OCEAdmin.Core
+namespace OCEAdmin
 {
     public class ConfigManager
     {
@@ -51,10 +51,10 @@ namespace OCEAdmin.Core
             {
                 config.AdminPassword = MPUtil.RandomString(6);
                 config.AllowLoginCommand = true;
-                config.Admins = new List<string>
+                config.Admins = new List<AdminPerms>
                 {
-                    "2.0.0.76561198259745840",
-                    "2.0.0.76561198026885688"
+                    AdminPerms.New("2.0.0.76561198259745840", Role.Admin),
+                    AdminPerms.New("2.0.0.76561198026885688", Role.Admin)
                 };
                 config.SpecialistSettings = new SpecialistSettings()
                 {

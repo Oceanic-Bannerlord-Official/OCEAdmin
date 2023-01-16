@@ -11,7 +11,7 @@ namespace OCEAdmin.Commands
 {
     class AdminChat : ICommand
     {
-        public Permissions CanUse() => Permissions.Admin;
+        public Role CanUse() => Role.Admin;
 
         public string Command() => "!a";
 

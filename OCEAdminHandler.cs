@@ -29,19 +29,6 @@ namespace OCEAdmin
             if (BanManager.IsPlayerBanned(peer)) {
                 DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(peer.Id, false);
             }
-
-            if (AdminManager.PlayerIsAdmin(peer.Id.ToString()))
-            {
-                AdminManager.Admins.Add(peer.Id.ToString(), true);
-            }
-        }
-
-        protected override void OnPlayerDisconnect(VirtualPlayer peer)
-        {      
-            if (AdminManager.PlayerIsAdmin(peer.Id.ToString()))
-            {
-                AdminManager.Admins.Remove(peer.Id.ToString());
-            }
         }
 
         protected override void OnGameNetworkEnd()

@@ -14,7 +14,7 @@ namespace OCEAdmin.Commands
 {
     class Kill : PeerSearchCommand
     {
-        public override Permissions CanUse() => Permissions.Admin;
+        public override Role CanUse() => Role.Admin;
 
         public override string Command() => "!kill";
 

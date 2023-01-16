@@ -12,7 +12,7 @@ namespace OCEAdmin.Commands
 {
     class Goto : PeerSearchCommand
     {
-        public override Permissions CanUse() => Permissions.Admin;
+        public override Role CanUse() => Role.Admin;
         public override string Command() => "!goto";
         
         public override string Description() => "Teleport yourself to another. Usage !tp <Target User>";
