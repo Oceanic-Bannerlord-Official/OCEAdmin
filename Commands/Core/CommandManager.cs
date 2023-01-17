@@ -36,7 +36,7 @@ namespace OCEAdmin.Commands
             if (!exists) {
                 return new CommandFeedback(CommandLogType.Player, "This command does not exist.", peer: networkPeer);
             }
-            if (component.role < executableCommand.CanUse()) {
+            if (component.HasPermission(executableCommand.CanUse())) {
                 return new CommandFeedback(CommandLogType.Player, "You are not authorised to run this command.", peer: networkPeer);
             }
 
