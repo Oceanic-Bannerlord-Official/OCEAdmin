@@ -165,7 +165,7 @@
     <Compile Include="Commands\Core\CommandSession.cs" />
     <Compile Include="Core\NetworkCommunicatorExtensions.cs" />
     <Compile Include="Core\Role.cs" />
-    <None Include="Commands\Nick.csold" />
+    <None Include="Commands\Nick.ocs" />
     <Compile Include="Commands\Core\PeerSearchCommand.cs" />
     <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Core\AdminPanel.cs" />

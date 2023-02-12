@@ -22,10 +22,12 @@ namespace OCEAdmin
                 if(networkPeer.VirtualPlayer.Id.ToString() == admin.PlayerId)
                 {
                     Role.TryParse(admin.PermType, out role);
+                    MPUtil.WriteToConsole($"Attemping to add role {role} to {networkPeer.UserName}.");
                 }
             }
 
             component.UpdateRole(role);
+            MPUtil.WriteToConsole($"Role '{role}' added to {networkPeer.UserName}.");
         }
 
         protected override void HandlePlayerDisconnect(NetworkCommunicator networkPeer)

@@ -50,22 +50,6 @@ namespace OCEAdmin
             GameNetwork.EndModuleEventAsServer();
         }
 
-        public static List<NetworkCommunicator> GetPermittedRoles(Role role) {
-            var peers = new List<NetworkCommunicator>();
-
-            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
-            {
-                RoleComponent component = peer.GetRoleComponent();
-
-                if(component.role >= role)
-                {
-                    peers.Add(peer);
-                }
-            }
-
-            return peers;
-        }
-
         public static NetworkCommunicator GetPeerFromName(string name)
         {
             NetworkCommunicator targetPeer = null;
@@ -108,9 +92,14 @@ namespace OCEAdmin
 
         public static void BroadcastToAdmins(string text)
         {
-            foreach(NetworkCommunicator admin in GetPermittedRoles(Role.Admin))
+            foreach(NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                SendChatMessage(admin, text);
+                RoleComponent component = peer.GetRoleComponent();
+
+                if (component.HasPermission(Role.Admin))
+                {
+                    SendChatMessage(peer, text);
+                }
             }
         }
 
