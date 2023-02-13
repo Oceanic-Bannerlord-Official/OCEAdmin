@@ -6,6 +6,8 @@ namespace OCEAdmin
     public class Config
     {
         public string AdminPassword { get; set; }
+
+        public bool UseWebAdmin { get; set; }
         public List<AdminPerms> Admins { get; set; }
         public bool AllowLoginCommand { get; set; }
         public SpecialistSettings SpecialistSettings { get; set; }

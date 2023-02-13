@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using OCEAdmin.API;
+using OCEAdmin.API.Endpoints;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -50,11 +54,14 @@ namespace OCEAdmin
             if (!File.Exists(configPath))
             {
                 config.AdminPassword = MPUtil.RandomString(6);
+                config.UseWebAdmin = false;
                 config.AllowLoginCommand = true;
                 config.Admins = new List<AdminPerms>
                 {
-                    AdminPerms.New("2.0.0.76561198259745840", Role.Admin),
-                    AdminPerms.New("2.0.0.76561198026885688", Role.Admin)
+                    AdminPerms.New("2.0.0.IDHere", Role.Admin),
+                    // Testing:
+                    // Adolphus - AdminPerms.New("2.0.0.76561198259745840", Role.Admin),
+                    // Muz - AdminPerms.New("2.0.0.76561198026885688", Role.Admin)
                 };
                 config.SpecialistSettings = new SpecialistSettings()
                 {
@@ -72,7 +79,7 @@ namespace OCEAdmin
                 Stream fs = new FileStream(configPath, FileMode.Create);
 
                 XmlTextWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
-                writer.Formatting = Formatting.Indented;
+                writer.Formatting = System.Xml.Formatting.Indented;
                 writer.Indentation = 4;
 
                 serializer.Serialize(writer, config);
@@ -89,6 +96,45 @@ namespace OCEAdmin
             }
 
             Instance.SetConfig(config);
+
+            // Replace the current admins loaded from the xml with
+            // the ones from the OCEAdmin API.
+            if(config.UseWebAdmin)
+            {
+                LoadAdminsFromAPI();
+            }
+        }
+
+        public void LoadAdminsFromAPI()
+        {
+            EndPoint endpoint = new GetAdminsEndPoint();
+
+            endpoint.OnResponseHandler += OnAdminsReceived;
+            endpoint.Request();
+        }
+
+        public void OnAdminsReceived(APIResponse response)
+        {
+            if (response.data == null)
+                return;
+
+            MPUtil.WriteToConsole("Loading admins from the web API. They will not be loaded from the config.");
+
+            List<AdminData> admins = JsonConvert.DeserializeObject<List<AdminData>>(response.data);
+
+            Instance.config.Admins.Clear();
+
+            foreach (AdminData admin in admins)
+            {
+                Instance.config.Admins.Add(AdminPerms.New(admin.steamid, Role.Admin));
+                MPUtil.WriteToConsole($"Adding '{admin.username}' from the web API.");
+            }
+        }
+
+        private struct AdminData
+        {
+            public string steamid { get; set; }
+            public string username { get; set; }
         }
     }
 }
