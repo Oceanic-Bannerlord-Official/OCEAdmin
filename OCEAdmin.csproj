@@ -158,6 +158,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\APIResponse.cs" />
+    <Compile Include="API\EndPoint.cs" />
+    <Compile Include="API\Endpoints\GetAdminsEndPoint.cs" />
+    <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\ArcherLimit.cs" />
     <Compile Include="Commands\AutoAdmin.cs" />
     <Compile Include="Commands\CavLimit.cs" />
@@ -217,6 +221,7 @@
   <ItemGroup>
     <Content Include="Module\SubModule.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set DEST_FOLDER="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin"
