@@ -126,7 +126,8 @@ namespace OCEAdmin
 
             foreach (AdminData admin in admins)
             {
-                Instance.config.Admins.Add(AdminPerms.New(admin.steamid, Role.Admin));
+                string bannerlordID = "2.0.0." + admin.steamid;
+                Instance.config.Admins.Add(AdminPerms.New(bannerlordID, Role.Admin));
                 MPUtil.WriteToConsole($"Adding '{admin.username}' from the web API.");
             }
         }
