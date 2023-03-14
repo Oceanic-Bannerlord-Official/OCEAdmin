@@ -40,16 +40,6 @@ namespace OCEAdmin
             {
                 Mission.Current.AddMissionBehavior(new SpecialistLimitMissionBehavior());
             }
-
-            if (ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
-            {
-                SpecialistLimitMissionBehavior missionBehavior = Mission.Current.GetMissionBehavior<SpecialistLimitMissionBehavior>();
-
-                if(missionBehavior != null)
-                {
-                    Mission.Current.AddMissionBehavior(missionBehavior);
-                }
-            }
         }
 
         public override void OnGameEnd(Game game)

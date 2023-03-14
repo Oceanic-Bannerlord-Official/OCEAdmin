@@ -24,5 +24,10 @@ namespace OCEAdmin
         {
             return RoleComponent.Create(networkPeer);
         }
+
+        public static bool IsBanned(this NetworkCommunicator networkPeer)
+        {
+            return BanManager.IsBanned(networkPeer);
+        }
     }
 }

@@ -25,9 +25,11 @@ namespace OCEAdmin
             this.AddRemoveMessageHandlers(GameNetwork.NetworkMessageHandlerRegisterer.RegisterMode.Add);
         }
 
-        protected override void OnPlayerConnect(VirtualPlayer peer) {
-            if (BanManager.IsPlayerBanned(peer)) {
-                DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(peer.Id, false);
+        protected override void OnPlayerConnect(VirtualPlayer virtualPlayer) {
+            NetworkCommunicator peer = (NetworkCommunicator) virtualPlayer.Communicator;
+
+            if (peer.IsBanned()) {
+                DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(virtualPlayer.Id, false);
             }
         }
 

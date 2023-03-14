@@ -10,7 +10,7 @@ using OCEAdmin.Core;
 
 namespace OCEAdmin.Commands
 {
-    class OCEAdmin : PeerSearchCommand
+    class Kick : PeerSearchCommand
     {
         public override Role CanUse() => Role.Admin;
 

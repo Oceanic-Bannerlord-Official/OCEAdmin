@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OCEAdmin.API;
 using OCEAdmin.API.Endpoints;
+using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,7 +55,9 @@ namespace OCEAdmin
             if (!File.Exists(configPath))
             {
                 config.AdminPassword = MPUtil.RandomString(6);
-                config.UseWebAdmin = false;
+                config.UseWebAdmin = true;
+                config.UseWebBans = true;
+                config.WebKey = "SetMe";
                 config.AllowLoginCommand = true;
                 config.Admins = new List<AdminPerms>
                 {
@@ -103,6 +106,17 @@ namespace OCEAdmin
             {
                 LoadAdminsFromAPI();
             }
+
+            if (config.UseWebBans)
+            {
+                BanManager.Handler = new WebBanTransport();
+            }
+            else
+            {
+                BanManager.Handler = new LocalBanTransport();
+            }
+
+            BanManager.Handler.LoadList();
         }
 
         public void LoadAdminsFromAPI()
@@ -126,7 +140,8 @@ namespace OCEAdmin
 
             foreach (AdminData admin in admins)
             {
-                Instance.config.Admins.Add(AdminPerms.New(admin.steamid, Role.Admin));
+                string bannerlordID = "2.0.0." + admin.steamid;
+                Instance.config.Admins.Add(AdminPerms.New(bannerlordID, Role.Admin));
                 MPUtil.WriteToConsole($"Adding '{admin.username}' from the web API.");
             }
         }
