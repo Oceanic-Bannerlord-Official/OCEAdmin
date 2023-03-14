@@ -21,10 +21,9 @@ namespace OCEAdmin.Commands
 
         public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {         
-            using (StreamWriter sw = File.AppendText(BanManager.BanListPath()))
-            {
-                sw.WriteLine(targetPeer.UserName + "|" + targetPeer.VirtualPlayer.Id.ToString());
-            }
+            BanManager.Handler.OnAddBan(new OCEAdmin.Ban(gameID: targetPeer.VirtualPlayer.Id.ToString(),
+                bannerID: networkPeer.VirtualPlayer.Id.ToString(),
+                nickname: targetPeer.VirtualPlayer.UserName));
 
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
 

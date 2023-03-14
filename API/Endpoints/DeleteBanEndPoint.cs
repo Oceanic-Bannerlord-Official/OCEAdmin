@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OCEAdmin.API.Endpoints
 {
-    public class GetAdminsEndPoint : EndPoint
+    public class DeleteBanEndPoint : EndPoint
     {
-        public GetAdminsEndPoint()
+        public DeleteBanEndPoint()
         {
-            this.Url = "https://admin.bannerlord.au/api/getadmins.php";
+            this.Url = "https://admin.bannerlord.au/api/delete-ban.php";
             this.Prepare();
         }
     }

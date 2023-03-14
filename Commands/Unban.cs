@@ -25,26 +25,21 @@ namespace OCEAdmin.Commands
                     peer: networkPeer);
             }
 
-            string[] banlist = BanManager.BanList();
             string username = string.Join(" ", args);
-            int index = -1;
-            for (int i = 0; i < banlist.Length; i++) {
-                string ban = banlist[i];
-                if (ban.Contains(username)) {
-                    index = i;
-                    break;
+            
+            foreach(OCEAdmin.Ban ban in BanManager.GetBans())
+            {
+                if(ban.nickname == username)
+                {
+                    BanManager.Handler.OnRemoveBan(ban.gameID);
+
+                    return new CommandFeedback(CommandLogType.BroadcastToAdmins,
+                        msg: string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, ban.nickname));
                 }
             }
 
-            if (index == -1) {
-                return new CommandFeedback(CommandLogType.Player, msg: "Username was not found on banlist!",
-                    peer: networkPeer);
-            }
-            string[] newBanlist = banlist.Where((val, idx) => idx != index).ToArray();
-            BanManager.UpdateList(newBanlist);
-
-            return new CommandFeedback(CommandLogType.BroadcastToAdmins, 
-                msg: string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, username));
+            return new CommandFeedback(CommandLogType.Player, msg: "Username was not found on banlist!",
+                 peer: networkPeer);
         }
     }
 }

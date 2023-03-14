@@ -177,7 +177,7 @@ namespace OCEAdmin
 
         List<string> GetMapsInPool()
         {
-            return MultiplayerIntermissionVotingManager.Instance.MapVoteItems.Select(kvp => kvp.Key).ToList();
+            return MultiplayerIntermissionVotingManager.Instance.MapVoteItems.Select(kvp => kvp.Id).ToList();
         }
 
         public List<string> GetAllAvailableMaps()
@@ -185,7 +185,20 @@ namespace OCEAdmin
             var maps = new List<string>();
 
             maps = GetMapsForCurrentGameType().Union(GetMapsInPool()).ToList();
-            maps.Union(MultiplayerGameTypes.GetGameTypeInfo("Captain").Scenes.ToList());
+
+            string gameType;
+            MultiplayerOptions.Instance.GetOptionFromOptionType(MultiplayerOptions.OptionType.GameType).GetValue(out gameType);
+
+            if (gameType == "Battle")
+            {
+                var captainMaps = new List<string>();
+                captainMaps = GetMapsForGameType("Captain");
+
+                foreach(string map in captainMaps) 
+                {
+                    maps.Add(map);
+                }
+            }
 
             return maps; 
         }
@@ -492,8 +505,12 @@ namespace OCEAdmin
             MultiplayerIntermissionVotingManager.Instance.IsCultureVoteEnabled = missionData.cultureVote;
             MultiplayerIntermissionVotingManager.Instance.IsMapVoteEnabled = missionData.mapVote;
             MultiplayerIntermissionVotingManager.Instance.ClearVotes();
-            MultiplayerIntermissionVotingManager.Instance.SetVotesOfCulture(missionData.cultureTeam1, 100);
-            MultiplayerIntermissionVotingManager.Instance.SetVotesOfCulture(missionData.cultureTeam2, 100);
+
+            int culture1 = MultiplayerIntermissionVotingManager.Instance.CultureVoteItems.Where(item => item.Id.Contains(missionData.cultureTeam1)).ToList().First().Index;
+            int culture2 = MultiplayerIntermissionVotingManager.Instance.CultureVoteItems.Where(item => item.Id.Contains(missionData.cultureTeam2)).ToList().First().Index;
+
+            MultiplayerIntermissionVotingManager.Instance.SetVotesOfCulture(culture1, 100);
+            MultiplayerIntermissionVotingManager.Instance.SetVotesOfCulture(culture2, 100);
             Debug.Print(missionData.ToString(), 0, Debug.DebugColor.Yellow);
         }
 
