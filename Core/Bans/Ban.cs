@@ -8,13 +8,13 @@ namespace OCEAdmin
 {
     public class Ban
     {
-        public string gameID;
+        public string steamid;
         public string bannerID;
         public string nickname;
 
-        public Ban(string gameID, string bannerID, string nickname)
+        public Ban(string steamid, string bannerID, string nickname)
         {
-            this.gameID = gameID;
+            this.steamid = steamid;
             this.bannerID = bannerID;
             this.nickname = nickname;
         }

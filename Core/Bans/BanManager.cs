@@ -37,7 +37,7 @@ namespace OCEAdmin.Core
         {
             foreach (Ban ban in GetBans())
             {
-                if (ban.gameID == id)
+                if (ban.steamid == id)
                 {
                     GetBans().Remove(ban);
 
@@ -50,7 +50,7 @@ namespace OCEAdmin.Core
         {
             foreach (Ban ban in GetBans())
             {
-                if (ban.gameID == peer.VirtualPlayer.Id.ToString())
+                if (ban.steamid == peer.VirtualPlayer.Id.Id2.ToString())
                 {
                     return true;
                 }

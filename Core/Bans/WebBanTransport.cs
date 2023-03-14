@@ -32,7 +32,7 @@ namespace OCEAdmin
 
             endpoint.SetArgs(new List<Tuple<string, string>> {
                 Tuple.Create("key", ConfigManager.Instance.GetConfig().WebKey),
-                Tuple.Create("steam_link", ban.gameID),
+                Tuple.Create("steam_link", ban.steamid),
                 Tuple.Create("reason", "Ingame ban."),
                 Tuple.Create("banner", ban.bannerID),
             });
@@ -61,6 +61,11 @@ namespace OCEAdmin
             MPUtil.WriteToConsole("Loading bans from the web API. They will not be loaded from the config.");
 
             List<Ban> bans = JsonConvert.DeserializeObject<List<Ban>>(response.data);
+
+            foreach(Ban ban in bans)
+            {
+                MPUtil.WriteToConsole("Adding " + ban.nickname + " to the list of bans.");
+            }
 
             BanManager.Update(bans);
         }

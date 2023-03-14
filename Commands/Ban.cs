@@ -21,7 +21,7 @@ namespace OCEAdmin.Commands
 
         public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {         
-            BanManager.Handler.OnAddBan(new OCEAdmin.Ban(gameID: targetPeer.VirtualPlayer.Id.ToString(),
+            BanManager.Handler.OnAddBan(new OCEAdmin.Ban(steamid: targetPeer.VirtualPlayer.Id.ToString(),
                 bannerID: networkPeer.VirtualPlayer.Id.ToString(),
                 nickname: targetPeer.VirtualPlayer.UserName));
 

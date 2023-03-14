@@ -9,6 +9,7 @@ using TaleWorlds.Core;
 using System.Xml;
 using OCEAdmin.Core;
 using TaleWorlds.Library;
+using OCEAdmin.Commands;
 
 namespace OCEAdmin
 {
@@ -52,7 +53,14 @@ namespace OCEAdmin
                 {
                     try
                     {
-                        BanManager.Update((List<Ban>)serializer.Deserialize(reader));
+                        List<Ban> banList = (List<Ban>)serializer.Deserialize(reader);
+
+                        BanManager.Update(banList);
+
+                        foreach (Ban ban in banList)
+                        {
+                            MPUtil.WriteToConsole("Adding " + ban.nickname + " to the list of bans.");
+                        }
                     } 
                     catch(Exception error) 
                     {
