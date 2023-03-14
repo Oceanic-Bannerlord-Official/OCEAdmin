@@ -17,9 +17,7 @@ Supported modules: Native, Sword & Musket
 
 - Harmony for .NET Framework 4.7.2 (included)
 - Bannerlord Dedicated Server (1.0.3)
-- Windows
-
-*NOTE: Currently working on linux support.*
+- Windows or Linux
 
 ## Features
 
