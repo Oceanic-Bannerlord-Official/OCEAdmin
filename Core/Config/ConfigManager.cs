@@ -58,6 +58,7 @@ namespace OCEAdmin
                 config.UseWebAdmin = true;
                 config.UseWebBans = true;
                 config.WebKey = "SetMe";
+                config.APIUrl = "https://admin.bannerlord.au/api/";
                 config.AllowLoginCommand = true;
                 config.Admins = new List<AdminPerms>
                 {

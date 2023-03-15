@@ -62,7 +62,7 @@ namespace OCEAdmin.API
         {
             var error = $"An error occurred while retrieving the OCEAdmin API. Error: {ex.Message}";
 
-            Console.WriteLine(error);
+            MPUtil.WriteToConsole(error);
         }
     }
 }

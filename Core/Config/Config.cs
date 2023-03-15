@@ -7,6 +7,7 @@ namespace OCEAdmin
     {
         public string AdminPassword { get; set; }
         public string WebKey { get; set; }
+        public string APIUrl { get; set; }
         public bool UseWebAdmin { get; set; }
         public bool UseWebBans { get; set; }
         public List<AdminPerms> Admins { get; set; }

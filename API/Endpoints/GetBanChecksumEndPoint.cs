@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OCEAdmin.API.Endpoints
 {
-    public class GetAdminsEndPoint : EndPoint
+    public class GetBanChecksumEndPoint : EndPoint
     {
-        public GetAdminsEndPoint()
+        public GetBanChecksumEndPoint()
         {
-            this.Url = "getadmins.php";
+            this.Url = "get-ban-checksum.php";
             this.Prepare();
         }
     }

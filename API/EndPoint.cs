@@ -10,6 +10,7 @@ namespace OCEAdmin.API
     public class EndPoint
     {
         public string Url;
+        private string _website = ConfigManager.Instance.GetConfig().APIUrl;
         public WebRequest request;
         public delegate void OnResponse(APIResponse response);
         public OnResponse OnResponseHandler;
@@ -27,7 +28,7 @@ namespace OCEAdmin.API
         protected void Prepare()
         {
             this.request = new WebRequest();
-            this.request.SetRequestURL(Url);
+            this.request.SetRequestURL(_website + Url);
         }
 
         public virtual void RequestRaw()

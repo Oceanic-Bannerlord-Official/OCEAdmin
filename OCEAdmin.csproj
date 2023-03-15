@@ -143,6 +143,7 @@
     <Compile Include="API\Endpoints\AddBanEndPoint.cs" />
     <Compile Include="API\Endpoints\GetAdminsEndPoint.cs" />
     <Compile Include="API\Endpoints\DeleteBanEndPoint.cs" />
+    <Compile Include="API\Endpoints\GetBanChecksumEndPoint.cs" />
     <Compile Include="API\Endpoints\GetBansEndPoint.cs" />
     <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\ArcherLimit.cs" />

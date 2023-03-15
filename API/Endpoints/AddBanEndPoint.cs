@@ -10,7 +10,7 @@ namespace OCEAdmin.API.Endpoints
     {
         public AddBanEndPoint()
         {
-            this.Url = "https://admin.bannerlord.au/api/add-ban.php";
+            this.Url = "add-ban.php";
             this.Prepare();
         }
     }
