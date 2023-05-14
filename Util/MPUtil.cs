@@ -87,14 +87,14 @@ namespace OCEAdmin
 
         public static bool IsPermitted(NetworkCommunicator networkPeer, Role role)
         {
-            return (networkPeer.GetRoleComponent().role >= role) & networkPeer.IsSynchronized;
+            return (networkPeer.GetPlayerExtensionComponent().role >= role) & networkPeer.IsSynchronized;
         }
 
         public static void BroadcastToAdmins(string text)
         {
             foreach(NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                RoleComponent component = peer.GetRoleComponent();
+                PlayerExtensionComponent component = peer.GetPlayerExtensionComponent();
 
                 if (component.HasPermission(Role.Admin))
                 {

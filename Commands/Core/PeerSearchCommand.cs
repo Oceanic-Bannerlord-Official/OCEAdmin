@@ -1,5 +1,4 @@
-﻿using MySqlX.XDevAPI;
-using OCEAdmin.Core;
+﻿using OCEAdmin.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +42,7 @@ namespace OCEAdmin.Commands
                 return searchValidation;
             }
 
-            RoleComponent component = networkPeer.GetRoleComponent();
+            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
             CommandSession session = component.GetCommandSession(this);
 
             List<NetworkCommunicator> peers = new List<NetworkCommunicator>();

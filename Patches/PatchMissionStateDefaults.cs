@@ -11,7 +11,7 @@ namespace OCEAdmin.Core
     {
         public static IEnumerable<MissionBehavior> Postfix(IEnumerable<MissionBehavior> __result)
         {
-            __result = new List<MissionBehavior>() { (MissionBehavior) new RoleBehavior() }.Concat<MissionBehavior>(__result);
+            __result = new List<MissionBehavior>() { (MissionBehavior) new PlayerExtensionComponentBehavior() }.Concat<MissionBehavior>(__result);
             return __result;
         }
     }

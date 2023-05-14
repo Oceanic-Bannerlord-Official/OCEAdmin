@@ -38,7 +38,7 @@ namespace OCEAdmin.Commands
                   msg: "Incorrect password.", peer: networkPeer);
             }
 
-            RoleComponent component = networkPeer.GetRoleComponent();
+            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
             component.UpdateRole(Role.Admin);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
