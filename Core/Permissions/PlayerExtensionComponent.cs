@@ -10,11 +10,11 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin
 {
-    public class RoleComponent
+    public class PlayerExtensionComponent
     {
-        private static List<RoleComponent> All = new List<RoleComponent>();
+        private static List<PlayerExtensionComponent> All = new List<PlayerExtensionComponent>();
 
-        public static RoleComponent GetFor(NetworkCommunicator networkPeer)
+        public static PlayerExtensionComponent GetFor(NetworkCommunicator networkPeer)
         {
             return All.Find(x => x.GetNetworkPeer() == networkPeer);
         }
@@ -24,9 +24,9 @@ namespace OCEAdmin
             All.Remove(GetFor(networkPeer));
         }
 
-        public static RoleComponent Create(NetworkCommunicator networkPeer)
+        public static PlayerExtensionComponent Create(NetworkCommunicator networkPeer)
         {
-            RoleComponent component = new RoleComponent(networkPeer);
+            PlayerExtensionComponent component = new PlayerExtensionComponent(networkPeer);
             All.Add(component);
 
             return component;
@@ -34,7 +34,7 @@ namespace OCEAdmin
 
         private NetworkCommunicator networkPeer { get; set; }
 
-        public RoleComponent(NetworkCommunicator networkPeer)
+        public PlayerExtensionComponent(NetworkCommunicator networkPeer)
         {
             this.networkPeer = networkPeer;
         }
@@ -52,11 +52,28 @@ namespace OCEAdmin
         // is running through.
         private CommandSession session;
 
+        private bool _muted;
+
         public const float commandSessionTimeOut = 15f;
 
         public bool HasPermission(Role role)
         {
             return this.role >= role;
+        }
+
+        public bool IsMuted()
+        {
+            return _muted;
+        }
+
+        public void Mute()
+        {
+            _muted = true;
+        }
+
+        public void Unmute()
+        {
+            _muted = false;
         }
 
         public CommandSession GetCommandSession(ICommand command)

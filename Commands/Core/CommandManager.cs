@@ -31,7 +31,7 @@ namespace OCEAdmin.Commands
             ICommand executableCommand; 
             bool exists = commands.TryGetValue(command, out executableCommand);
 
-            RoleComponent component = networkPeer.GetRoleComponent();
+            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
 
             if (!exists) {
                 return new CommandFeedback(CommandLogType.Player, "This command does not exist.", peer: networkPeer);

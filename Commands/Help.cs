@@ -21,7 +21,7 @@ namespace OCEAdmin.Commands
             string[] commands = CommandManager.Instance.commands.Keys.ToArray();
             MPUtil.SendChatMessage(networkPeer, "-==== Command List ===-");
 
-            RoleComponent component = networkPeer.GetRoleComponent();
+            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
 
             foreach (string command in commands) {
                 ICommand commandExecutable = CommandManager.Instance.commands[command];

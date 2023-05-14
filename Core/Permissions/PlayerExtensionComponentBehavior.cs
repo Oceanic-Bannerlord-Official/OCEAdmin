@@ -8,13 +8,13 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin
 {
-    public class RoleBehavior : MissionNetwork
+    public class PlayerExtensionComponentBehavior : MissionNetwork
     { 
         protected override void HandleNewClientAfterSynchronized(NetworkCommunicator networkPeer)
         {
             base.HandleNewClientAfterSynchronized(networkPeer);
 
-            RoleComponent component = networkPeer.AddRoleComponent();
+            PlayerExtensionComponent component = networkPeer.AddPlayerExtensionComponent();
             Role role = Role.Player;
 
             foreach (AdminPerms admin in ConfigManager.Instance.GetConfig().Admins)
@@ -32,7 +32,7 @@ namespace OCEAdmin
         protected override void HandlePlayerDisconnect(NetworkCommunicator networkPeer)
         {
             base.HandlePlayerDisconnect(networkPeer);
-            networkPeer.RemoveRoleComponent();
+            networkPeer.RemovePlayerExtensionComponent();
         }
     }
 }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using OCEAdmin.Core;
-using MySqlX.XDevAPI;
 using TaleWorlds.Diamond;
 
 namespace OCEAdmin.Commands

@@ -47,7 +47,7 @@ namespace OCEAdmin
             }
             else
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Config));
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Ban>));
 
                 using (Stream reader = new FileStream(GetLocalPath(), FileMode.Open))
                 {

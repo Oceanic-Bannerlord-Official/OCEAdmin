@@ -10,19 +10,19 @@ namespace OCEAdmin
 {
     public static class NetworkCommunicatorExtensions
     {
-        public static RoleComponent GetRoleComponent(this NetworkCommunicator networkPeer)
+        public static PlayerExtensionComponent GetPlayerExtensionComponent(this NetworkCommunicator networkPeer)
         {
-            return RoleComponent.GetFor(networkPeer);
+            return PlayerExtensionComponent.GetFor(networkPeer);
         }
 
-        public static void RemoveRoleComponent(this NetworkCommunicator networkPeer)
+        public static void RemovePlayerExtensionComponent(this NetworkCommunicator networkPeer)
         {
-            RoleComponent.RemoveAt(networkPeer);
+            PlayerExtensionComponent.RemoveAt(networkPeer);
         }
 
-        public static RoleComponent AddRoleComponent(this NetworkCommunicator networkPeer)
+        public static PlayerExtensionComponent AddPlayerExtensionComponent(this NetworkCommunicator networkPeer)
         {
-            return RoleComponent.Create(networkPeer);
+            return PlayerExtensionComponent.Create(networkPeer);
         }
 
         public static bool IsBanned(this NetworkCommunicator networkPeer)
