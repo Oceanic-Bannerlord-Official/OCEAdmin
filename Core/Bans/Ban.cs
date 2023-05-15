@@ -12,6 +12,8 @@ namespace OCEAdmin
         public string bannerID;
         public string nickname;
 
+        public Ban() { }
+
         public Ban(string steamid, string bannerID, string nickname)
         {
             this.steamid = steamid;

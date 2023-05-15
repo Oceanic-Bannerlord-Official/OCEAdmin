@@ -9,24 +9,24 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin.Commands
 {
-    class TempMute : PeerSearchCommand
+    class Mute : PeerSearchCommand
     {
         public override Role CanUse() => Role.Admin;
 
-        public override string Command() => "!tempmute";
+        public override string Command() => "!mute";
 
         public override string Description() => "Temporarily mutes a player. Usage !tempmute <player name>";
 
         public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
             // Mute the player for the session only.
-            MuteManager.TempMute(new OCEAdmin.Mute(playerID: targetPeer.VirtualPlayer.Id.ToString(),
+            MuteManager.AddMute(new OCEAdmin.Mute(playerID: targetPeer.VirtualPlayer.Id.ToString(),
                 adminID: networkPeer.VirtualPlayer.Id.ToString(),
                 nickname: targetPeer.VirtualPlayer.UserName));
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget,
-                msg: string.Format("** Command ** {0} has muted {1} for the session.", networkPeer.UserName, targetPeer.UserName),
-                targetMsg: string.Format("** Command ** {0} has muted you for the session.", networkPeer.UserName), targetPeer: targetPeer);
+                msg: string.Format("** Command ** {0} has muted {1} indefinitely.", networkPeer.UserName, targetPeer.UserName),
+                targetMsg: string.Format("** Command ** {0} has muted you indefinitely.", networkPeer.UserName), targetPeer: targetPeer);
         }
     }
 }

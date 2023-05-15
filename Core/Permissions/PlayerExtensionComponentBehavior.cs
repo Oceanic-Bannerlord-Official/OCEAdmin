@@ -25,6 +25,14 @@ namespace OCEAdmin
                 }
             }
 
+            foreach(Mute mute in MuteManager.GetMutes())
+            {
+                if(networkPeer.VirtualPlayer.Id.ToString().Contains(mute.playerID))
+                {
+                    component.Mute();
+                }
+            }
+
             component.UpdateRole(role);
             MPUtil.WriteToConsole($"Role '{role}' added to " + networkPeer.UserName);
         }

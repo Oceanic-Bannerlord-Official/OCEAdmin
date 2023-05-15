@@ -10,7 +10,14 @@ namespace OCEAdmin.Patches
     class PatchChatBox
     {
         public static bool Prefix(ChatBox __instance, NetworkCommunicator fromPeer, bool toTeamOnly, string message) {
-            return !message.StartsWith("!");
+            bool textShown = !message.StartsWith("!") || !fromPeer.IsMuted;
+
+            if(fromPeer.IsMuted)
+            {
+                MPUtil.SendChatMessage(fromPeer, "You are muted.");
+            }
+
+            return textShown;
         }
     }
 }

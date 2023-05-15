@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 
-namespace OCEAdmin.Core
+namespace OCEAdmin
 {
     // This is the temporary storage of bans while the server is running.
     // Do not use this to add bans for persistance.

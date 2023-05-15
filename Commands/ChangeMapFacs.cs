@@ -11,7 +11,7 @@ namespace OCEAdmin.Commands
 
         public string Command() => "!mapfacs";
 
-        public string Description() => "Changes the map and the team factions. !chagemapfacs <map id> <team1 faction> <team2 faction>";
+        public string Description() => "Changes the map and the team factions. !mapfacs <map id> <team1 faction> <team2 faction>";
 
         bool ArgValid(Tuple<bool,string> args, NetworkCommunicator networkPeer, string messagePrefix="")
         {
