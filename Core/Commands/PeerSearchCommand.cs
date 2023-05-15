@@ -42,8 +42,8 @@ namespace OCEAdmin.Commands
                 return searchValidation;
             }
 
-            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
-            CommandSession session = component.GetCommandSession(this);
+            Player player = networkPeer.GetPlayer();
+            CommandSession session = player.GetCommandSession(this);
 
             List<NetworkCommunicator> peers = new List<NetworkCommunicator>();
             bool search = true;
@@ -88,7 +88,7 @@ namespace OCEAdmin.Commands
             }
             else if (peers.Count > 1 && peers.Count <= 4)
             {
-                session = component.CreateCommandSession(this, peers);
+                session = player.CreateCommandSession(this, peers);
 
                 return new CommandFeedback(CommandLogType.Player, msgs: session.GenerateSelectionString(),
                     peer: networkPeer);
@@ -103,7 +103,7 @@ namespace OCEAdmin.Commands
             // to consume it.
             if (session != null)
             {
-                component.ConsumeCommandSession();
+                player.ConsumeCommandSession();
             }
 
             // Reroute the old command implementation

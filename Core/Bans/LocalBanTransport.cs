@@ -39,8 +39,10 @@ namespace OCEAdmin
             UpdateLocalStorage(BanManager.GetBans());
         }
 
-        public void LoadList()
+        public void Load()
         {
+            MPUtil.WriteToConsole("Loading bans using local storage.");
+
             if (!File.Exists(GetLocalPath()))
             {
                 UpdateLocalStorage(new List<Ban>());

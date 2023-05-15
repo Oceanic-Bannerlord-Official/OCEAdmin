@@ -33,6 +33,24 @@ namespace OCEAdmin
             GetBans().Add(ban);
         }
 
+        public static Task LoadBans()
+        {
+            if (Config.Get().UseWebBans)
+            {
+                BanManager.Handler = new WebBanTransport();
+            }
+            else
+            {
+                BanManager.Handler = new LocalBanTransport();
+            }
+
+            MPUtil.WriteToConsole("Loading bans...");
+
+            Handler.Load();
+
+            return Task.CompletedTask;
+        }
+
         public static void RemoveBan(string id)
         {
             foreach (Ban ban in GetBans())

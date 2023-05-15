@@ -11,19 +11,19 @@ namespace OCEAdmin
 {
     public static class NetworkCommunicatorExtensions
     {
-        public static PlayerExtensionComponent GetPlayerExtensionComponent(this NetworkCommunicator networkPeer)
+        public static Player GetPlayer(this NetworkCommunicator networkPeer)
         {
-            return PlayerExtensionComponent.GetFor(networkPeer);
+            return Player.GetFor(networkPeer);
         }
 
-        public static void RemovePlayerExtensionComponent(this NetworkCommunicator networkPeer)
+        public static void DisposePlayer(this NetworkCommunicator networkPeer)
         {
-            PlayerExtensionComponent.RemoveAt(networkPeer);
+            Player.RemoveAt(networkPeer);
         }
 
-        public static PlayerExtensionComponent AddPlayerExtensionComponent(this NetworkCommunicator networkPeer)
+        public static Player Setup(this NetworkCommunicator networkPeer)
         {
-            return PlayerExtensionComponent.Create(networkPeer);
+            return Player.Create(networkPeer);
         }
 
         public static bool IsBanned(this NetworkCommunicator networkPeer)
@@ -33,7 +33,7 @@ namespace OCEAdmin
 
         public static bool IsMuted(this NetworkCommunicator networkPeer)
         {
-            return networkPeer.GetPlayerExtensionComponent().IsMuted();
+            return networkPeer.GetPlayer().IsMuted();
         }
 
         public static bool IsCavalry(this NetworkCommunicator networkPeer)

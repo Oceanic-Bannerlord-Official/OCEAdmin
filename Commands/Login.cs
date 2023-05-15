@@ -19,7 +19,7 @@ namespace OCEAdmin.Commands
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            if(!ConfigManager.Instance.GetConfig().AllowLoginCommand)
+            if(!Config.Get().AllowLoginCommand)
             {
                 return new CommandFeedback(CommandLogType.Player, 
                     msg: "** Command ** The login command has been disabled from the config file.", peer: networkPeer);
@@ -31,15 +31,15 @@ namespace OCEAdmin.Commands
             }
 
             String password = args[0];
-            Config config = ConfigManager.Instance.GetConfig();
+            Config config = Config.Get();
 
             if (!password.Equals(config.AdminPassword)) {
                 return new CommandFeedback(CommandLogType.Player,
                   msg: "Incorrect password.", peer: networkPeer);
             }
 
-            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
-            component.UpdateRole(Role.Admin);
+            Player player = networkPeer.GetPlayer();
+            player.UpdateRole(Role.Admin);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
                 msg: string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.UserName),
