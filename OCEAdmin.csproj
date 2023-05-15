@@ -149,8 +149,6 @@
     <Compile Include="API\Endpoints\GetBansEndPoint.cs" />
     <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\GetSpecs.cs" />
-    <Compile Include="Commands\ArcherLimit.cs" />
-    <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Commands\Core\CommandSession.cs" />
     <Compile Include="Commands\Mute.cs" />
@@ -163,7 +161,6 @@
     <Compile Include="Core\NetworkCommunicatorExtensions.cs" />
     <Compile Include="Core\Permissions\Role.cs" />
     <Compile Include="Commands\Core\PeerSearchCommand.cs" />
-    <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Core\AdminPanel.cs" />
     <Compile Include="Commands\Bring.cs" />
     <Compile Include="Core\Config\ConfigManager.cs" />
@@ -174,8 +171,6 @@
     <Compile Include="Core\Permissions\PlayerExtensionComponent.cs" />
     <Compile Include="Core\Permissions\PlayerExtensionComponentBehavior.cs" />
     <Compile Include="Features\CavalryDismountMissionBehavior.cs" />
-    <Compile Include="Features\SpecialistLimitGameHandler.cs" />
-    <Compile Include="Features\SpecialistLimitMissionBehavior.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Commands\Heal.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
