@@ -148,6 +148,7 @@
     <Compile Include="API\Endpoints\GetBanChecksumEndPoint.cs" />
     <Compile Include="API\Endpoints\GetBansEndPoint.cs" />
     <Compile Include="API\WebRequest.cs" />
+    <Compile Include="Commands\GetSpecs.cs" />
     <Compile Include="Commands\ArcherLimit.cs" />
     <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Core\Config\ConfigManager.cs" />
     <Compile Include="Core\Bans\WebBanTransport.cs" />
     <Compile Include="Core\Bans\BanManager.cs" />
+    <Compile Include="Features\TeamComposition.cs" />
     <Compile Include="Patches\PatchMissionStateDefaults.cs" />
     <Compile Include="Core\Permissions\PlayerExtensionComponent.cs" />
     <Compile Include="Core\Permissions\PlayerExtensionComponentBehavior.cs" />

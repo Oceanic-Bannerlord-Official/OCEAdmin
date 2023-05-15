@@ -121,6 +121,35 @@ namespace OCEAdmin
             }
         }
 
+        public static Tuple<TeamComposition, TeamComposition> GetTeamsComposition() 
+        {
+            Tuple<TeamComposition, TeamComposition> teams = new Tuple<TeamComposition, TeamComposition>(
+                new TeamComposition(GetMapCulture(true)),
+                new TeamComposition(GetMapCulture(false))
+            );
+
+            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+            {
+                // team 1 = attacker
+                CompositionType compositionType = CompositionType.Infantry;
+
+                if (peer.IsArcher())
+                {
+                    compositionType = CompositionType.Archer;
+                }
+                else if (peer.IsCavalry())
+                {
+                    compositionType = CompositionType.Cavalry;
+                }
+
+                TeamComposition team = peer.ControlledAgent.Team.IsAttacker ? teams.Item1 : teams.Item2;
+
+                team.AddPlayerToCollection(compositionType, peer);
+            }
+
+            return teams;
+        }
+
         public static void BroadcastToAll(string text)
         {
             GameNetwork.BeginBroadcastModuleEvent();
@@ -190,6 +219,17 @@ namespace OCEAdmin
             }
 
             return null;
+        }
+
+        public static BasicCultureObject GetMapCulture(bool isAttacker)
+        {
+            string strValue = MultiplayerOptions.OptionType.CultureTeam1.GetStrValue(MultiplayerOptions.MultiplayerOptionsAccessMode.CurrentMapOptions);
+            if (!isAttacker)
+            {
+                strValue = MultiplayerOptions.OptionType.CultureTeam2.GetStrValue(MultiplayerOptions.MultiplayerOptionsAccessMode.CurrentMapOptions);
+            }
+
+            return MBObjectManager.Instance.GetObject<BasicCultureObject>(strValue);
         }
 
         public static Team GetPeerTeam(NetworkCommunicator networkPeer)
