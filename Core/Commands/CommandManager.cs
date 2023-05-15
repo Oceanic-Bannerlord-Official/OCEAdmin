@@ -7,44 +7,35 @@ using System.Text;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using OCEAdmin.Core;
+using System.Threading.Tasks;
 
 namespace OCEAdmin.Commands
 {
-    class CommandManager
+    public static class CommandManager
     {
-        private static CommandManager instance;
-        public static CommandManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new CommandManager();
-                }
-                return instance;
-            }
-        }
+        public static Dictionary<string, ICommand> commands;
 
-        public Dictionary<string, ICommand> commands;
-
-        public CommandFeedback Execute(NetworkCommunicator networkPeer, string command, string[] args) {
+        public static CommandFeedback Execute(NetworkCommunicator networkPeer, string command, string[] args) {
             ICommand executableCommand; 
             bool exists = commands.TryGetValue(command, out executableCommand);
 
-            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
+            Player player = networkPeer.GetPlayer();
 
             if (!exists) {
                 return new CommandFeedback(CommandLogType.Player, "This command does not exist.", peer: networkPeer);
             }
-            if (!component.HasPermission(executableCommand.CanUse())) {
+            if (!player.HasPermission(executableCommand.CanUse())) {
                 return new CommandFeedback(CommandLogType.Player, "You are not authorised to run this command.", peer: networkPeer);
             }
 
             return executableCommand.Execute(networkPeer, args);
         }
 
-        public void Initialize() {
-            this.commands = new Dictionary<string, ICommand>();
+        public static Task Initialize() {
+            MPUtil.WriteToConsole("Loading all chat commands...");
+
+            commands = new Dictionary<string, ICommand>();
+
             foreach (Type mytype in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
                  .Where(mytype => mytype.GetInterfaces().Contains(typeof(ICommand))))
             {
@@ -60,6 +51,7 @@ namespace OCEAdmin.Commands
                 }
             }
 
+            return Task.CompletedTask;
         }
     }
 }

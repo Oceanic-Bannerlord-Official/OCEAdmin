@@ -7,6 +7,10 @@ using SocketIOClient;
 using System.Text.Json;
 using static OCEAdmin.API.EndPoint;
 using OCEAdmin.Core;
+using System.Threading.Tasks;
+using OCEAdmin.Core.Permissions;
+using System.Collections.Generic;
+using System;
 
 namespace OCEAdmin
 {
@@ -16,53 +20,46 @@ namespace OCEAdmin
         {
             base.OnSubModuleLoad();
 
+            try
+            {
+                LoadDependencies();
+            }
+            catch(Exception error)
+            {
+                MPUtil.WriteToConsole("OCEAdmin experienced an error while trying to start. Bannerlord server start will not continue.");
+                MPUtil.WriteToConsole($"Error: {error.Message}");
+            }
+        }
+
+        protected async void LoadDependencies()
+        {
             // Loads the configuration for OCEAdmin variables.
-            Config config = ConfigManager.Instance.LoadConfig();
+            await Config.Load();
+            await AdminManager.LoadAdmins();
+            await BanManager.LoadBans();
+            await MuteManager.LoadMutes();
 
-            // Replace the current admins loaded from the xml with
-            // the ones from the OCEAdmin API.
-            if (config.UseWebAdmin)
-            {
-                ConfigManager.LoadAdminsFromAPI();
-            }
-
-            // Deciding whether to load from the API or local
-            // storage.
-            if (config.UseWebBans)
-            {
-                BanManager.Handler = new WebBanTransport();
-            }
-            else
-            {
-                BanManager.Handler = new LocalBanTransport();
-            }
-
-            // Persistance for punitary actions.
-            BanManager.Handler.LoadList();
-            MuteManager.LoadMutes();
-
-            // Creates a new instance of the in-game command manager.
-            CommandManager.Instance.Initialize();
+            // Initialize all the commands for the in-game command manager.
+            await CommandManager.Initialize();
 
             // This handles all the hotfixes or game code edits
-            PatchManager.LoadPatches();
+            await PatchManager.LoadPatches();
         }
 
         protected override void OnSubModuleUnloaded() { }
 
         public override void OnMultiplayerGameStart(Game game, object starterObject) 
         {
-            game.AddGameHandler<OCEAdminHandler>();
-        }
-
-        public override void OnBeforeMissionBehaviorInitialize(Mission mission)
-        {
-            base.OnBeforeMissionBehaviorInitialize(mission);
+            game.AddGameHandler<CommandsGameHandler>();
+            game.AddGameHandler<BansGameHandler>();
+            game.AddGameHandler<PlayerGameHandler>();
         }
 
         public override void OnGameEnd(Game game)
         {
-            game.RemoveGameHandler<OCEAdminHandler>();
+            game.RemoveGameHandler<CommandsGameHandler>();
+            game.RemoveGameHandler<BansGameHandler>();
+            game.RemoveGameHandler<PlayerGameHandler>();
         }
     }
 }

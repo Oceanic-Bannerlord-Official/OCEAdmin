@@ -37,7 +37,7 @@ namespace OCEAdmin
                 return;
 
             // Mutes the player on the current server session.
-            peer.GetPlayerExtensionComponent().Mute();
+            peer.GetPlayer().Mute();
 
             // Add the player to the permanent mutes.
             _mutes.Add(mute);
@@ -54,7 +54,7 @@ namespace OCEAdmin
                 return;
 
             // Mutes the player on the current server session.
-            peer.GetPlayerExtensionComponent().Mute();
+            peer.GetPlayer().Mute();
         }
 
         public static void RemoveMute(string id) 
@@ -78,11 +78,13 @@ namespace OCEAdmin
                 return;
 
             // Unmute the player for the local session.
-            peer.GetPlayerExtensionComponent().Unmute();
+            peer.GetPlayer().Unmute();
         }
 
-        public static void LoadMutes()
+        public static Task LoadMutes()
         {
+            MPUtil.WriteToConsole("Loading player mutes...");
+
             if (!File.Exists(GetLocalPath()))
             {
                 UpdateMutes(new List<Mute>());
@@ -97,7 +99,7 @@ namespace OCEAdmin
                     {
                         List<Mute> muteList = (List<Mute>)serializer.Deserialize(reader);
 
-                        UpdateMutes(muteList);
+                        _mutes = muteList;
 
                         foreach (Mute peer in muteList)
                         {
@@ -110,6 +112,8 @@ namespace OCEAdmin
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         public static void UpdateMutes(List<Mute> mutes)

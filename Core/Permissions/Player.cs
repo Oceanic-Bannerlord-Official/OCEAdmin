@@ -10,11 +10,11 @@ using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin
 {
-    public class PlayerExtensionComponent
+    public class Player
     {
-        private static List<PlayerExtensionComponent> All = new List<PlayerExtensionComponent>();
+        private static List<Player> All = new List<Player>();
 
-        public static PlayerExtensionComponent GetFor(NetworkCommunicator networkPeer)
+        public static Player GetFor(NetworkCommunicator networkPeer)
         {
             return All.Find(x => x.GetNetworkPeer() == networkPeer);
         }
@@ -24,9 +24,9 @@ namespace OCEAdmin
             All.Remove(GetFor(networkPeer));
         }
 
-        public static PlayerExtensionComponent Create(NetworkCommunicator networkPeer)
+        public static Player Create(NetworkCommunicator networkPeer)
         {
-            PlayerExtensionComponent component = new PlayerExtensionComponent(networkPeer);
+            Player component = new Player(networkPeer);
             All.Add(component);
 
             return component;
@@ -34,7 +34,7 @@ namespace OCEAdmin
 
         private NetworkCommunicator networkPeer { get; set; }
 
-        public PlayerExtensionComponent(NetworkCommunicator networkPeer)
+        public Player(NetworkCommunicator networkPeer)
         {
             this.networkPeer = networkPeer;
         }

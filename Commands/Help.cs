@@ -18,15 +18,16 @@ namespace OCEAdmin.Commands
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-            string[] commands = CommandManager.Instance.commands.Keys.ToArray();
-            MPUtil.SendChatMessage(networkPeer, "-==== Command List ===-");
+            string[] commands = CommandManager.commands.Keys.ToArray();
 
-            PlayerExtensionComponent component = networkPeer.GetPlayerExtensionComponent();
+            networkPeer.SendChatMessage("<< Command List >>");
+
+            Player player = networkPeer.GetPlayer();
 
             foreach (string command in commands) {
-                ICommand commandExecutable = CommandManager.Instance.commands[command];
+                ICommand commandExecutable = CommandManager.commands[command];
 
-                if(component.HasPermission(commandExecutable.CanUse()))
+                if(player.HasPermission(commandExecutable.CanUse()))
                 {
                     MPUtil.SendChatMessage(networkPeer, string.Format("{0}: {1}", command, commandExecutable.Description()));
                 }

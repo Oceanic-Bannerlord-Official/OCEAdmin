@@ -28,7 +28,7 @@ namespace OCEAdmin.Features
 
         public override void OnAgentMount(Agent agent)
         {
-            if (!ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSystemEnabled)
+            if (!Config.Get().AutoAdminSettings.DismountSystemEnabled)
                 return;
 
             if (AdminPanel.Instance.GetWarmupState() == MultiplayerWarmupComponent.WarmupStates.InProgress)
@@ -60,11 +60,11 @@ namespace OCEAdmin.Features
                 }
 
                 MPUtil.SendChatMessage(networkPeer, string.Format("** DISMOUNT ** - You will be slain in {0}s", 
-                    ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSlayTime));
+                    Config.Get().AutoAdminSettings.DismountSlayTime));
 
                 MPUtil.SendChatMessage(networkPeer, "** DISMOUNT ** - You are not the correct class for this mount.");
 
-                CountdownTimer countdown = new CountdownTimer(networkPeer, ConfigManager.Instance.GetConfig().AutoAdminSettings.DismountSlayTime);
+                CountdownTimer countdown = new CountdownTimer(networkPeer, Config.Get().AutoAdminSettings.DismountSlayTime);
                 countdown.OnTimerComplete += PunishPlayer;
             }
         }

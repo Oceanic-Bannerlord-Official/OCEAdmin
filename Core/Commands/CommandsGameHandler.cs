@@ -14,7 +14,7 @@ using TaleWorlds.PlayerServices;
 
 namespace OCEAdmin
 {
-    class OCEAdminHandler : GameHandler
+    class CommandsGameHandler : GameHandler
     {
         public override void OnAfterSave() {}
 
@@ -23,14 +23,6 @@ namespace OCEAdmin
         protected override void OnGameNetworkBegin()
         {
             this.AddRemoveMessageHandlers(GameNetwork.NetworkMessageHandlerRegisterer.RegisterMode.Add);
-        }
-
-        protected override void OnPlayerConnect(VirtualPlayer virtualPlayer) {
-            NetworkCommunicator peer = (NetworkCommunicator) virtualPlayer.Communicator;
-
-            if (peer.IsBanned()) {
-                DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(virtualPlayer.Id, false);
-            }
         }
 
         protected override void OnGameNetworkEnd()
@@ -53,7 +45,7 @@ namespace OCEAdmin
                 string[] argsWithCommand = message.Message.Split(' ');
                 string command = argsWithCommand[0];
                 string[] args = argsWithCommand.Skip(1).ToArray();
-                CommandManager.Instance.Execute(networkPeer, command, args).Log();
+                CommandManager.Execute(networkPeer, command, args).Log();
             }
             return true;
         }

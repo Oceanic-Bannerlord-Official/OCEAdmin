@@ -22,8 +22,9 @@ namespace OCEAdmin
         private string _checksum = "";
         private readonly int _tickTime = 30000; // 30s (Milliseconds)
 
-        public void LoadList()
+        public void Load()
         {
+            MPUtil.WriteToConsole("Starting bans heartbeat for API.");
             StartHeartbeat();
         }
 
@@ -34,7 +35,7 @@ namespace OCEAdmin
             BanManager.AddBan(ban);
 
             endpoint.SetArgs(new List<Tuple<string, string>> {
-                Tuple.Create("key", ConfigManager.Instance.GetConfig().WebKey),
+                Tuple.Create("key", Config.Get().WebKey),
                 Tuple.Create("steam_link", ban.steamid),
                 Tuple.Create("reason", "Ingame ban."),
                 Tuple.Create("banner", ban.bannerID),
@@ -49,7 +50,7 @@ namespace OCEAdmin
             BanManager.RemoveBan(id);
 
             endpoint.SetArgs(new List<Tuple<string, string>> {
-                Tuple.Create("key", ConfigManager.Instance.GetConfig().WebKey),
+                Tuple.Create("key", Config.Get().WebKey),
                 Tuple.Create("steamid", id),
             });
 

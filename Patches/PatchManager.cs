@@ -14,23 +14,16 @@ namespace OCEAdmin.Patches
     {
         private static Harmony _harmony;
 
-        public static void LoadPatches()
+        public static Task LoadPatches()
         {
             MPUtil.WriteToConsole("Loading Harmony patches...");
 
             Harmony.DEBUG = true;
             _harmony = new Harmony("OCEAdmin.Bannerlord");
 
-            LoadDefaultBehaviorPatch();
-            LoadChatBoxPatch(); 
-        }
+            LoadChatBoxPatch();
 
-        private static void LoadDefaultBehaviorPatch()
-        {
-            var original = typeof(MissionState).GetMethod("AddDefaultMissionBehaviorsTo", BindingFlags.NonPublic | BindingFlags.Static);
-            var postfix = typeof(PatchMissionStateDefaults).GetMethod("Postfix");
-            _harmony.Patch(original, postfix: new HarmonyMethod(postfix));
-            MPUtil.WriteToConsole("MissionState::PatchMissionStateDefaults");
+            return Task.CompletedTask;
         }
 
         private static void LoadChatBoxPatch()
