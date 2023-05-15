@@ -19,7 +19,6 @@ namespace OCEAdmin.Commands
 
         public CommandFeedback Execute(NetworkCommunicator networkPeer, string[] args)
         {
-
             Tuple<TeamComposition, TeamComposition> teams = MPUtil.GetTeamsComposition();
 
             networkPeer.SendChatMessage(string.Format("{0}: {1} Infantry, {2} Cavalry, {3} Archer(s). {4} Total.",
