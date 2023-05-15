@@ -149,16 +149,18 @@
     <Compile Include="API\Endpoints\GetBansEndPoint.cs" />
     <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\ArcherLimit.cs" />
-    <None Include="Commands\AutoAdmin.ocs" />
     <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\Core\CommandFeedback.cs" />
     <Compile Include="Commands\Core\CommandSession.cs" />
+    <Compile Include="Commands\Mute.cs" />
     <Compile Include="Commands\TempMute.cs" />
+    <Compile Include="Commands\Unmute.cs" />
     <Compile Include="Core\Bans\Ban.cs" />
     <Compile Include="Core\Bans\IBanTransport.cs" />
+    <Compile Include="Core\Mutes\Mute.cs" />
+    <Compile Include="Core\Mutes\MuteManager.cs" />
     <Compile Include="Core\NetworkCommunicatorExtensions.cs" />
     <Compile Include="Core\Permissions\Role.cs" />
-    <None Include="Commands\Nick.ocs" />
     <Compile Include="Commands\Core\PeerSearchCommand.cs" />
     <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Core\AdminPanel.cs" />
@@ -212,9 +214,7 @@
   <ItemGroup>
     <Content Include="Module\SubModule.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Mutes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set DEST_FOLDER="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin"

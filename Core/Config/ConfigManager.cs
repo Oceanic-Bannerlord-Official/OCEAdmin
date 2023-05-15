@@ -41,7 +41,7 @@ namespace OCEAdmin
             return ConfigManager.Instance.config;
         }
 
-        public void LoadConfig()
+        public Config LoadConfig()
         {
             config = new Config();
 
@@ -100,27 +100,10 @@ namespace OCEAdmin
             }
 
             Instance.SetConfig(config);
-
-            // Replace the current admins loaded from the xml with
-            // the ones from the OCEAdmin API.
-            if(config.UseWebAdmin)
-            {
-                LoadAdminsFromAPI();
-            }
-
-            if (config.UseWebBans)
-            {
-                BanManager.Handler = new WebBanTransport();
-            }
-            else
-            {
-                BanManager.Handler = new LocalBanTransport();
-            }
-
-            BanManager.Handler.LoadList();
+            return config;
         }
 
-        public void LoadAdminsFromAPI()
+        public static void LoadAdminsFromAPI()
         {
             EndPoint endpoint = new GetAdminsEndPoint();
 
@@ -128,7 +111,7 @@ namespace OCEAdmin
             endpoint.Request();
         }
 
-        public void OnAdminsReceived(APIResponse response)
+        public static void OnAdminsReceived(APIResponse response)
         {
             if (response.data == null)
                 return;

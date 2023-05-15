@@ -68,6 +68,24 @@ namespace OCEAdmin
             return targetPeer;
         }
 
+        public static NetworkCommunicator GetPeerFromID(string id)
+        {
+            NetworkCommunicator targetPeer = null;
+
+            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+            {
+                if (peer.IsSynchronized)
+                {
+                    if (peer.VirtualPlayer.Id.ToString().Contains(id))
+                    {
+                        return peer;
+                    }
+                }
+            }
+
+            return targetPeer;
+        }
+
         public static List<NetworkCommunicator> GetPeersFromName(string name)
         {
             List<NetworkCommunicator> targetPeers = new List<NetworkCommunicator>();

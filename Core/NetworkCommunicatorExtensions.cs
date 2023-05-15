@@ -29,5 +29,10 @@ namespace OCEAdmin
         {
             return BanManager.IsBanned(networkPeer);
         }
+
+        public static bool IsMuted(this NetworkCommunicator networkPeer)
+        {
+            return networkPeer.GetPlayerExtensionComponent().IsMuted();
+        }
     }
 }

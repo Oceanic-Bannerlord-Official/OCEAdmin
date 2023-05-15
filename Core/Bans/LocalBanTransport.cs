@@ -79,7 +79,7 @@ namespace OCEAdmin
             writer.Formatting = System.Xml.Formatting.Indented;
             writer.Indentation = 4;
 
-            serializer.Serialize(writer, new List<Ban>());
+            serializer.Serialize(writer, bans);
             writer.Close();
         }
     }
