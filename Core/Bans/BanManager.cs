@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade;
 
@@ -48,7 +49,30 @@ namespace OCEAdmin
 
             Handler.Load();
 
+            StartBansTick();
+
             return Task.CompletedTask;
+        }
+
+
+        public static Task StartBansTick()
+        {
+            Timer timer = new Timer(CheckBanExpirations, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            return Task.CompletedTask;
+        }
+
+        private static void CheckBanExpirations(object state)
+        {
+            lock(_bans)
+            {
+                foreach(Ban ban in _bans.ToList())
+                {
+                    if(ban.IsExpired())
+                    {
+                        Handler.OnRemoveBan(ban.steamid);
+                    }
+                }
+            }
         }
 
         public static void RemoveBan(string id)
