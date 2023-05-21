@@ -39,6 +39,14 @@ namespace OCEAdmin.Commands
             }
 
             Player player = networkPeer.GetPlayer();
+
+            if(player.role != Role.Player) 
+            {
+                return new CommandFeedback(CommandLogType.Player,
+                    msg: "You're already logged in!",
+                    peer: networkPeer);
+            }
+
             player.UpdateRole(Role.Admin);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
