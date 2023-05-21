@@ -25,7 +25,7 @@ namespace OCEAdmin.Commands
         {
             AdminPanel.Instance.EndWarmup();
 
-            return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg: string.Format("** Command ** {0} has ended warmup.", networkPeer.UserName),
+            return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg: string.Format("** Command ** {0} has ended warmup.", networkPeer.GetUsername()),
                 peer: networkPeer);
         }
     }

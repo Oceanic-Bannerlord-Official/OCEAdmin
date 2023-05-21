@@ -22,8 +22,16 @@ namespace OCEAdmin.Patches
             _harmony = new Harmony("OCEAdmin.Bannerlord");
 
             LoadChatBoxPatch();
+            LoadAddNewPlayerOnServerPatch();
 
             return Task.CompletedTask;
+        }
+
+        private static void LoadAddNewPlayerOnServerPatch()
+        {
+            var original = typeof(GameNetwork).GetMethod("AddNewPlayerOnServer", BindingFlags.Public | BindingFlags.Static);
+            var prefix = typeof(PatchAddNewPlayerOnServer).GetMethod("Prefix");
+            _harmony.Patch(original, prefix: new HarmonyMethod(prefix));
         }
 
         private static void LoadChatBoxPatch()

@@ -22,11 +22,11 @@ namespace OCEAdmin.Commands
             // Mute the player for the session only.
             MuteManager.AddMute(new OCEAdmin.Mute(playerID: targetPeer.VirtualPlayer.Id.ToString(),
                 adminID: networkPeer.VirtualPlayer.Id.ToString(),
-                nickname: targetPeer.VirtualPlayer.UserName));
+                nickname: targetPeer.GetUsername()));
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget,
-                msg: string.Format("** Command ** {0} has muted {1} indefinitely.", networkPeer.UserName, targetPeer.UserName),
-                targetMsg: string.Format("** Command ** {0} has muted you indefinitely.", networkPeer.UserName), targetPeer: targetPeer);
+                msg: string.Format("** Command ** {0} has muted {1} indefinitely.", networkPeer.GetUsername(), targetPeer.GetUsername()),
+                targetMsg: string.Format("** Command ** {0} has muted you indefinitely.", networkPeer.GetUsername()), targetPeer: targetPeer);
         }
     }
 }

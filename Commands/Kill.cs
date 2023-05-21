@@ -26,7 +26,7 @@ namespace OCEAdmin.Commands
                 MPUtil.Slay(targetPeer.ControlledAgent);
 
                 return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget,
-                    msg: string.Format("** Command ** {0} has slayed {1}.", networkPeer.UserName, targetPeer.UserName),
+                    msg: string.Format("** Command ** {0} has slayed {1}.", networkPeer.GetUsername(), targetPeer.GetUsername()),
                     targetMsg: "** Command ** You have been slain.", targetPeer: targetPeer);
             }
 

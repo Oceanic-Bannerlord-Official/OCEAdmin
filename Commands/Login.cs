@@ -42,7 +42,7 @@ namespace OCEAdmin.Commands
             player.UpdateRole(Role.Admin);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget, 
-                msg: string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.UserName),
+                msg: string.Format("** Login ** {0} has logged in with the admin password!", networkPeer.GetUsername()),
                 targetMsg: "Login successful. Welcome!", targetPeer: networkPeer);
         }
     }

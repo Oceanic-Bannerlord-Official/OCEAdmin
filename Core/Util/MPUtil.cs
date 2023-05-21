@@ -62,7 +62,7 @@ namespace OCEAdmin
             {
                 if (peer.IsSynchronized)
                 {
-                    if (peer.UserName.ToLower().Contains(name.ToLower()))
+                    if (peer.GetUsername().ToLower().Contains(name.ToLower()))
                     {
                         return peer;
                     }
@@ -97,7 +97,7 @@ namespace OCEAdmin
             {
                 if (peer.IsSynchronized)
                 {
-                    if (peer.UserName.ToLower().Contains(name.ToLower()))
+                    if (peer.GetUsername().ToLower().Contains(name.ToLower()))
                     {
                         targetPeers.Add(peer);
                     }
