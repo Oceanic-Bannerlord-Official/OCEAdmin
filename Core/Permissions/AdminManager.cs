@@ -50,12 +50,9 @@ namespace OCEAdmin.Core.Permissions
 
             List<AdminData> admins = JsonConvert.DeserializeObject<List<AdminData>>(response.data);
 
-            Config.Get().Admins.Clear();
-
             foreach (AdminData admin in admins)
             {
-                string bannerlordID = "2.0.0." + admin.steamid;
-                Config.Get().Admins.Add(AdminPerms.New(bannerlordID, Role.Admin));
+                AddAdmin(AdminPerms.New(admin.steamid, Role.Admin));
                 MPUtil.WriteToConsole($"Adding '{admin.username}' from the web API.");
             }
         }

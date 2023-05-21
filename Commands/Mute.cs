@@ -19,6 +19,12 @@ namespace OCEAdmin.Commands
 
         public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
+            if(networkPeer.GetPlayer().role != Role.Player)
+            {
+                return new CommandFeedback(CommandLogType.Player,
+                    peer: networkPeer, msg: "You can't mute an admin!");
+            }
+
             // Mute the player for the session only.
             MuteManager.AddMute(new OCEAdmin.Mute(playerID: targetPeer.VirtualPlayer.Id.ToString(),
                 adminID: networkPeer.VirtualPlayer.Id.ToString(),

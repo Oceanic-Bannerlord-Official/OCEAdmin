@@ -45,7 +45,7 @@ namespace OCEAdmin.Core.Logging
         private static string GetLogFileName()
         {
             string date = DateTime.Now.ToString("yyyy-MM-dd");
-            return $"{GetLogPath()}/{date}.txt";
+            return GetLogPath() + "/" + date + ".txt";
         }
 
         public static string GetLogPath()

@@ -25,7 +25,7 @@ namespace OCEAdmin.Core.Logging
         {
             Queue = new Queue<string>();
             logger = new LocalLogger();
-            saveTimer = new Timer(TimeSpan.FromMinutes(2).TotalMilliseconds);
+            saveTimer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
             saveTimer.Elapsed += logger.Save;
             saveTimer.Start();
 

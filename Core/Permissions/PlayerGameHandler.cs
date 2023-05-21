@@ -20,27 +20,39 @@ namespace OCEAdmin.Core.Permissions
 
             NetworkCommunicator networkPeer = (NetworkCommunicator)peer.Communicator;
 
+            networkPeer.Setup();
+
+            SetupRole(networkPeer);
+            CheckMute(networkPeer);
+        }
+
+        public void SetupRole(NetworkCommunicator networkPeer)
+        {
             Player player = networkPeer.GetPlayer();
             Role role = Role.Player;
 
             foreach (AdminPerms admin in AdminManager.GetAdmins())
             {
-                if (networkPeer.VirtualPlayer.Id.ToString() == admin.PlayerId)
+                if (networkPeer.VirtualPlayer.Id.Id2.ToString() == admin.PlayerId)
                 {
                     Role.TryParse(admin.PermType, out role);
                 }
             }
 
+            player.UpdateRole(role);
+
+            MPUtil.WriteToConsole($"Role '{role}' added to " + networkPeer.GetUsername());
+        }
+
+        public void CheckMute(NetworkCommunicator networkPeer)
+        {
             foreach (Mute mute in MuteManager.GetMutes())
             {
-                if (peer.Id.ToString().Contains(mute.playerID))
+                if (networkPeer.VirtualPlayer.Id.ToString().Contains(mute.playerID))
                 {
-                    player.Mute();
+                    networkPeer.GetPlayer().Mute();
                 }
             }
-
-            player.UpdateRole(role);
-            MPUtil.WriteToConsole($"Role '{role}' added to " + networkPeer.GetUsername());
         }
 
         protected override void OnPlayerDisconnect(VirtualPlayer peer)
