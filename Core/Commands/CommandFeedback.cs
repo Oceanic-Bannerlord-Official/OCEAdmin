@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCEAdmin.Core.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,12 +33,14 @@ namespace OCEAdmin.Commands
                     if(msg != null)
                     {
                         MPUtil.BroadcastToAdmins(msg);
+                        LogManager.Add(msg);
                     }
                     break;
                 case CommandLogType.BroadcastToAdminsAndTarget:
                     if(msg != null && targetMsg != null && targetPeer != null)
                     {
                         MPUtil.BroadcastToAdmins(msg);
+                        LogManager.Add(msg);
                         MPUtil.SendChatMessage(targetPeer, targetMsg);
                     }
                     break;
