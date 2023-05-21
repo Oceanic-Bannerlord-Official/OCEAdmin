@@ -157,6 +157,9 @@
     <Compile Include="Commands\Unmute.cs" />
     <Compile Include="Core\Bans\Ban.cs" />
     <Compile Include="Core\Bans\IBanTransport.cs" />
+    <Compile Include="Core\Logging\ILogger.cs" />
+    <Compile Include="Core\Logging\LocalLogger.cs" />
+    <Compile Include="Core\Logging\LogManager.cs" />
     <Compile Include="Core\Permissions\AdminData.cs" />
     <Compile Include="Core\Permissions\AdminPerms.cs" />
     <Compile Include="Core\Mutes\Mute.cs" />

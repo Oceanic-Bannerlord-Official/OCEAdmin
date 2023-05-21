@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using OCEAdmin.Core.Permissions;
 using System.Collections.Generic;
 using System;
+using OCEAdmin.Core.Logging;
 
 namespace OCEAdmin
 {
@@ -33,6 +34,9 @@ namespace OCEAdmin
 
         protected async void LoadDependencies()
         {
+            // Start logging all commands ingame and from the console.
+            await LogManager.Start();
+
             // Loads the configuration for OCEAdmin variables.
             await Config.Load();
             await AdminManager.LoadAdmins();

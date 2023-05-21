@@ -1,5 +1,6 @@
 ﻿using NetworkMessages.FromServer;
 using OCEAdmin.Core;
+using OCEAdmin.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,7 +35,10 @@ namespace OCEAdmin
         }
 
         public static void WriteToConsole(string text) {
-            Debug.Print(string.Format("[OCEAdmin] - " + text), 0, Debug.DebugColor.Green);
+            string msg = string.Format("[OCEAdmin] - " + text);
+
+            Debug.Print(msg, 0, Debug.DebugColor.Green);
+            LogManager.Add(msg);
         }
 
         public static string RandomString(int length)
