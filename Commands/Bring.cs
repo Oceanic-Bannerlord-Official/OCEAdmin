@@ -29,8 +29,8 @@ namespace OCEAdmin.Commands
                 targetPeer.ControlledAgent.TeleportToPosition(targetPos);
 
                 return new CommandFeedback(CommandLogType.Both,
-                    msg: string.Format("** Command ** You have brought {0} to you.", targetPeer.UserName), peer: networkPeer,
-                    targetMsg: string.Format("** Command ** {0} has brought you to them.", networkPeer.UserName), targetPeer: targetPeer);
+                    msg: string.Format("** Command ** You have brought {0} to you.", targetPeer.GetUsername()), peer: networkPeer,
+                    targetMsg: string.Format("** Command ** {0} has brought you to them.", networkPeer.GetUsername()), targetPeer: targetPeer);
             }
 
             return new CommandFeedback(CommandLogType.Player, msg: "Player is not alive. Can't bring.",

@@ -23,7 +23,7 @@ namespace OCEAdmin.Commands
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins,
-                msg: string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.UserName, targetPeer.UserName));
+                msg: string.Format("** Command ** {0} has kicked {1} from the server.", networkPeer.GetUsername(), targetPeer.GetUsername()));
         }
     }
 }

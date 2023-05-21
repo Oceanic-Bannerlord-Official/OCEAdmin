@@ -34,7 +34,7 @@ namespace OCEAdmin.Commands
                     MuteManager.RemoveMute(mute.playerID);
 
                     return new CommandFeedback(CommandLogType.BroadcastToAdmins,
-                        msg: string.Format("** Command ** {0} has unmuted {1}.", networkPeer.UserName, mute.nickname));
+                        msg: string.Format("** Command ** {0} has unmuted {1}.", networkPeer.GetUsername(), mute.nickname));
                 }
             }
 

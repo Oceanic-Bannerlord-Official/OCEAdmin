@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
@@ -49,6 +50,13 @@ namespace OCEAdmin
         public static bool IsInfantry(this NetworkCommunicator networkPeer)
         {
             return !networkPeer.IsArcher() && !networkPeer.IsCavalry();
+        }
+        
+        public static string GetUsername(this NetworkCommunicator networkPeer)
+        {
+            string username = networkPeer.UserName;
+            string cleanedUsername = Regex.Replace(username, "[{}]", ""); // Remove curly braces
+            return cleanedUsername;
         }
 
         public static void SendChatMessage(this NetworkCommunicator networkPeer, string message)

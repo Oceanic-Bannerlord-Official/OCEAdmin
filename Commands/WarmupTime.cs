@@ -34,7 +34,7 @@ namespace OCEAdmin.Commands
             AdminPanel.Instance.SetWarmupTime(newRoundTime);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins, 
-                msg: string.Format("** Command ** {0} has adjusted the warmup timer to {1} minute(s).", networkPeer.UserName, args[0]));
+                msg: string.Format("** Command ** {0} has adjusted the warmup timer to {1} minute(s).", networkPeer.GetUsername(), args[0]));
         }
     }
 }

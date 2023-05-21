@@ -40,7 +40,7 @@ namespace OCEAdmin.Core.Permissions
             }
 
             player.UpdateRole(role);
-            MPUtil.WriteToConsole($"Role '{role}' added to " + networkPeer.UserName);
+            MPUtil.WriteToConsole($"Role '{role}' added to " + networkPeer.GetUsername());
         }
 
         protected override void OnPlayerDisconnect(VirtualPlayer peer)

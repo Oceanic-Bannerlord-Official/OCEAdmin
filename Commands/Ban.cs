@@ -23,12 +23,12 @@ namespace OCEAdmin.Commands
         {         
             BanManager.Handler.OnAddBan(new OCEAdmin.Ban(steamid: targetPeer.VirtualPlayer.Id.ToString(),
                 bannerID: networkPeer.VirtualPlayer.Id.ToString(),
-                nickname: targetPeer.VirtualPlayer.UserName));
+                nickname: targetPeer.GetUsername()));
 
             DedicatedCustomServerSubModule.Instance.DedicatedCustomGameServer.KickPlayer(targetPeer.VirtualPlayer.Id, false);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins,
-                msg: string.Format("** Command ** {0} has banned {1} from the server.", networkPeer.UserName, targetPeer.UserName));
+                msg: string.Format("** Command ** {0} has banned {1} from the server.", networkPeer.GetUsername(), targetPeer.GetUsername()));
         }
     }
 }

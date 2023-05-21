@@ -34,7 +34,7 @@ namespace OCEAdmin.Commands
                     BanManager.Handler.OnRemoveBan(ban.steamid);
 
                     return new CommandFeedback(CommandLogType.BroadcastToAdmins,
-                        msg: string.Format("** Command ** {0} has unbanned {1}.", networkPeer.UserName, ban.nickname));
+                        msg: string.Format("** Command ** {0} has unbanned {1}.", networkPeer.GetUsername(), ban.nickname));
                 }
             }
 

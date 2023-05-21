@@ -22,7 +22,7 @@ namespace OCEAdmin.Commands
             String text = string.Join(" ", args);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins,
-                msg: string.Format("(Admin) {0}: {1}", networkPeer.VirtualPlayer.UserName.ToString(), text));
+                msg: string.Format("(Admin) {0}: {1}", networkPeer.GetUsername(), text));
         }
     }
 }

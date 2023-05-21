@@ -30,7 +30,7 @@ namespace OCEAdmin.Commands
                 AdminPanel.Instance.ChangeMap(searchResult.Item2);
 
                 return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg:
-                    string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.UserName, searchResult.Item2));
+                    string.Format("** Command ** {0} has initiated a map change to: {1}.", networkPeer.GetUsername(), searchResult.Item2));
             }
 
             return new CommandFeedback(CommandLogType.Player, msg: searchResult.Item2, peer: networkPeer);

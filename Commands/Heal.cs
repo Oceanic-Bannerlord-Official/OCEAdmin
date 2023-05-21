@@ -31,7 +31,7 @@ namespace OCEAdmin.Commands
                 }
 
                 return new CommandFeedback(CommandLogType.BroadcastToAdmins, 
-                    msg: string.Format("** Command ** {0} has healed all players.", networkPeer.UserName));
+                    msg: string.Format("** Command ** {0} has healed all players.", networkPeer.GetUsername()));
             }
 
             NetworkCommunicator targetPeer = MPUtil.GetPeerFromName(string.Join(" ", args));
@@ -45,15 +45,15 @@ namespace OCEAdmin.Commands
             if (targetPeer.ControlledAgent != null) {
                 targetPeer.ControlledAgent.Health = targetPeer.ControlledAgent.HealthLimit;
 
-                if(targetPeer.UserName != networkPeer.UserName)
+                if(targetPeer.GetUsername() != networkPeer.GetUsername())
                 {
                     return new CommandFeedback(CommandLogType.BroadcastToAdminsAndTarget,
-                        msg: string.Format("** Command ** {0} has healed {1}.", networkPeer.UserName, targetPeer.UserName),
-                        targetMsg: string.Format("** Command ** {0} has healed you.", networkPeer.UserName), targetPeer: targetPeer);
+                        msg: string.Format("** Command ** {0} has healed {1}.", networkPeer.GetUsername(), targetPeer.GetUsername()),
+                        targetMsg: string.Format("** Command ** {0} has healed you.", networkPeer.GetUsername()), targetPeer: targetPeer);
                 }
                 else
                 {
-                    return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg: string.Format("** Command ** {0} has healed themself.", networkPeer.UserName));
+                    return new CommandFeedback(CommandLogType.BroadcastToAdmins, msg: string.Format("** Command ** {0} has healed themself.", networkPeer.GetUsername()));
                 }
             }
 

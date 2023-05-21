@@ -33,7 +33,7 @@ namespace OCEAdmin.Commands
             AdminPanel.Instance.SetMapTime(newRoundTime);
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins, 
-                msg: string.Format("** Command ** {0} has adjusted the map time to {1} minute(s).", networkPeer.UserName, args[0])); 
+                msg: string.Format("** Command ** {0} has adjusted the map time to {1} minute(s).", networkPeer.GetUsername(), args[0])); 
         }
     }
 }

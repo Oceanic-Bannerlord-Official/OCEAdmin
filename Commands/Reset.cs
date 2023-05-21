@@ -19,7 +19,7 @@ namespace OCEAdmin.Commands
             AdminPanel.Instance.ResetMission();
 
             return new CommandFeedback(CommandLogType.BroadcastToAdmins,
-                msg: string.Format("** Command ** {0} has reset the map.", networkPeer.UserName));
+                msg: string.Format("** Command ** {0} has reset the map.", networkPeer.GetUsername()));
         }
     }
 }

@@ -176,6 +176,7 @@
     <Compile Include="Core\Util\TeamComposition.cs" />
     <Compile Include="Core\Permissions\Player.cs" />
     <Compile Include="Core\AutoAdmin\CavalryDismountMissionBehavior.cs" />
+    <Compile Include="Patches\PatchAddNewPlayerOnServerr.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Commands\Heal.cs" />
     <Compile Include="OCEAdminSubModule.cs" />

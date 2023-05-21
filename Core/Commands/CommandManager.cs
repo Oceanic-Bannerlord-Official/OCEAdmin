@@ -28,7 +28,7 @@ namespace OCEAdmin.Commands
                 return new CommandFeedback(CommandLogType.Player, "You are not authorised to run this command.", peer: networkPeer);
             }
 
-            MPUtil.WriteToConsole(networkPeer.UserName + "attempted to run the !" + command + " command.");
+            MPUtil.WriteToConsole(networkPeer.GetUsername() + "attempted to run the !" + command + " command.");
 
             return executableCommand.Execute(networkPeer, args);
         }

@@ -33,7 +33,7 @@ namespace OCEAdmin.Commands
 
             foreach(NetworkCommunicator peer in peers)
             {
-                selection.Add($"[{i}] " + peer.UserName);
+                selection.Add($"[{i}] " + peer.GetUsername());
                 i++;
             }
 

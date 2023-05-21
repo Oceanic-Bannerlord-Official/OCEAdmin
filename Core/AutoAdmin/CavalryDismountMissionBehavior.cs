@@ -93,7 +93,7 @@ namespace OCEAdmin.Features
         {
             MPUtil.Slay(networkPeer);
             MPUtil.SendChatMessage(networkPeer, "You have been slain by auto-admin.");
-            MPUtil.BroadcastToAdmins(string.Format("** ADMIN ** {0} has been slain for mounting a horse as the wrong class.", networkPeer.UserName));
+            MPUtil.BroadcastToAdmins(string.Format("** ADMIN ** {0} has been slain for mounting a horse as the wrong class.", networkPeer.GetUsername()));
         }
     }
 }
