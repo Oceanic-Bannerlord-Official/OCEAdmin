@@ -19,7 +19,7 @@ namespace OCEAdmin.Commands
 
         public override CommandFeedback OnRunAction(NetworkCommunicator networkPeer, NetworkCommunicator targetPeer)
         {
-            if(networkPeer.GetPlayer().role != Role.Player)
+            if(targetPeer.GetPlayer().role != Role.Player)
             {
                 return new CommandFeedback(CommandLogType.Player,
                     peer: networkPeer, msg: "You can't mute an admin!");
