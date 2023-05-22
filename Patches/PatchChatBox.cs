@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using OCEAdmin.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,8 @@ namespace OCEAdmin.Patches
             { 
                 return false;
             }
+
+            LogManager.Add(fromPeer.GetUsername() + " types in chat: " + message);
 
             return true;
         }
