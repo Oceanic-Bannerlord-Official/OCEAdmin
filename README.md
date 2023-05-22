@@ -16,7 +16,7 @@ Supported modules: Native, Sword & Musket
 # Requirements
 
 - Harmony for .NET Framework 4.7.2 (included)
-- Bannerlord Dedicated Server (1.0.3)
+- Bannerlord Dedicated Server (1.1.x)
 - Windows or Linux
 
 ## Features
@@ -26,6 +26,8 @@ All gameplay features are configurable and togglable.
 - Specialist limits for archers and cavalry.
 - Cavalry dismount auto-admin. Non cavalry will be told to dismount and slain after a grace period.
 - Rich admin and permission system. Admin chat included.
+- Voice and text chat mutes.
+- Local logging of player actions and events.
 - Intuitive commands with echo feedback and in-game multiple player result handling.
 - Custom web panel to manage global admins and bans across all your servers.
 
