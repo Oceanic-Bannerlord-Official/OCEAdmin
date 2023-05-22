@@ -134,21 +134,24 @@ namespace OCEAdmin
 
             foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
             {
-                // team 1 = attacker
-                CompositionType compositionType = CompositionType.Infantry;
-
-                if (peer.IsArcher())
+                if (peer.ControlledAgent != null)
                 {
-                    compositionType = CompositionType.Archer;
-                }
-                else if (peer.IsCavalry())
-                {
-                    compositionType = CompositionType.Cavalry;
-                }
+                    // team 1 = attacker
+                    CompositionType compositionType = CompositionType.Infantry;
 
-                TeamComposition team = peer.ControlledAgent.Team.IsAttacker ? teams.Item1 : teams.Item2;
+                    if (peer.IsArcher())
+                    {
+                        compositionType = CompositionType.Archer;
+                    }
+                    else if (peer.IsCavalry())
+                    {
+                        compositionType = CompositionType.Cavalry;
+                    }
 
-                team.AddPlayerToCollection(compositionType, peer);
+                    TeamComposition team = peer.ControlledAgent.Team.IsAttacker ? teams.Item1 : teams.Item2;
+
+                    team.AddPlayerToCollection(compositionType, peer);
+                }
             }
 
             return teams;
