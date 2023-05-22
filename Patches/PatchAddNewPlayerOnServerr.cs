@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OCEAdmin.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace OCEAdmin
             {
                 playerConnectionInfo.Name = name.Replace("{", "").Replace("}", ""); // Remove curly braces
             }
+
+            LogManager.Add(playerConnectionInfo.Name + " (" + playerConnectionInfo.PlayerID.ToString() + ") is connecting to the server.");
 
             return true;
         }
