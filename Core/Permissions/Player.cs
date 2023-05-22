@@ -1,11 +1,13 @@
 ﻿using OCEAdmin.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Core;
+using TaleWorlds.Diamond;
 using TaleWorlds.MountAndBlade;
 
 namespace OCEAdmin
@@ -69,11 +71,19 @@ namespace OCEAdmin
         public void Mute()
         {
             _muted = true;
+
+            MissionPeer component = networkPeer.GetComponent<MissionPeer>();
+            component.SetMuted(true);
+            component.SetMutedFromPlatform(true);
         }
 
         public void Unmute()
         {
             _muted = false;
+
+            MissionPeer component = networkPeer.GetComponent<MissionPeer>();
+            component.SetMuted(false);
+            component.SetMutedFromPlatform(false);
         }
 
         public CommandSession GetCommandSession(ICommand command)
