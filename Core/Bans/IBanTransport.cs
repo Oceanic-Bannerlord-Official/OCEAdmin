@@ -9,8 +9,8 @@ namespace OCEAdmin
 {
     public interface IBanTransport
     {
-        void OnRemoveBan(string id);
-        void OnAddBan(Ban ban);
-        void Load();
+        Task OnRemoveBan(string id);
+        Task OnAddBan(Ban ban);
+        Task Load();
     }
 }

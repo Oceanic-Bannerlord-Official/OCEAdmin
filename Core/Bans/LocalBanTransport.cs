@@ -27,19 +27,23 @@ namespace OCEAdmin
             return Path.Combine(MPUtil.GetPluginDirNoData(), bansFile);
         }
 
-        public void OnAddBan(Ban ban)
+        public Task OnAddBan(Ban ban)
         {
             BanManager.AddBan(ban);
             UpdateLocalStorage(BanManager.GetBans());
+
+            return Task.CompletedTask;
         }
 
-        public void OnRemoveBan(string id)
+        public Task OnRemoveBan(string id)
         {
             BanManager.RemoveBan(id);
             UpdateLocalStorage(BanManager.GetBans());
+
+            return Task.CompletedTask;
         }
 
-        public void Load()
+        public Task Load()
         {
             MPUtil.WriteToConsole("Loading bans using local storage.");
 
@@ -70,9 +74,11 @@ namespace OCEAdmin
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
-        private void UpdateLocalStorage(List<Ban> bans)
+        private Task UpdateLocalStorage(List<Ban> bans)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Ban>));
             Stream fs = new FileStream(GetLocalPath(), FileMode.Create);
@@ -83,6 +89,8 @@ namespace OCEAdmin
 
             serializer.Serialize(writer, bans);
             writer.Close();
+
+            return Task.CompletedTask;
         }
     }
 }

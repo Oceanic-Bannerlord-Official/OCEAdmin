@@ -141,12 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\APIResponse.cs" />
-    <Compile Include="API\EndPoint.cs" />
-    <Compile Include="API\Endpoints\AddBanEndPoint.cs" />
-    <Compile Include="API\Endpoints\GetAdminsEndPoint.cs" />
-    <Compile Include="API\Endpoints\DeleteBanEndPoint.cs" />
-    <Compile Include="API\Endpoints\GetBanChecksumEndPoint.cs" />
-    <Compile Include="API\Endpoints\GetBansEndPoint.cs" />
     <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\GetSpecs.cs" />
     <Compile Include="Core\Bans\BansGameHandler.cs" />

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OCEAdmin.API.Endpoints;
 using OCEAdmin.API;
 using System;
 using System.Collections.Generic;
@@ -22,54 +21,53 @@ namespace OCEAdmin
         private string _checksum = "";
         private readonly int _tickTime = 30000; // 30s (Milliseconds)
 
-        public void Load()
+        public async Task Load()
         {
             MPUtil.WriteToConsole("Starting bans heartbeat for API.");
-            StartHeartbeat();
+
+            await StartHeartbeat();
         }
 
-        public void OnAddBan(Ban ban)
+        public async Task OnAddBan(Ban ban)
         {
-            EndPoint endpoint = new AddBanEndPoint();
-
+            WebRequest webRequest = new WebRequest(EndPoint.AddBan);
             BanManager.AddBan(ban);
 
-            endpoint.SetArgs(new List<Tuple<string, string>> {
+            webRequest.SetArgs(new List<Tuple<string, string>> {
                 Tuple.Create("key", Config.Get().WebKey),
                 Tuple.Create("steam_link", ban.steamid),
                 Tuple.Create("reason", "Ingame ban."),
                 Tuple.Create("banner", ban.bannerID),
             });
 
-            endpoint.Request();
+            // Don't need a response from it.
+            await webRequest.Request();
         }
 
-        public void OnRemoveBan(string id)
+        public async Task OnRemoveBan(string id)
         {
-            EndPoint endpoint = new DeleteBanEndPoint();
+            WebRequest webRequest = new WebRequest(EndPoint.DeleteBan);
             BanManager.RemoveBan(id);
 
-            endpoint.SetArgs(new List<Tuple<string, string>> {
+            webRequest.SetArgs(new List<Tuple<string, string>> {
                 Tuple.Create("key", Config.Get().WebKey),
                 Tuple.Create("steamid", id),
             });
 
-            endpoint.Request();
+            // Don't need a response from it.
+            await webRequest.Request();
         }
 
-        private void GetBans()
+        private async Task GetBans()
         {
-            EndPoint endpoint = new GetBansEndPoint();
+            WebRequest webRequest = new WebRequest(EndPoint.GetBans);
 
-            endpoint.OnResponseHandler += OnBansReceived;
-            endpoint.Request();
+            webRequest.OnResponseHandler += OnBansReceived;
+            await webRequest.Request();
         }
 
-        private void OnBansReceived(APIResponse response)
+        private Task OnBansReceived(APIResponse response)
         {
-            if (response.data == null)
-                return;
-
             MPUtil.WriteToConsole("Heartbeat: Loading bans from the web API.");
 
             List<Ban> bans = JsonConvert.DeserializeObject<List<Ban>>(response.data);
@@ -80,13 +78,16 @@ namespace OCEAdmin
             }
 
             BanManager.Update(bans);
+
+            return Task.CompletedTask;
         }
 
-        private void StartHeartbeat()
+        private async Task StartHeartbeat()
         {
             // We want to do an initial heartbeat to pool the bans table.
             MPUtil.WriteToConsole("Listening for bans...");
-            OnHeartbeat();
+
+            await OnHeartbeat();
 
             System.Timers.Timer timer = new System.Timers.Timer(_tickTime);
             timer.Start();
@@ -94,34 +95,31 @@ namespace OCEAdmin
             timer.Elapsed += OnTick;
         }
 
-        private void OnTick(object sender, ElapsedEventArgs e)
+        private async void OnTick(object sender, ElapsedEventArgs e)
         {
-            OnHeartbeat();
+            await OnHeartbeat();
         }
 
-        private void OnHeartbeat()
+        private async Task OnHeartbeat()
         {
             MPUtil.WriteToConsole("Monitoring web for changes...");
-            EndPoint endpoint = new GetBanChecksumEndPoint();
+            WebRequest webRequest = new WebRequest(EndPoint.GetBanChecksum);
 
-            endpoint.OnResponseHandler += OnHeartbeatChecksumReceived;
-            endpoint.Request();
+            webRequest.OnResponseHandler += OnHeartbeatChecksumReceived;
+            await webRequest.Request();
         }
 
-        private void OnHeartbeatChecksumReceived(APIResponse response)
+        private async Task OnHeartbeatChecksumReceived(APIResponse response)
         {
             try
             {
-                if (response.data == null)
-                    return;
-
                 Heartbeat heartbeat = JsonConvert.DeserializeObject<Heartbeat> (response.data);
 
                 if(heartbeat.checksum != _checksum)
                 {
                     MPUtil.WriteToConsole("Bans checksum different to the web panel. Reloading...");
 
-                    GetBans();
+                    await GetBans();
                     _checksum = heartbeat.checksum;
                 }
                 else

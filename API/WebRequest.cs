@@ -1,47 +1,80 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace OCEAdmin.API
 {
     public class WebRequest
     {
-        public string Url { get; set; }
+        private EndPoint _endpoint;
+        private string _args;
+        private Dictionary<EndPoint, string> _urls = new Dictionary<EndPoint, string>()
+        {
+            { EndPoint.AddBan, "add-ban.php" },
+            { EndPoint.DeleteBan, "delete-ban.php" },
+            { EndPoint.GetAdmins, "getadmins.php" },
+            { EndPoint.GetBanChecksum, "get-ban-checksum.php" },
+            { EndPoint.GetBans, "getbans.php" },
+        };
 
         public Action OnError;
 
-        public void ApplyFetchArgs(List<Tuple<string, string>> FetchData)
+        public delegate Task OnResponse(APIResponse response);
+        public OnResponse OnResponseHandler;
+
+        public WebRequest() { }
+
+        public WebRequest(EndPoint endpoint)
+        {
+            SetEndpoint(endpoint);
+        }
+
+        public void SetArgs(List<Tuple<string, string>> FetchData)
         {
             for (int i = 0; i < FetchData.Count; i++)
             {
                 Tuple<string, string> FetchArg = FetchData[i];
                 if (i == 0)
                 {
-                    Url = $"{Url}?{FetchArg.Item1}={FetchArg.Item2}";
+                    _args = $"{_args}?{FetchArg.Item1}={FetchArg.Item2}";
                 }
                 else
                 {
-                    Url = $"{Url}&{FetchArg.Item1}={FetchArg.Item2}";
+                    _args = $"{_args}&{FetchArg.Item1}={FetchArg.Item2}";
                 }
             }
         }
 
-        public void SetRequestURL(string Url)
+        public void SetEndpoint(EndPoint endPoint)
         {
-            this.Url = Url;
+            _endpoint = endPoint;   
         }
 
-        public string GetResponse()
+        public string GetRequestURL()
+        {
+            if (_urls.ContainsKey(_endpoint))
+            {
+                string endpointUrl = _urls[_endpoint];
+
+                return Config.Get().APIUrl + endpointUrl + _args;
+            }
+
+            throw new InvalidOperationException("Invalid endpoint.");
+        }
+
+        private async Task<string> GetResponseRaw()
         {
             try
             {
                 WebClient client = new WebClient();
-                string contents = client.DownloadString(Url);
+                Uri address = new Uri(GetRequestURL());
 
-                return contents;
+                return await client.DownloadStringTaskAsync(address);
             }
             catch (WebException ex)
             {
@@ -58,11 +91,38 @@ namespace OCEAdmin.API
             }
         }
 
+        public async Task Request()
+        {
+            string response = await GetResponseRaw();
+
+            if(response != null && this.OnResponseHandler != null)
+            {
+                try
+                {
+                    APIResponse apiResponse = JsonConvert.DeserializeObject<APIResponse>(response);
+                    await this.OnResponseHandler(apiResponse);
+                } 
+                catch(Exception error)
+                {
+                    MPUtil.WriteToConsole("Error with deserializing API packet. " + error.ToString());
+                }
+            }
+        }
+
         public void DefaultError(WebException ex)
         {
             var error = $"An error occurred while retrieving the OCEAdmin API. Error: {ex.Message}";
 
             MPUtil.WriteToConsole(error);
         }
+    }
+
+    public enum EndPoint
+    {
+        AddBan,
+        DeleteBan,
+        GetAdmins,
+        GetBanChecksum,
+        GetBans
     }
 }
