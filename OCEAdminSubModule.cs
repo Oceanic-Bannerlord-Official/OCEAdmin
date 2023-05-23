@@ -39,6 +39,11 @@ namespace OCEAdmin
 
             // Loads the configuration for OCEAdmin variables.
             await Config.Load();
+
+            // Load variables that have been predefined from the config
+            // into the session. These won't be saved after change.
+            await SessionManager.UpdateFromConfig();
+
             await AdminManager.LoadAdmins();
             await BanManager.LoadBans();
             await MuteManager.LoadMutes();
@@ -54,16 +59,36 @@ namespace OCEAdmin
 
         public override void OnMultiplayerGameStart(Game game, object starterObject) 
         {
-            game.AddGameHandler<CommandsGameHandler>();
-            game.AddGameHandler<BansGameHandler>();
-            game.AddGameHandler<PlayerGameHandler>();
+            try
+            {
+                MPUtil.WriteToConsole("Loading game handlers...");
+
+                game.AddGameHandler<CommandsGameHandler>();
+                game.AddGameHandler<BansGameHandler>();
+                game.AddGameHandler<PlayerGameHandler>();
+                game.AddGameHandler<GroupfightGameHandler>();
+            }
+            catch(Exception ex)
+            {
+                MPUtil.WriteToConsole(ex.ToString(), true);
+            }
         }
 
         public override void OnGameEnd(Game game)
         {
-            game.RemoveGameHandler<CommandsGameHandler>();
-            game.RemoveGameHandler<BansGameHandler>();
-            game.RemoveGameHandler<PlayerGameHandler>();
+            try
+            {
+                MPUtil.WriteToConsole("Unloading game handlers...");
+
+                game.RemoveGameHandler<CommandsGameHandler>();
+                game.RemoveGameHandler<BansGameHandler>();
+                game.RemoveGameHandler<PlayerGameHandler>();
+                game.RemoveGameHandler<GroupfightGameHandler>();
+            }
+            catch(Exception ex) 
+            {
+                MPUtil.WriteToConsole(ex.ToString(), true);
+            }
         }
     }
 }

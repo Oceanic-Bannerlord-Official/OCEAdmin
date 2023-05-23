@@ -34,11 +34,15 @@ namespace OCEAdmin
             return networkPeer.VirtualPlayer.Id.Id2.ToString();
         }
 
-        public static void WriteToConsole(string text) {
+        public static void WriteToConsole(string text, bool log = false) {
             string msg = string.Format("[OCEAdmin] - " + text);
 
             Debug.Print(msg, 0, Debug.DebugColor.Green);
-            LogManager.Add(msg);
+
+            if (log)
+            {
+                LogManager.Add(msg);
+            }
         }
 
         public static string RandomString(int length)

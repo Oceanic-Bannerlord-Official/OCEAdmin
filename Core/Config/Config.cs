@@ -20,6 +20,8 @@ namespace OCEAdmin
         public bool UseWebBans { get; set; }
         public List<AdminPerms> Admins { get; set; }
         public bool AllowLoginCommand { get; set; }
+        public bool GroupfightMode { get; set; }
+        
         public SpecialistSettings SpecialistSettings { get; set; }
         public AutoAdminSettings AutoAdminSettings { get; set; }
 
