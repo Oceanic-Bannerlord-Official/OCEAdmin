@@ -71,19 +71,11 @@ namespace OCEAdmin
         public void Mute()
         {
             _muted = true;
-
-            MissionPeer component = networkPeer.GetComponent<MissionPeer>();
-            component.SetMuted(true);
-            component.SetMutedFromPlatform(true);
         }
 
         public void Unmute()
         {
             _muted = false;
-
-            MissionPeer component = networkPeer.GetComponent<MissionPeer>();
-            component.SetMuted(false);
-            component.SetMutedFromPlatform(false);
         }
 
         public CommandSession GetCommandSession(ICommand command)
