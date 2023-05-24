@@ -21,7 +21,6 @@ namespace OCEAdmin.Core.Logging
 
             lock (LogManager.Queue)
             {
-                MPUtil.WriteToConsole(LogManager.Queue.Count.ToString());
                 if (LogManager.Queue.Count > 0)
                 {
                     using (var writer = File.AppendText(logFileName))

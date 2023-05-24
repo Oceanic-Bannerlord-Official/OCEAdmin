@@ -129,7 +129,7 @@ namespace OCEAdmin
             }
             catch (Exception e)
             {
-                MPUtil.WriteToConsole("Skipped a web tick. Error: " + e.Message);
+                MPUtil.WriteToConsole("Skipped a web tick. Error: " + e.Message, true);
             }
         }
     }

@@ -3,8 +3,6 @@ using TaleWorlds.MountAndBlade;
 using OCEAdmin.Patches;
 using OCEAdmin.Commands;
 using OCEAdmin.Features;
-using SocketIOClient;
-using System.Text.Json;
 using static OCEAdmin.API.EndPoint;
 using OCEAdmin.Core;
 using System.Threading.Tasks;
@@ -27,8 +25,8 @@ namespace OCEAdmin
             }
             catch(Exception error)
             {
-                MPUtil.WriteToConsole("OCEAdmin experienced an error while trying to start. Bannerlord server start will not continue.");
-                MPUtil.WriteToConsole($"Error: {error.Message}");
+                MPUtil.WriteToConsole("OCEAdmin experienced an error while trying to start. Bannerlord server start will not continue.", true);
+                MPUtil.WriteToConsole($"Error: {error.Message}", true);
             }
         }
 

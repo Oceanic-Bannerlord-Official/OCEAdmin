@@ -108,7 +108,7 @@ namespace OCEAdmin
                     }
                     catch (Exception error)
                     {
-                        MPUtil.WriteToConsole("Attempted to read from mutes.xml with error: " + error.Message);
+                        MPUtil.WriteToConsole("Attempted to read from mutes.xml with error: " + error.Message, true);
                     }
                 }
             }

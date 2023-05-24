@@ -104,7 +104,7 @@ namespace OCEAdmin.API
                 } 
                 catch(Exception error)
                 {
-                    MPUtil.WriteToConsole("Error with deserializing API packet. " + error.ToString());
+                    MPUtil.WriteToConsole("Error with deserializing API packet. " + error.ToString(), true);
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace OCEAdmin.API
         {
             var error = $"An error occurred while retrieving the OCEAdmin API. Error: {ex.Message}";
 
-            MPUtil.WriteToConsole(error);
+            MPUtil.WriteToConsole(error, true);
         }
     }
 

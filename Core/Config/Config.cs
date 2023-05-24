@@ -25,6 +25,8 @@ namespace OCEAdmin
         public SpecialistSettings SpecialistSettings { get; set; }
         public AutoAdminSettings AutoAdminSettings { get; set; }
 
+        public DiscordSettings DiscordSettings { get; set; }
+
         public static Config Get()
         {
             return _instance;
@@ -73,6 +75,12 @@ namespace OCEAdmin
             {
                 DismountSystemEnabled = true,
                 DismountSlayTime = 10
+            };
+            _instance.DiscordSettings = new DiscordSettings()
+            {
+                enabled = false,
+                client = "here",
+                token = "here"
             };
 
             return Task.CompletedTask;
@@ -127,5 +135,12 @@ namespace OCEAdmin
         public bool Enabled { get; set; }
         public int CavLimit { get; set; }
         public int ArcherLimit { get; set; }
+    }
+
+    public class DiscordSettings
+    {
+        public bool enabled { get; set; }
+        public string client { get; set; }
+        public string token { get; set; }
     }
 }
