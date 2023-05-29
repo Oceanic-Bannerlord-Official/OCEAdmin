@@ -32,6 +32,18 @@ namespace OCEAdmin
             return BanManager.IsBanned(networkPeer);
         }
 
+        public static bool HasAdmin(this NetworkCommunicator networkPeer)
+        {
+            Player player = networkPeer.GetPlayer();
+
+            if (player.HasPermission(Role.Admin))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool IsMuted(this NetworkCommunicator networkPeer)
         {
             return networkPeer.GetPlayer().IsMuted();

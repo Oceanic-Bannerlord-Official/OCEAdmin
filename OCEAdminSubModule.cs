@@ -16,9 +16,14 @@ namespace OCEAdmin
 {
     public class OCEAdminSubModule : MBSubModuleBase
     {
+        private bool _loaded;
+        public static OCEAdminSubModule Instance { get; private set; }
+
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
+
+            Instance = this;
 
             try
             {
@@ -30,6 +35,8 @@ namespace OCEAdmin
                 MPUtil.WriteToConsole($"Error: {error.Message}", true);
             }
         }
+
+        public bool IsLoaded() => _loaded;
 
         protected async void LoadDependencies()
         {
@@ -52,6 +59,9 @@ namespace OCEAdmin
 
             // This handles all the hotfixes or game code edits
             await PatchManager.LoadPatches();
+
+            _loaded = true;
+            MPUtil.WriteToConsole("OCEAdmin loaded. Extensions can now be loaded.");
         }
 
         protected override void OnSubModuleUnloaded() { }
@@ -65,7 +75,7 @@ namespace OCEAdmin
                 game.AddGameHandler<CommandsGameHandler>();
                 game.AddGameHandler<BansGameHandler>();
                 game.AddGameHandler<PlayerGameHandler>();
-                game.AddGameHandler<GroupfightGameHandler>();
+                game.AddGameHandler<GroupfightGameHandler>();    
             }
             catch(Exception ex)
             {

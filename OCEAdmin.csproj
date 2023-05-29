@@ -57,10 +57,6 @@
     <OutputPath>bin\x64\GitHubRelease\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="$(BannerlordServerDir)\bin\Win64_Shipping_Server\TaleWorlds.*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
@@ -90,10 +86,14 @@
     <Reference Include="MonoMod.Utils, Version=22.7.31.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MonoMod.Utils.22.7.31.1\lib\net452\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PersistentEmpires">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\PersistantEmpires\bin\Win64_Shipping_Client\PersistentEmpires.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
