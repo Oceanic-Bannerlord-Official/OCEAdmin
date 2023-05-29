@@ -12,10 +12,13 @@ namespace OCEAdmin.Core
 
         public static SpecialistSettings SpecialistSettings = new SpecialistSettings();
 
+        public static AutoAdminSettings AutoAdminSettings = new AutoAdminSettings();
+
         public static async Task UpdateFromConfig()
         {
             GroupfightMode = Config.Get().GroupfightMode;
             SpecialistSettings = Config.Get().SpecialistSettings;
+            AutoAdminSettings = Config.Get().AutoAdminSettings;
         }
     }
 }

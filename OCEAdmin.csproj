@@ -90,6 +90,9 @@
     <Reference Include="MonoMod.Utils, Version=22.7.31.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MonoMod.Utils.22.7.31.1\lib\net452\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="PersistentEmpires">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\PersistantEmpires\bin\Win64_Shipping_Client\PersistentEmpires.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -112,6 +115,7 @@
     <Compile Include="API\APIResponse.cs" />
     <Compile Include="API\WebRequest.cs" />
     <Compile Include="Commands\GetSpecs.cs" />
+    <Compile Include="Commands\Autoadmin.cs" />
     <Compile Include="Commands\Groupfight.cs" />
     <Compile Include="Core\Bans\BansGameHandler.cs" />
     <Compile Include="Core\Commands\CommandFeedback.cs" />
