@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCEAdmin", "OCEAdmin.csproj", "{5BC392E4-CA8E-4C20-A009-FBDB298AED75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCEAdmin.Panel", "..\OCEAdmin.Panel\OCEAdmin.Panel.csproj", "{B7526969-1313-4876-93D0-30587DE00AD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OCEAdmin.Panel", "..\OCEAdmin.Panel\OCEAdmin.Panel.csproj", "{B7526969-1313-4876-93D0-30587DE00AD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCEAdmin.Shared", "..\OCEAdmin.Shared\OCEAdmin.Shared.csproj", "{7B3310A4-3883-4968-88A9-5714E26BE7AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{B7526969-1313-4876-93D0-30587DE00AD2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7526969-1313-4876-93D0-30587DE00AD2}.Release|x64.ActiveCfg = Release|Any CPU
 		{B7526969-1313-4876-93D0-30587DE00AD2}.Release|x64.Build.0 = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.GitHubRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.GitHubRelease|Any CPU.Build.0 = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.GitHubRelease|x64.ActiveCfg = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.GitHubRelease|x64.Build.0 = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B3310A4-3883-4968-88A9-5714E26BE7AA}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

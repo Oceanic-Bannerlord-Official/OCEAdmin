@@ -187,7 +187,12 @@
   <ItemGroup>
     <Content Include="Module\SubModule.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OCEAdmin.Shared\OCEAdmin.Shared.csproj">
+      <Project>{7b3310a4-3883-4968-88a9-5714e26be7aa}</Project>
+      <Name>OCEAdmin.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set DEST_FOLDER="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin"
@@ -196,6 +201,7 @@ md %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
 
 xcopy /y "$(ProjectDir)Module" %25DEST_FOLDER%25
 xcopy /y "$(ProjectDir)bin\Debug\OCEAdmin.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
-xcopy /y "$(ProjectDir)\0Harmony.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"</PostBuildEvent>
+xcopy /y "$(ProjectDir)\0Harmony.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
+xcopy /y "$(ProjectDir)bin\Debug\OCEAdmin.Shared.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"</PostBuildEvent>
   </PropertyGroup>
 </Project>

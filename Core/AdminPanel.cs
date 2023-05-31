@@ -14,36 +14,16 @@ using TaleWorlds.MountAndBlade.Network.Messages;
 using TaleWorlds.ObjectSystem;
 using TaleWorlds.MountAndBlade.Diamond;
 using System.Reflection;
+using OCEAdmin.Shared.Network.Structs;
+using OCEAdmin.Shared.Network;
 
 namespace OCEAdmin
 {
-    public struct MissionData
+    public struct Timers
     {
-        public string gameType;
-        public string mapId;
-        public string cultureTeam1;
-        public string cultureTeam2;
-        public bool cultureVote;
-        public bool mapVote;
-        public int roundTime;
         public int warmupTime;
         public int mapTime;
-        public int numRounds;
-
-        public override string ToString()
-        {
-            return "gameType: " + gameType + "\n" +
-                "mapId: " + mapId + "\n" +
-                "cultureTeam1: " + cultureTeam1 + "\n" +
-                "cultureTeam2: " + cultureTeam2 + "\n" +
-                "cultureTeam2: " + cultureTeam2 + "\n" +
-                "cultureVote: " + cultureVote + "\n" +
-                "mapVote: " + mapVote + "\n" +
-                "roundTime: " + roundTime + "\n" +
-                "warmupTime: " + warmupTime + "\n" +
-                "mapTime: " + mapTime + "\n" +
-                "numRounds: " + numRounds + "\n";
-        }
+        public int roundTime;
     }
 
     class StartMissionThread
@@ -168,6 +148,17 @@ namespace OCEAdmin
             toReturn.numRounds = GetOptionInt(MultiplayerOptions.OptionType.RoundTotal);
 
             return toReturn;
+        }
+
+        public Timers GetTimers()
+        {
+            var timer = new Timers();
+
+            timer.roundTime = GetOptionInt(MultiplayerOptions.OptionType.RoundTimeLimit);
+            timer.warmupTime = GetOptionInt(MultiplayerOptions.OptionType.WarmupTimeLimit);
+            timer.mapTime = GetOptionInt(MultiplayerOptions.OptionType.MapTimeLimit);
+
+            return timer;
         }
 
         List<string> GetMapsForCurrentGameType()

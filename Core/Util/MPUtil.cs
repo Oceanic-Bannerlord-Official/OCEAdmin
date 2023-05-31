@@ -35,7 +35,7 @@ namespace OCEAdmin
         }
 
         public static void WriteToConsole(string text, bool log = false) {
-            string msg = string.Format("[OCEAdmin] - " + text);
+            string msg = "[OCEAdmin] - " + text;
 
             Debug.Print(msg, 0, Debug.DebugColor.Green);
 
@@ -88,6 +88,21 @@ namespace OCEAdmin
                     {
                         return peer;
                     }
+                }
+            }
+
+            return targetPeer;
+        }
+
+        public static NetworkCommunicator GetPeerFromIDNoSync(string id)
+        {
+            NetworkCommunicator targetPeer = null;
+
+            foreach (NetworkCommunicator peer in GameNetwork.NetworkPeers)
+            {
+                if (peer.VirtualPlayer.Id.ToString().Contains(id))
+                {
+                    return peer;
                 }
             }
 
