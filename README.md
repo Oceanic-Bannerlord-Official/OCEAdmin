@@ -45,7 +45,7 @@ All gameplay features are configurable and togglable.
 
 1. Register for a steam API key: https://steamcommunity.com/dev/apikey
 2. Place the API key in the config.xml of OCEAdmin.
-3. Make sure to admin *OCEAdminPanel to your launch settings.
+3. Make sure to add *OCEAdminPanel to your commandline launch settings.
 
 **Web Panel**
 
