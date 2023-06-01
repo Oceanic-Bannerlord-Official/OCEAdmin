@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using TaleWorlds.Core;
 using OCEAdmin.Core;
 using OCEAdmin.Commands;
-using static TaleWorlds.Library.VirtualFolders.Win64_Shipping_Server;
 using TaleWorlds.MountAndBlade;
 using System.Threading;
 using System.Timers;
