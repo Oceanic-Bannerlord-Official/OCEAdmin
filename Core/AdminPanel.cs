@@ -295,19 +295,19 @@ namespace OCEAdmin
 
         public List<string> GetMapsForGameType(string searchString)
         {
-
             Tuple<bool, string> gameTypeSearch = FindSingleGameType(searchString);
+
             if(gameTypeSearch.Item1)
             {
                 List<string> maps = new List<string>();
 
                 string gameType = gameTypeSearch.Item2;
 
-                maps = MultiplayerGameTypes.GetGameTypeInfo(gameType).Scenes.ToList().Union(GetMapsInPool()).ToList();
+                maps = MultiplayerGameTypes.GetGameTypeInfo(gameType).Scenes.ToList(); // .Union(GetMapsInPool()).ToList();
 
                 if (gameType == "Battle")
                 {
-                    var captainMaps = MultiplayerGameTypes.GetGameTypeInfo("Captain").Scenes.ToList().Union(GetMapsInPool()).ToList();
+                    var captainMaps = MultiplayerGameTypes.GetGameTypeInfo("Captain").Scenes.ToList(); // .Union(GetMapsInPool()).ToList();
                     maps.Union(captainMaps); 
                 }
 

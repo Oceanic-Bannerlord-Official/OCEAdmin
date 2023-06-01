@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Module>
-	<Name value="OCEAdmin" />
+	<Name value="OCEAdmin - Core" />
 	<Id value="OCEAdmin" />
-	<Version value="v1.0.3" />
+	<Version value="v1.1.4" />
   <ModuleCategory value="MultiplayerOptional" />
   <Official value="false" />
 	<DefaultModule value="false" />
