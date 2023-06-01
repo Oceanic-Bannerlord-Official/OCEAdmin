@@ -23,20 +23,33 @@ Supported modules: Native, Sword & Musket
 
 All gameplay features are configurable and togglable.
 
-- Specialist limits for archers and cavalry.
+- Groupfight mode. Disables all cavalry and archers.
 - Cavalry dismount auto-admin. Non cavalry will be told to dismount and slain after a grace period.
 - Rich admin and permission system. Admin chat included.
 - Voice and text chat mutes.
 - Local logging of player actions and events.
 - Intuitive commands with echo feedback and in-game multiple player result handling.
 - Custom web panel to manage global admins and bans across all your servers.
+- Ingame admin panel optional module for admins
 
-## Installation
+## Core Installation
 
 1. Download the latest release for your Bannerlord version. (It's located on the right panel)
 2. Drag and drop into your Bannerlord Dedicated Server's module folder.
 3. Inside the OCEAdmin module there are default startup settings you can configure before your first start up. This is regenerated if deleted.
 4. Make sure to include *OCEAdmin into your command options for startup.
+
+## Optional Installation:
+
+**Admin Panel**
+
+1. Register for a steam API key: https://steamcommunity.com/dev/apikey
+2. Place the API key in the config.xml of OCEAdmin.
+3. Make sure to add *OCEAdminPanel to your commandline launch settings.
+
+**Web Panel**
+
+Public release soon.
 
 ## Credits
 - Adolphus[^1].
