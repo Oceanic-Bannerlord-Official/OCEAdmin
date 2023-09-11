@@ -114,9 +114,12 @@
   <ItemGroup>
     <Compile Include="API\APIResponse.cs" />
     <Compile Include="API\WebRequest.cs" />
+    <Compile Include="Commands\ArcherLimit.cs" />
+    <Compile Include="Commands\CavLimit.cs" />
     <Compile Include="Commands\GetSpecs.cs" />
     <Compile Include="Commands\Autoadmin.cs" />
     <Compile Include="Commands\Groupfight.cs" />
+    <Compile Include="Commands\SpecLimit.cs" />
     <Compile Include="Core\Bans\BansGameHandler.cs" />
     <Compile Include="Core\Commands\CommandFeedback.cs" />
     <Compile Include="Core\Commands\CommandSession.cs" />
@@ -136,6 +139,9 @@
     <Compile Include="Core\Permissions\AdminManager.cs" />
     <Compile Include="Core\Permissions\PlayerGameHandler.cs" />
     <Compile Include="Core\SessionManager.cs" />
+    <Compile Include="Core\Specialists\SpecialistLimitGameHandler.cs" />
+    <Compile Include="Core\Specialists\SpecialistLimitMissionBehavior.cs" />
+    <Compile Include="Core\Specialists\TeamSpecialistCollection.cs" />
     <Compile Include="Core\Util\NetworkCommunicatorExtensions.cs" />
     <Compile Include="Core\Permissions\Role.cs" />
     <Compile Include="Core\Commands\PeerSearchCommand.cs" />
