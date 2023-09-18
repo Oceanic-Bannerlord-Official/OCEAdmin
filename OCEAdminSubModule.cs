@@ -66,6 +66,13 @@ namespace OCEAdmin
 
         protected override void OnSubModuleUnloaded() { }
 
+        public override void OnBeforeMissionBehaviorInitialize(Mission mission)
+        {
+            base.OnBeforeMissionBehaviorInitialize(mission);
+
+            Mission.Current.AddMissionBehavior(new SpecialistLimitMissionBehavior());
+        }
+
         public override void OnMultiplayerGameStart(Game game, object starterObject) 
         {
             try
@@ -75,7 +82,8 @@ namespace OCEAdmin
                 game.AddGameHandler<CommandsGameHandler>();
                 game.AddGameHandler<BansGameHandler>();
                 game.AddGameHandler<PlayerGameHandler>();
-                game.AddGameHandler<GroupfightGameHandler>();    
+                game.AddGameHandler<GroupfightGameHandler>();
+                game.AddGameHandler<SpecialistLimitGameHandler>();
             }
             catch(Exception ex)
             {
@@ -93,6 +101,7 @@ namespace OCEAdmin
                 game.RemoveGameHandler<BansGameHandler>();
                 game.RemoveGameHandler<PlayerGameHandler>();
                 game.RemoveGameHandler<GroupfightGameHandler>();
+                game.RemoveGameHandler<SpecialistLimitGameHandler>();
             }
             catch(Exception ex) 
             {

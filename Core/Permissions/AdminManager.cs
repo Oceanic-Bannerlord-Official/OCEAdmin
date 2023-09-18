@@ -28,12 +28,21 @@ namespace OCEAdmin.Core.Permissions
             if (!Config.Get().UseWebAdmin)
             {
                 _admins = Config.Get().Admins;
+
+                MPUtil.WriteToConsole("Loading admins from the config.");
+
+                foreach (AdminPerms admin in _admins)
+                {
+                    MPUtil.WriteToConsole($"Adding '{admin.PlayerId}' from the config.");
+                }
             }
+            else
+            {
+                WebRequest webRequest = new WebRequest(EndPoint.GetAdmins);
 
-            WebRequest webRequest = new WebRequest(EndPoint.GetAdmins);
-
-            webRequest.OnResponseHandler += OnAdminsReceived;
-            await webRequest.Request();
+                webRequest.OnResponseHandler += OnAdminsReceived;
+                await webRequest.Request();
+            }
         }
 
         public static Task OnAdminsReceived(APIResponse response)
