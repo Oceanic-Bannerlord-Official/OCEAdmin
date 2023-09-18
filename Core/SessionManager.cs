@@ -18,6 +18,7 @@ namespace OCEAdmin.Core
         {
             GroupfightMode = Config.Get().GroupfightMode;
             SpecialistSettings = Config.Get().SpecialistSettings;
+            SpecialistSettings.Enabled = false; // Not ready yet
             AutoAdminSettings = Config.Get().AutoAdminSettings;
         }
     }

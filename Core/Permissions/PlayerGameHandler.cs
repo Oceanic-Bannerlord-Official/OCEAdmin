@@ -33,7 +33,7 @@ namespace OCEAdmin.Core.Permissions
 
             foreach (AdminPerms admin in AdminManager.GetAdmins())
             {
-                if (networkPeer.VirtualPlayer.Id.Id2.ToString() == admin.PlayerId)
+                if (admin.PlayerId.Contains(networkPeer.VirtualPlayer.Id.Id2.ToString()))
                 {
                     Role.TryParse(admin.PermType, out role);
                 }
