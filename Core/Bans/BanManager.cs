@@ -49,7 +49,7 @@ namespace OCEAdmin
 
             Handler.Load();
 
-            StartBansTick();
+            // StartBansTick();
 
             return Task.CompletedTask;
         }
@@ -92,7 +92,7 @@ namespace OCEAdmin
         {
             foreach (Ban ban in GetBans())
             {
-                if (ban.steamid == peer.VirtualPlayer.Id.Id2.ToString())
+                if (ban.steamid.Contains(peer.VirtualPlayer.Id.Id2.ToString()))
                 {
                     return true;
                 }
