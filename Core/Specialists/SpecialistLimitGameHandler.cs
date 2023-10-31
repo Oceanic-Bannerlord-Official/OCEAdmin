@@ -58,7 +58,10 @@ namespace OCEAdmin
 
             if (mb != null)
             {
-                mb.OnPlayerDisconnect((NetworkCommunicator)peer.Communicator);
+                if((NetworkCommunicator)peer.Communicator != null)
+                {
+                    mb.OnPlayerDisconnect((NetworkCommunicator)peer.Communicator);
+                }
             }
         }
     }

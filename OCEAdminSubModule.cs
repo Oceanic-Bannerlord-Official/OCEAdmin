@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System;
 using OCEAdmin.Core.Logging;
 using PersistentEmpires;
+using OCEAdmin.Core.Extension;
 
 namespace OCEAdmin
 {
@@ -18,6 +19,8 @@ namespace OCEAdmin
     {
         private bool _loaded;
         public static OCEAdminSubModule Instance { get; private set; }
+
+        private List<IPlugin> Plugins = new List<IPlugin>();
 
         protected override void OnSubModuleLoad()
         {
@@ -59,9 +62,6 @@ namespace OCEAdmin
 
             // This handles all the hotfixes or game code edits
             await PatchManager.LoadPatches();
-
-            _loaded = true;
-            MPUtil.WriteToConsole("OCEAdmin loaded. Extensions can now be loaded.");
         }
 
         protected override void OnSubModuleUnloaded() { }
