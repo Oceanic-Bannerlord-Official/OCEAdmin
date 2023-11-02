@@ -112,8 +112,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\APIResponse.cs" />
-    <Compile Include="API\WebRequest.cs" />
     <Compile Include="Plugins\Admin\Commands\GetSpecs.cs" />
     <Compile Include="Plugins\Groupfight\Commands\Groupfight.cs" />
     <Compile Include="Plugins\Bans\BansGameHandler.cs" />

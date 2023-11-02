@@ -10,16 +10,9 @@ namespace OCEAdmin.Core
     {
         public static bool GroupfightMode = false;
 
-        public static SpecialistSettings SpecialistSettings = new SpecialistSettings();
-
-        public static AutoAdminSettings AutoAdminSettings = new AutoAdminSettings();
-
         public static async Task UpdateFromConfig()
         {
             GroupfightMode = Config.Get().GroupfightMode;
-            SpecialistSettings = Config.Get().SpecialistSettings;
-            SpecialistSettings.Enabled = false; // Not ready yet
-            AutoAdminSettings = Config.Get().AutoAdminSettings;
         }
     }
 }
