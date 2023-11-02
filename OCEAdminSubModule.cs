@@ -56,10 +56,10 @@ namespace OCEAdmin
             // into the session. These won't be saved after change.
             await SessionManager.UpdateFromConfig();
 
+            await _plugins.RegisterPlugin(new CommandsPlugin());
+            await _plugins.RegisterPlugin(new AdminPlugin());
             await _plugins.RegisterPlugin(new BansPlugin());
             await _plugins.RegisterPlugin(new MutesPlugin());
-            await _plugins.RegisterPlugin(new AdminPlugin());
-            await _plugins.RegisterPlugin(new CommandsPlugin());
             await _plugins.RegisterPlugin(new LoggingPlugin());
             await _plugins.RegisterPlugin(new GroupfightPlugin());
             await _plugins.RegisterPlugin(new NameExploitFixPlugin());

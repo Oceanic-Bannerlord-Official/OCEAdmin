@@ -7,7 +7,7 @@ using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace OCEAdmin.Patches
+namespace OCEAdmin.Plugins.Mutes
 {
     class PatchChatBox
     {

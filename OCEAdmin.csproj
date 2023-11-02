@@ -179,7 +179,7 @@
     <Compile Include="Plugins\Commands\CommandsGameHandler.cs" />
     <Compile Include="Plugins\Bans\LocalBanTransport.cs" />
     <Compile Include="Core\Config\Config.cs" />
-    <Compile Include="Plugins\Commands\Patches\PatchChatBox.cs" />
+    <Compile Include="Plugins\Mutes\Patches\PatchChatBox.cs" />
     <Compile Include="Plugins\NameExploitFix\NameExploitFixPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Util\CountdownTimer.cs" />

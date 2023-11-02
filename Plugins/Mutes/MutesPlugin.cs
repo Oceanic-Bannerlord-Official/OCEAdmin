@@ -10,6 +10,9 @@ using System.Xml;
 using System.Threading;
 using OCEAdmin.Core.Extensions;
 using OCEAdmin.Plugins.Commands;
+using HarmonyLib;
+using OCEAdmin.Plugins.Logging;
+using System.Reflection;
 
 namespace OCEAdmin.Plugins.Mutes
 {
@@ -31,6 +34,15 @@ namespace OCEAdmin.Plugins.Mutes
                 await commands.Register(new TempMute());
                 await commands.Register(new Unmute());
             }
+        }
+
+        public override void OnPatch(Harmony harmony)
+        {
+            base.OnPatch(harmony);
+
+            var original = typeof(ChatBox).GetMethod("ServerPrepareAndSendMessage", BindingFlags.NonPublic | BindingFlags.Instance);
+            var prefix = typeof(PatchChatBox).GetMethod("Prefix");
+            harmony.Patch(original, prefix: new HarmonyMethod(prefix));
         }
 
         private string GetLocalPath()
