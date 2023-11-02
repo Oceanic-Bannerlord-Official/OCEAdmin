@@ -3,7 +3,6 @@ using TaleWorlds.MountAndBlade;
 using System.Threading.Tasks;
 using System;
 using OCEAdmin.Core;
-using OCEAdmin.Core.Extensions;
 using OCEAdmin.Core.Permissions;
 using HarmonyLib;
 using OCEAdmin.Plugins.Logging;
@@ -13,6 +12,7 @@ using OCEAdmin.Plugins.NameExploitFix;
 using OCEAdmin.Plugins.Bans;
 using OCEAdmin.Plugins.Admin;
 using OCEAdmin.Plugins.Mutes;
+using OCEAdmin.Core.Plugin;
 
 namespace OCEAdmin
 {

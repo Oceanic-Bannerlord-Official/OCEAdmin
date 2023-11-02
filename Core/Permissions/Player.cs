@@ -10,7 +10,7 @@ using TaleWorlds.Core;
 using TaleWorlds.Diamond;
 using TaleWorlds.MountAndBlade;
 
-namespace OCEAdmin
+namespace OCEAdmin.Core.Permissions
 {
     public class Player
     {

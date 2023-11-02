@@ -1,4 +1,5 @@
 ﻿using OCEAdmin.Core;
+using OCEAdmin.Core.Permissions;
 using OCEAdmin.Plugins.Bans;
 using System;
 using System.Collections.Generic;

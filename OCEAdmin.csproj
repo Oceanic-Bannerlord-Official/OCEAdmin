@@ -125,9 +125,9 @@
     <Compile Include="Plugins\Mutes\Commands\Unmute.cs" />
     <Compile Include="Plugins\Bans\Ban.cs" />
     <Compile Include="Plugins\Bans\IBanTransport.cs" />
-    <Compile Include="Core\Extensions\IPluginBase.cs" />
-    <Compile Include="Core\Extensions\PluginBase.cs" />
-    <Compile Include="Core\Extensions\PluginManager.cs" />
+    <Compile Include="Core\Plugin\IPluginBase.cs" />
+    <Compile Include="Core\Plugin\PluginBase.cs" />
+    <Compile Include="Core\Plugin\PluginManager.cs" />
     <Compile Include="Plugins\Commands\CommandsPlugin.cs" />
     <Compile Include="Plugins\Admin\AdminPlugin.cs" />
     <Compile Include="Plugins\Groupfight\GroupfightGameHandler.cs" />
@@ -180,7 +180,6 @@
     <Compile Include="Plugins\Mutes\Patches\PatchChatBox.cs" />
     <Compile Include="Plugins\NameExploitFix\NameExploitFixPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Util\CountdownTimer.cs" />
     <Compile Include="Core\Util\MPUtil.cs" />
   </ItemGroup>
   <ItemGroup>

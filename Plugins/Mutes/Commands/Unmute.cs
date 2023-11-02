@@ -1,5 +1,6 @@
 ﻿using NetworkMessages.FromServer;
 using OCEAdmin.Core;
+using OCEAdmin.Core.Permissions;
 using OCEAdmin.Plugins.Bans;
 using OCEAdmin.Plugins.Commands;
 using System;

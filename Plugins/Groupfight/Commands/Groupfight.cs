@@ -1,6 +1,7 @@
 ﻿using OCEAdmin.Core;
 using TaleWorlds.MountAndBlade;
 using OCEAdmin.Plugins.Commands;
+using OCEAdmin.Core.Permissions;
 
 namespace OCEAdmin.Plugins.Groupfight
 {

@@ -1,4 +1,5 @@
 ﻿using NetworkMessages.FromServer;
+using OCEAdmin.Core.Permissions;
 using OCEAdmin.Plugins.Commands;
 using System;
 using System.Collections.Generic;

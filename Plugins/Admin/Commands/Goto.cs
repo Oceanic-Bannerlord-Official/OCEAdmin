@@ -8,6 +8,7 @@ using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using OCEAdmin.Core;
 using OCEAdmin.Plugins.Commands;
+using OCEAdmin.Core.Permissions;
 
 namespace OCEAdmin.Plugins.Admin
 {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.Core;
 
-namespace OCEAdmin.Core.Extensions
+namespace OCEAdmin.Core.Plugin
 {
     public class PluginBase : IPluginBase
     {

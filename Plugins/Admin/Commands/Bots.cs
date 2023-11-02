@@ -1,6 +1,7 @@
 ﻿using NetworkMessages.FromServer;
 using OCEAdmin.Core;
 using OCEAdmin.Core.Missions;
+using OCEAdmin.Core.Permissions;
 using OCEAdmin.Plugins.Commands;
 using System;
 using TaleWorlds.MountAndBlade;

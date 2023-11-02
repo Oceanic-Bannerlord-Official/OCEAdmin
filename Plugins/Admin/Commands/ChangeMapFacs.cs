@@ -4,6 +4,7 @@ using TaleWorlds.MountAndBlade;
 using OCEAdmin.Core;
 using OCEAdmin.Core.Missions;
 using OCEAdmin.Plugins.Commands;
+using OCEAdmin.Core.Permissions;
 
 namespace OCEAdmin.Plugins.Admin
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
-namespace OCEAdmin
+namespace OCEAdmin.Core
 {
     public class TeamComposition
     {

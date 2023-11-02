@@ -1,4 +1,4 @@
-﻿using OCEAdmin.Core.Extensions;
+﻿using OCEAdmin.Core.Plugin;
 using OCEAdmin.Plugins.Commands;
 using OCEAdmin.Plugins.Groupfight;
 using System;

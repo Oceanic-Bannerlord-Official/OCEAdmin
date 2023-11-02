@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin.Core.Extensions
+namespace OCEAdmin.Core.Plugin
 {
     public class PluginManager
     {

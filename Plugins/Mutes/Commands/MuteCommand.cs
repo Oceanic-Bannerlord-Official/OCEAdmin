@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TaleWorlds.MountAndBlade.DedicatedCustomServer;
 using TaleWorlds.MountAndBlade;
 using OCEAdmin.Plugins.Commands;
+using OCEAdmin.Core.Permissions;
 
 namespace OCEAdmin.Plugins.Mutes
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OCEAdmin
+namespace OCEAdmin.Core.Permissions
 {
     public enum Role
     {

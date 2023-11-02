@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using TaleWorlds.MountAndBlade;
 using System.Xml;
 using System.Threading;
-using OCEAdmin.Core.Extensions;
+using OCEAdmin.Core.Plugin;
 using OCEAdmin.Plugins.Commands;
 using HarmonyLib;
 using OCEAdmin.Plugins.Logging;
