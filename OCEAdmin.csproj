@@ -114,74 +114,73 @@
   <ItemGroup>
     <Compile Include="API\APIResponse.cs" />
     <Compile Include="API\WebRequest.cs" />
-    <Compile Include="Commands\ArcherLimit.cs" />
-    <Compile Include="Commands\CavLimit.cs" />
-    <Compile Include="Commands\GetSpecs.cs" />
-    <Compile Include="Commands\Autoadmin.cs" />
-    <Compile Include="Commands\Groupfight.cs" />
-    <Compile Include="Commands\SpecLimit.cs" />
-    <Compile Include="Core\Bans\BansGameHandler.cs" />
-    <Compile Include="Core\Commands\CommandFeedback.cs" />
-    <Compile Include="Core\Commands\CommandSession.cs" />
-    <Compile Include="Commands\Mute.cs" />
-    <Compile Include="Commands\TempMute.cs" />
-    <Compile Include="Commands\Unmute.cs" />
-    <Compile Include="Core\Bans\Ban.cs" />
-    <Compile Include="Core\Bans\IBanTransport.cs" />
-    <Compile Include="Core\Groupfight\GroupfightGameHandler.cs" />
-    <Compile Include="Core\Logging\ILogger.cs" />
-    <Compile Include="Core\Logging\LocalLogger.cs" />
-    <Compile Include="Core\Logging\LogManager.cs" />
+    <Compile Include="Plugins\Admin\Commands\GetSpecs.cs" />
+    <Compile Include="Plugins\Groupfight\Commands\Groupfight.cs" />
+    <Compile Include="Plugins\Bans\BansGameHandler.cs" />
+    <Compile Include="Core\Missions\MissionListener.cs" />
+    <Compile Include="Core\Missions\StartMissionThread.cs" />
+    <Compile Include="Core\Missions\Structs\Timers.cs" />
+    <Compile Include="Plugins\Commands\CommandFeedback.cs" />
+    <Compile Include="Plugins\Commands\CommandSession.cs" />
+    <Compile Include="Plugins\Mutes\Commands\MuteCommand.cs" />
+    <Compile Include="Plugins\Mutes\Commands\TempMute.cs" />
+    <Compile Include="Plugins\Mutes\Commands\Unmute.cs" />
+    <Compile Include="Plugins\Bans\Ban.cs" />
+    <Compile Include="Plugins\Bans\IBanTransport.cs" />
+    <Compile Include="Core\Extensions\IPluginBase.cs" />
+    <Compile Include="Core\Extensions\PluginBase.cs" />
+    <Compile Include="Core\Extensions\PluginManager.cs" />
+    <Compile Include="Plugins\Commands\CommandsPlugin.cs" />
+    <Compile Include="Plugins\Admin\AdminPlugin.cs" />
+    <Compile Include="Plugins\Groupfight\GroupfightGameHandler.cs" />
+    <Compile Include="Core\Missions\Structs\MissionData.cs" />
+    <Compile Include="Plugins\Groupfight\GroupfightPlugin.cs" />
+    <Compile Include="Plugins\Logging\ILogger.cs" />
+    <Compile Include="Plugins\Logging\LocalLogger.cs" />
+    <Compile Include="Plugins\Logging\LoggingPlugin.cs" />
     <Compile Include="Core\Permissions\AdminData.cs" />
     <Compile Include="Core\Permissions\AdminPerms.cs" />
-    <Compile Include="Core\Mutes\Mute.cs" />
-    <Compile Include="Core\Mutes\MuteManager.cs" />
-    <Compile Include="Core\Permissions\AdminManager.cs" />
+    <Compile Include="Plugins\Logging\Patches\LogPatchAddNewPlayerOnServerr.cs" />
+    <Compile Include="Plugins\Mutes\Mute.cs" />
+    <Compile Include="Plugins\Mutes\MutesPlugin.cs" />
     <Compile Include="Core\Permissions\PlayerGameHandler.cs" />
     <Compile Include="Core\SessionManager.cs" />
-    <Compile Include="Core\Specialists\SpecialistLimitGameHandler.cs" />
-    <Compile Include="Core\Specialists\SpecialistLimitMissionBehavior.cs" />
-    <Compile Include="Core\Specialists\TeamSpecialistCollection.cs" />
     <Compile Include="Core\Util\NetworkCommunicatorExtensions.cs" />
     <Compile Include="Core\Permissions\Role.cs" />
-    <Compile Include="Core\Commands\PeerSearchCommand.cs" />
-    <Compile Include="Core\AdminPanel.cs" />
-    <Compile Include="Commands\Bring.cs" />
-    <Compile Include="Core\Bans\WebBanTransport.cs" />
-    <Compile Include="Core\Bans\BanManager.cs" />
+    <Compile Include="Plugins\Commands\PeerSearchCommand.cs" />
+    <Compile Include="Core\Missions\MissionHooks.cs" />
+    <Compile Include="Plugins\Admin\Commands\Bring.cs" />
+    <Compile Include="Plugins\Bans\BansPlugin.cs" />
     <Compile Include="Core\Util\TeamComposition.cs" />
     <Compile Include="Core\Permissions\Player.cs" />
-    <Compile Include="Core\AutoAdmin\CavalryDismountMissionBehavior.cs" />
-    <Compile Include="Patches\PatchAddNewPlayerOnServerr.cs" />
-    <Compile Include="Patches\PatchManager.cs" />
-    <Compile Include="Commands\Heal.cs" />
+    <Compile Include="Plugins\NameExploitFix\Patches\NamePatchAddNewPlayerOnServerr.cs" />
+    <Compile Include="Plugins\Admin\Commands\Heal.cs" />
     <Compile Include="OCEAdminSubModule.cs" />
-    <Compile Include="Commands\AdminChat.cs" />
-    <Compile Include="Commands\Ban.cs" />
-    <Compile Include="Commands\Bots.cs" />
-    <Compile Include="Commands\ChangeMap.cs" />
-    <Compile Include="Commands\ChangeMapFacs.cs" />
-    <Compile Include="Commands\ChangeMission.cs" />
-    <Compile Include="Core\Commands\ICommand.cs" />
-    <Compile Include="Commands\EndWarmup.cs" />
-    <Compile Include="Commands\Factions.cs" />
-    <Compile Include="Commands\GodMode.cs" />
-    <Compile Include="Commands\Gold.cs" />
-    <Compile Include="Commands\Help.cs" />
-    <Compile Include="Commands\Kick.cs" />
-    <Compile Include="Commands\Kill.cs" />
-    <Compile Include="Commands\Login.cs" />
-    <Compile Include="Commands\Maps.cs" />
-    <Compile Include="Commands\MapTime.cs" />
-    <Compile Include="Commands\Reset.cs" />
-    <Compile Include="Commands\Goto.cs" />
-    <Compile Include="Commands\Unban.cs" />
-    <Compile Include="Commands\WarmupTime.cs" />
-    <Compile Include="Core\Commands\CommandsGameHandler.cs" />
-    <Compile Include="Core\Commands\CommandManager.cs" />
-    <Compile Include="Core\Bans\LocalBanTransport.cs" />
+    <Compile Include="Plugins\Admin\Commands\AdminChat.cs" />
+    <Compile Include="Plugins\Bans\Commands\Ban.cs" />
+    <Compile Include="Plugins\Admin\Commands\Bots.cs" />
+    <Compile Include="Plugins\Admin\Commands\ChangeMap.cs" />
+    <Compile Include="Plugins\Admin\Commands\ChangeMapFacs.cs" />
+    <Compile Include="Plugins\Admin\Commands\ChangeMission.cs" />
+    <Compile Include="Plugins\Commands\ICommand.cs" />
+    <Compile Include="Plugins\Admin\Commands\EndWarmup.cs" />
+    <Compile Include="Plugins\Admin\Commands\Factions.cs" />
+    <Compile Include="Plugins\Admin\Commands\GodMode.cs" />
+    <Compile Include="Plugins\Admin\Commands\Help.cs" />
+    <Compile Include="Plugins\Admin\Commands\Kick.cs" />
+    <Compile Include="Plugins\Admin\Commands\Kill.cs" />
+    <Compile Include="Plugins\Admin\Commands\Login.cs" />
+    <Compile Include="Plugins\Admin\Commands\Maps.cs" />
+    <Compile Include="Plugins\Admin\Commands\MapTime.cs" />
+    <Compile Include="Plugins\Admin\Commands\Reset.cs" />
+    <Compile Include="Plugins\Admin\Commands\Goto.cs" />
+    <Compile Include="Plugins\Bans\Commands\Unban.cs" />
+    <Compile Include="Plugins\Admin\Commands\WarmupTime.cs" />
+    <Compile Include="Plugins\Commands\CommandsGameHandler.cs" />
+    <Compile Include="Plugins\Bans\LocalBanTransport.cs" />
     <Compile Include="Core\Config\Config.cs" />
-    <Compile Include="Patches\PatchChatBox.cs" />
+    <Compile Include="Plugins\Commands\Patches\PatchChatBox.cs" />
+    <Compile Include="Plugins\NameExploitFix\NameExploitFixPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Util\CountdownTimer.cs" />
     <Compile Include="Core\Util\MPUtil.cs" />
@@ -193,12 +192,7 @@
   <ItemGroup>
     <Content Include="Module\SubModule.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OCEAdmin.Shared\OCEAdmin.Shared.csproj">
-      <Project>{7b3310a4-3883-4968-88a9-5714e26be7aa}</Project>
-      <Name>OCEAdmin.Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set DEST_FOLDER="C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Dedicated Server\Modules\OCEAdmin"
@@ -207,7 +201,6 @@ md %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
 
 xcopy /y "$(ProjectDir)Module" %25DEST_FOLDER%25
 xcopy /y "$(ProjectDir)bin\Debug\OCEAdmin.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
-xcopy /y "$(ProjectDir)\0Harmony.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"
-xcopy /y "$(ProjectDir)bin\Debug\OCEAdmin.Shared.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"</PostBuildEvent>
+xcopy /y "$(ProjectDir)\0Harmony.dll" %25DEST_FOLDER%25"\bin\Win64_Shipping_Server"</PostBuildEvent>
   </PropertyGroup>
 </Project>

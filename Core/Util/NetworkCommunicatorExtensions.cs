@@ -1,4 +1,5 @@
 ﻿using OCEAdmin.Core;
+using OCEAdmin.Plugins.Bans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace OCEAdmin
 
         public static bool IsBanned(this NetworkCommunicator networkPeer)
         {
-            return BanManager.IsBanned(networkPeer);
+            return OCEAdminSubModule.GetPlugin<BansPlugin>().IsBanned(networkPeer);
         }
 
         public static bool HasAdmin(this NetworkCommunicator networkPeer)

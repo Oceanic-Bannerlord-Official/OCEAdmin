@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OCEAdmin.Plugins.Admin;
+using OCEAdmin.Plugins.Mutes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +33,9 @@ namespace OCEAdmin.Core.Permissions
             Player player = networkPeer.GetPlayer();
             Role role = Role.Player;
 
-            foreach (AdminPerms admin in AdminManager.GetAdmins())
+            AdminPlugin admins = OCEAdminSubModule.GetPlugin<AdminPlugin>();
+
+            foreach (AdminPerms admin in admins.GetAdmins())
             {
                 if (admin.PlayerId.Contains(networkPeer.VirtualPlayer.Id.Id2.ToString()))
                 {
@@ -46,7 +50,9 @@ namespace OCEAdmin.Core.Permissions
 
         public void CheckMute(NetworkCommunicator networkPeer)
         {
-            foreach (Mute mute in MuteManager.GetMutes())
+            MutesPlugin mutes = OCEAdminSubModule.GetPlugin<MutesPlugin>();
+
+            foreach (Mute mute in mutes.GetMutes())
             {
                 if (networkPeer.VirtualPlayer.Id.ToString().Contains(mute.playerID))
                 {

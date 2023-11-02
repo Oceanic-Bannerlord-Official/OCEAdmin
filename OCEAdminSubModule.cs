@@ -1,26 +1,34 @@
 ﻿using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
-using OCEAdmin.Patches;
-using OCEAdmin.Commands;
-using OCEAdmin.Features;
-using static OCEAdmin.API.EndPoint;
-using OCEAdmin.Core;
 using System.Threading.Tasks;
-using OCEAdmin.Core.Permissions;
-using System.Collections.Generic;
 using System;
-using OCEAdmin.Core.Logging;
-using PersistentEmpires;
-using OCEAdmin.Core.Extension;
+using OCEAdmin.Core;
+using OCEAdmin.Core.Extensions;
+using OCEAdmin.Core.Permissions;
+using OCEAdmin.Patches;
+using HarmonyLib;
+using OCEAdmin.Plugins.Logging;
+using OCEAdmin.Plugins.Groupfight;
+using OCEAdmin.Plugins.Commands;
+using OCEAdmin.Plugins.NameExploitFix;
+using OCEAdmin.Plugins.Bans;
+using OCEAdmin.Plugins.Admin;
+using OCEAdmin.Plugins.Mutes;
 
 namespace OCEAdmin
 {
     public class OCEAdminSubModule : MBSubModuleBase
     {
-        private bool _loaded;
-        public static OCEAdminSubModule Instance { get; private set; }
+        protected static OCEAdminSubModule Instance;
+        public static OCEAdminSubModule Get()
+        {
+            return Instance;
+        }
 
-        private List<IPlugin> Plugins = new List<IPlugin>();
+        protected PluginManager _plugins;
+        public PluginManager GetPluginManager() => _plugins;
+
+        private static Harmony _harmony;
 
         protected override void OnSubModuleLoad()
         {
@@ -30,7 +38,7 @@ namespace OCEAdmin
 
             try
             {
-                LoadDependencies();
+                Load();
             }
             catch(Exception error)
             {
@@ -39,13 +47,8 @@ namespace OCEAdmin
             }
         }
 
-        public bool IsLoaded() => _loaded;
-
-        protected async void LoadDependencies()
+        protected async void Load()
         {
-            // Start logging all commands ingame and from the console.
-            await LogManager.Start();
-
             // Loads the configuration for OCEAdmin variables.
             await Config.Load();
 
@@ -53,24 +56,47 @@ namespace OCEAdmin
             // into the session. These won't be saved after change.
             await SessionManager.UpdateFromConfig();
 
-            await AdminManager.LoadAdmins();
-            await BanManager.LoadBans();
-            await MuteManager.LoadMutes();
+            await _plugins.RegisterPlugin(new BansPlugin());
+            await _plugins.RegisterPlugin(new MutesPlugin());
+            await _plugins.RegisterPlugin(new AdminPlugin());
+            await _plugins.RegisterPlugin(new CommandsPlugin());
+            await _plugins.RegisterPlugin(new LoggingPlugin());
+            await _plugins.RegisterPlugin(new GroupfightPlugin());
+            await _plugins.RegisterPlugin(new NameExploitFixPlugin());
+        }
 
-            // Initialize all the commands for the in-game command manager.
-            await CommandManager.Initialize();
+        public static T GetPlugin<T>() where T : IPluginBase
+        {
+            OCEAdminSubModule instance = Get();
 
-            // This handles all the hotfixes or game code edits
-            await PatchManager.LoadPatches();
+            if (instance != null)
+            {
+                return instance.GetPluginManager().GetPlugin<T>();
+            }
+            else
+            {
+                return default(T);
+            }
         }
 
         protected override void OnSubModuleUnloaded() { }
 
-        public override void OnBeforeMissionBehaviorInitialize(Mission mission)
+        public override void OnBeforeMissionBehaviorInitialize(TaleWorlds.MountAndBlade.Mission mission)
         {
             base.OnBeforeMissionBehaviorInitialize(mission);
+        }
 
-            Mission.Current.AddMissionBehavior(new SpecialistLimitMissionBehavior());
+        public Task OnPatch()
+        {
+            Harmony.DEBUG = true;
+            _harmony = new Harmony("OCEAdmin.Bannerlord");
+
+            foreach (IPluginBase plugin in _plugins.GetPlugins())
+            {
+                plugin.OnPatch(_harmony);
+            }
+
+            return Task.CompletedTask;
         }
 
         public override void OnMultiplayerGameStart(Game game, object starterObject) 
@@ -79,11 +105,12 @@ namespace OCEAdmin
             {
                 MPUtil.WriteToConsole("Loading game handlers...");
 
-                game.AddGameHandler<CommandsGameHandler>();
-                game.AddGameHandler<BansGameHandler>();
                 game.AddGameHandler<PlayerGameHandler>();
-                game.AddGameHandler<GroupfightGameHandler>();
-                game.AddGameHandler<SpecialistLimitGameHandler>();
+
+                foreach(IPluginBase plugin in _plugins.GetPlugins())
+                {
+                    plugin.OnMultiplayerGameStart(game, starterObject);
+                }
             }
             catch(Exception ex)
             {
@@ -97,11 +124,12 @@ namespace OCEAdmin
             {
                 MPUtil.WriteToConsole("Unloading game handlers...");
 
-                game.RemoveGameHandler<CommandsGameHandler>();
-                game.RemoveGameHandler<BansGameHandler>();
                 game.RemoveGameHandler<PlayerGameHandler>();
-                game.RemoveGameHandler<GroupfightGameHandler>();
-                game.RemoveGameHandler<SpecialistLimitGameHandler>();
+
+                foreach (IPluginBase plugin in _plugins.GetPlugins())
+                {
+                    plugin.OnGameEnd(game);
+                }
             }
             catch(Exception ex) 
             {

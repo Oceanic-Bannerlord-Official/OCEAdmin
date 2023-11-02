@@ -1,4 +1,4 @@
-﻿using OCEAdmin.Commands;
+﻿using OCEAdmin.Plugins.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

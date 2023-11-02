@@ -1,18 +1,14 @@
 ﻿using NetworkMessages.FromServer;
-using OCEAdmin.Core;
-using OCEAdmin.Core.Logging;
+using OCEAdmin.Core.Extensions;
+using OCEAdmin.Plugins.Logging;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaleWorlds.Core;
-using TaleWorlds.Diamond;
+using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.ObjectSystem;
-using static TaleWorlds.MountAndBlade.MultiplayerClassDivisions;
 
 namespace OCEAdmin
 {
@@ -41,7 +37,12 @@ namespace OCEAdmin
 
             if (log)
             {
-                LogManager.Add(msg);
+                LoggingPlugin logger = OCEAdminSubModule.GetPlugin<LoggingPlugin>();
+
+                if(logger != null)
+                {
+                    logger.Add(msg);
+                }
             }
         }
 
