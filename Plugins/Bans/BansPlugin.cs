@@ -15,6 +15,12 @@ namespace OCEAdmin.Plugins.Bans
 {
     public class BansPlugin : PluginBase
     {
+        public override string Name => "Bans";
+
+        public override string Description => "Manages bans and unbanning of players.";
+
+        public override bool IsCore => true;
+
         public IBanTransport Handler;
 
         private List<Ban> _bans = new List<Ban>();
@@ -27,12 +33,8 @@ namespace OCEAdmin.Plugins.Bans
 
             CommandsPlugin commands = OCEAdminSubModule.GetPlugin<CommandsPlugin>();
 
-            if (commands != null)
-            {
-                await commands.Register(new BanCommand());
-                await commands.Register(new Unban());
-            }
-
+            await commands.Register(new BanCommand());
+            await commands.Register(new Unban());
 
             Handler = new LocalBanTransport();
 

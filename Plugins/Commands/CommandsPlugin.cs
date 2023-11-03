@@ -14,6 +14,10 @@ namespace OCEAdmin.Plugins.Commands
     {
         public override string Name => "Commands";
 
+        public override string Description => "Handles in-game command interaction to use features of the mod.";
+
+        public override bool IsCore => true;
+
         public Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
 
         public CommandsPlugin() { }

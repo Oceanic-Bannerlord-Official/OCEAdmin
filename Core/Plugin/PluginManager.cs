@@ -12,6 +12,14 @@ namespace OCEAdmin.Core.Plugin
 
         public List<IPluginBase> GetPlugins() => _plugins;
 
+        public async Task RegisterPlugin(IPluginBase[] plugins)
+        {
+            foreach(IPluginBase plugin in plugins)
+            {
+                await RegisterPlugin(plugin);
+            }
+        }
+
         public async Task RegisterPlugin(IPluginBase plugin)
         {
             var existingPlugin = _plugins.FirstOrDefault(p => p.GetType() == plugin.GetType());

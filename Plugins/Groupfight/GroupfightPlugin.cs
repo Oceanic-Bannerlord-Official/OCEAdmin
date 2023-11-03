@@ -9,6 +9,10 @@ namespace OCEAdmin.Plugins.Groupfight
     {
         public override string Name => "Groupfighting";
 
+        public override string Description => "Allows for groupfight mode to disable ranged and cavalry.";
+
+        public override bool IsCore => false; 
+
         public GroupfightPlugin() { }
 
         public override async Task Load()

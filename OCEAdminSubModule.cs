@@ -13,6 +13,7 @@ using OCEAdmin.Plugins.Bans;
 using OCEAdmin.Plugins.Admin;
 using OCEAdmin.Plugins.Mutes;
 using OCEAdmin.Core.Plugin;
+using TaleWorlds.Network;
 
 namespace OCEAdmin
 {
@@ -52,16 +53,22 @@ namespace OCEAdmin
             await Config.Load();
 
             // Load variables that have been predefined from the config
-            // into the session. These won't be saved after change.
+            // into the session. These won't be saved after change.     
             await SessionManager.UpdateFromConfig();
 
-            await _plugins.RegisterPlugin(new CommandsPlugin());
-            await _plugins.RegisterPlugin(new AdminPlugin());
-            await _plugins.RegisterPlugin(new BansPlugin());
-            await _plugins.RegisterPlugin(new MutesPlugin());
-            await _plugins.RegisterPlugin(new LoggingPlugin());
-            await _plugins.RegisterPlugin(new GroupfightPlugin());
-            await _plugins.RegisterPlugin(new NameExploitFixPlugin());
+            // We need to load all the core OCEAdmin plugins into the manager.
+            // This will allow any mods to interact or access any of the objects
+            // that we use directly with the main module.
+            await GetPluginManager().RegisterPlugin(new IPluginBase[]
+            {
+                new CommandsPlugin(),
+                new AdminPlugin(),
+                new BansPlugin(),
+                new MutesPlugin(),
+                new LoggingPlugin(),
+                new GroupfightPlugin(),
+                new NameExploitFixPlugin()
+            });
         }
 
         public static T GetPlugin<T>() where T : IPluginBase
@@ -104,8 +111,6 @@ namespace OCEAdmin
             {
                 MPUtil.WriteToConsole("Loading game handlers...");
 
-                game.AddGameHandler<PlayerGameHandler>();
-
                 foreach(IPluginBase plugin in _plugins.GetPlugins())
                 {
                     plugin.OnMultiplayerGameStart(game, starterObject);
@@ -122,8 +127,6 @@ namespace OCEAdmin
             try
             {
                 MPUtil.WriteToConsole("Unloading game handlers...");
-
-                game.RemoveGameHandler<PlayerGameHandler>();
 
                 foreach (IPluginBase plugin in _plugins.GetPlugins())
                 {

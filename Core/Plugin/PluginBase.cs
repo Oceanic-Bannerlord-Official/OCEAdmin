@@ -12,6 +12,12 @@ namespace OCEAdmin.Core.Plugin
     {
         public virtual string Name => "Plugin";
 
+        public virtual string Description => "No description for this plugin has been set.";
+
+        public virtual bool IsCore => false;
+
+        public virtual bool IsEnabled => true;
+
         public virtual async Task Load()
         {
             MPUtil.WriteToConsole(string.Format("Plugin '{0}' has been loaded.", Name));

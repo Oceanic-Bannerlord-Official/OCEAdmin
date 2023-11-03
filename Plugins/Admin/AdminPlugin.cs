@@ -15,6 +15,10 @@ namespace OCEAdmin.Plugins.Admin
     { 
         public override string Name => "Admin";
 
+        public override string Description => "Handles all the base commands and admin assignment for OCEAdmin.";
+
+        public override bool IsCore => true;
+
         public AdminPlugin() { }
 
         private List<AdminPerms> _admins = new List<AdminPerms>();
@@ -25,7 +29,7 @@ namespace OCEAdmin.Plugins.Admin
 
             CommandsPlugin commands = OCEAdminSubModule.GetPlugin<CommandsPlugin>();
 
-            ICommand[] registerList = new ICommand[]
+            await commands.Register(new ICommand[]
             {
                 new AdminChat(),
                 new Bots(),
@@ -47,9 +51,7 @@ namespace OCEAdmin.Plugins.Admin
                 new MapTime(),
                 new Reset(),
                 new WarmupTime()
-            };
-
-            await commands.Register(registerList);
+            });
 
             _admins = Config.Get().Admins;
 

@@ -18,6 +18,10 @@ namespace OCEAdmin.Plugins.Mutes
 {
     public class MutesPlugin : PluginBase
     {
+        public override string Name => "Mutes";
+        public override string Description => "Allows for the muting of players.";
+        public override bool IsCore => true;
+
         private List<Mute> _mutes = new List<Mute>();
 
         private const string mutesFile = "mutes.xml";

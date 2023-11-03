@@ -11,11 +11,15 @@ namespace OCEAdmin.Plugins.Logging
 {
     public class LoggingPlugin : PluginBase
     {
-        public Queue<string> Queue;
-        private Timer saveTimer;
-        private ILogger logger;
-
         public override string Name => "Logging";
+        public override string Description => "Allows for logging of player messages.";
+        public override bool IsCore => true;
+
+        public Queue<string> Queue;
+
+        private Timer saveTimer;
+
+        private ILogger logger;
 
         public LoggingPlugin() { }
 
