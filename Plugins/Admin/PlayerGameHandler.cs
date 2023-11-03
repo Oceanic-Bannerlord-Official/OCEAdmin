@@ -1,4 +1,5 @@
-﻿using OCEAdmin.Plugins.Admin;
+﻿using OCEAdmin.Core.Permissions;
+using OCEAdmin.Plugins.Admin;
 using OCEAdmin.Plugins.Mutes;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
-namespace OCEAdmin.Core.Permissions
+namespace OCEAdmin.Plugins.Admin
 {
     internal class PlayerGameHandler : GameHandler
     {

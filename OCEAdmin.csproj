@@ -141,7 +141,7 @@
     <Compile Include="Plugins\Logging\Patches\LogPatchAddNewPlayerOnServerr.cs" />
     <Compile Include="Plugins\Mutes\Mute.cs" />
     <Compile Include="Plugins\Mutes\MutesPlugin.cs" />
-    <Compile Include="Core\Permissions\PlayerGameHandler.cs" />
+    <Compile Include="Plugins\Admin\PlayerGameHandler.cs" />
     <Compile Include="Core\SessionManager.cs" />
     <Compile Include="Core\Util\NetworkCommunicatorExtensions.cs" />
     <Compile Include="Core\Permissions\Role.cs" />

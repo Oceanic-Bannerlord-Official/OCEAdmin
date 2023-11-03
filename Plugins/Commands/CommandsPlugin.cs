@@ -44,6 +44,16 @@ namespace OCEAdmin.Plugins.Commands
             return executableCommand.Execute(networkPeer, args);
         }
 
+        public Task Register(ICommand[] commands)
+        {
+            foreach(ICommand command in commands)
+            {
+                Register(command);
+            }
+
+            return Task.CompletedTask;
+        }
+
         public Task Register(ICommand command)
         {
             MPUtil.WriteToConsole("** Chat Command " + command.Command() + " has been loaded!");

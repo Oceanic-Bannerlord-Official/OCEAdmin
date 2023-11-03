@@ -25,29 +25,31 @@ namespace OCEAdmin.Plugins.Admin
 
             CommandsPlugin commands = OCEAdminSubModule.GetPlugin<CommandsPlugin>();
 
-            if (commands != null)
+            ICommand[] registerList = new ICommand[]
             {
-                await commands.Register(new AdminChat());
-                await commands.Register(new Bots());
-                await commands.Register(new Bring());
-                await commands.Register(new ChangeMap());
-                await commands.Register(new ChangeMapFacs());
-                await commands.Register(new ChangeMission());
-                await commands.Register(new EndWarmup());
-                await commands.Register(new Factions());
-                await commands.Register(new GetSpecs());
-                await commands.Register(new GodMode());
-                await commands.Register(new Goto());
-                await commands.Register(new Heal());
-                await commands.Register(new Help());
-                await commands.Register(new Kick());
-                await commands.Register(new Kill());
-                await commands.Register(new Login());
-                await commands.Register(new Maps());
-                await commands.Register(new MapTime());
-                await commands.Register(new Reset());
-                await commands.Register(new WarmupTime());
-            }
+                new AdminChat(),
+                new Bots(),
+                new Bring(),
+                new ChangeMap(),
+                new ChangeMapFacs(),
+                new ChangeMission(),
+                new EndWarmup(),
+                new Factions(),
+                new GetSpecs(),
+                new GodMode(),
+                new Goto(),
+                new Heal(),
+                new Help(),
+                new Kick(),
+                new Kill(),
+                new Login(),
+                new Maps(),
+                new MapTime(),
+                new Reset(),
+                new WarmupTime()
+            };
+
+            await commands.Register(registerList);
 
             _admins = Config.Get().Admins;
 
@@ -57,6 +59,18 @@ namespace OCEAdmin.Plugins.Admin
             {
                 MPUtil.WriteToConsole($"Adding '{admin.PlayerId}' from the config.");
             }
+        }
+
+        public override void OnMultiplayerGameStart(Game game, object starterObject)
+        {
+            base.OnMultiplayerGameStart(game, starterObject);
+            game.AddGameHandler<PlayerGameHandler>();
+        }
+
+        public override void OnGameEnd(Game game)
+        {
+            base.OnGameEnd(game);
+            game.RemoveGameHandler<PlayerGameHandler>();
         }
 
         public void AddAdmin(AdminPerms admin)
